@@ -38,3 +38,10 @@ Supersedes the unexecuted immediate-consequence proposal before any neural outco
 Existing CellWorld is frozen. New task-specific action head on actual MiniGPT; one
 REINFORCE objective. Kaggle/GitHub access verified, upstream remains clean/pinned.
 Protocol, H1/H2/H3 and resource budgets frozen in L1_QUALIFICATION.md. No L.2.
+
+### L.1 remote admission execution
+
+Smoke v1 f7822a9: FAILED_ADMISSION, RNG comparator identity bug, raw outputs preserved.
+Smoke v2 6c63f35: COMPLETE / ENGINEERING PASS, exact fresh-process full-state
+continuation and genuine neural update on Kaggle T4. No learning qualification implied.
+See L1_QUALIFICATION.md and experiments/l1_single_cell/smoke-v1, smoke-v2.

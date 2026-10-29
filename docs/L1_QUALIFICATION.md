@@ -115,3 +115,14 @@ objects by identity rather than RNG state. Correct to getstate() equality; the
 independent immutable RNG snapshot correction is retained too. No learning experiment
 or sealed evaluation was started. Raw trace/checkpoints/logs preserved under
 runs/l1-smoke-v1/output. This is a failed admission, not a neural learning result.
+
+### Smoke v2 actual admission result
+
+Kernel sparklinghydraulics0/ontogeny-l1-smoke version 2 COMPLETE at source
+6c63f35 (full revision in runtime record), Tesla T4 x2 allocated, CUDA:0 used,
+Python 3.13.15, Torch 2.6.0+cu124, CUDA 12.4, NumPy 2.1.3.
+Neural smoke wall time 6.667 seconds (excludes environment setup).
+Initialization exact; finite action distribution and genuine gradient update executed.
+Fresh-process action distribution/transition and all 8 state groups exactly match.
+Full experiment is now admitted; H1/H2 are still NOT RUN. Versioned small evidence:
+experiments/l1_single_cell/smoke-v2; raw checkpoints/logs: runs/l1-smoke-v2/output.

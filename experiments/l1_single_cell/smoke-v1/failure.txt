@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 385, in main
+    admission = smoke(args, torch, np, Owner)
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 165, in smoke
+    assert equal(comparable(owner), comparable(restored), torch, np)
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

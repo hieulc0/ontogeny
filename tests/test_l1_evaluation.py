@@ -37,3 +37,20 @@ def test_paired_interval_respects_initialization_clusters():
     assert ci["lower95"] < 0 < ci["upper95"]
     with pytest.raises(ValueError):
         paired_interval(rows[:20], "frozen", "duration", "default")
+
+
+def test_continuation_comparator_uses_rng_state(monkeypatch):
+    # Import the driver is safe: torch is only imported inside remote setup().
+    import importlib
+    import random
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "kaggle"))
+    driver = importlib.import_module("run_l1")
+    torch = SimpleNamespace(Tensor=type("FakeTensor", (), {}))
+    np = SimpleNamespace(ndarray=type("FakeArray", (), {}))
+    left, right = random.Random(2), random.Random(2)
+    assert left is not right and driver.equal(left, right, torch, np)
+    right.random()
+    assert not driver.equal(left, right, torch, np)

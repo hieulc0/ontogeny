@@ -1,0 +1,17 @@
+{
+  "ontogeny_sha": "6c63f3531e4346f9d4ce89b7e97afddd3eec30db",
+  "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d",
+  "world_version": "cellworld-v1",
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "cuda": "12.4",
+  "python": "3.13.15",
+  "gpu": "Tesla T4",
+  "gpu_count": 2,
+  "mode": "smoke",
+  "status": "COMPLETE",
+  "seconds": 6.666572146000021,
+  "kernel": "sparklinghydraulics0/ontogeny-l1-smoke",
+  "version": 2,
+  "verdict": "PASSED_ADMISSION"
+}

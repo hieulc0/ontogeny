@@ -1,0 +1,10 @@
+{
+  "model": true,
+  "optimizer": true,
+  "external": true,
+  "metadata": true,
+  "gradients": true,
+  "rng": true,
+  "training_mode": true,
+  "requires_grad": true
+}
