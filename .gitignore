@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+runs/*
+!runs/.gitkeep
+*.pt
+.env
+.agents/
+.gemini/
+.aws/
+.codex/

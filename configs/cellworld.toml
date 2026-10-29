@@ -1,0 +1,12 @@
+width = 12
+height = 12
+resources = 24
+hazards = 12
+initial_energy = 40
+max_energy = 60
+max_steps = 100
+action_cost = 1
+inspect_cost = 2
+resource_gain = 15
+hazard_cost = 6
+change_interval = 20

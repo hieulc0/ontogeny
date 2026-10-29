@@ -1,0 +1,9 @@
+# PLANNED; no learning qualification from this file.
+protocol = "l1-immediate-consequence-v1"
+model_seeds = [42, 43, 44]
+train_seeds = [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007]
+dev_seeds = [2000, 2001, 2002, 2003]
+sealed_seeds = [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
+max_updates = 800
+max_seconds = 1800
+replay_capacity = 128
