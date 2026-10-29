@@ -41,6 +41,8 @@ def main():
                             "observation_tiles",
                         )
                     },
+                    "final_energy": statistics.mean(r["energy_trajectory"][-1] for r in group),
+                    "inspections": statistics.mean(r["actions"].count(4) for r in group),
                     "horizon_fraction": statistics.mean(
                         r["termination"] == "horizon" for r in group
                     ),
@@ -67,6 +69,7 @@ def main():
             ax.set(xlabel="Training episode", ylabel=f"{metric} (16-episode mean)")
             ax.legend()
     fig.savefig(args.output / "training.svg")
+    fig.savefig(args.output / "training.png", dpi=160)
     plt.close(fig)
     fig, axes = plt.subplots(1, 2, figsize=(11, 4), constrained_layout=True)
     for ax, variant in zip(axes, ("default", "hazard_shift"), strict=True):
@@ -88,6 +91,7 @@ def main():
         ax.set(title=variant, xlabel="Step", ylabel="Energy (remaining episodes only)")
         ax.legend()
     fig.savefig(args.output / "energy.svg")
+    fig.savefig(args.output / "energy.png", dpi=160)
     plt.close(fig)
 
 

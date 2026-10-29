@@ -51,6 +51,46 @@ def main():
     for name, expected in manifest.items():
         if digest(source / name) != expected["sha256"]:
             raise RuntimeError(f"failed input provenance: {name}")
+    if args.mode == "records":
+        args.output.mkdir(parents=True, exist_ok=False)
+        started = time.monotonic()
+        records = []
+        for seed in (42, 43, 44):
+            owner = Owner.load(source / f"{seed}-final.pt")
+            assert owner.metadata["steps"] == 256
+            history = owner.external["history"]
+            assert len(history) == 256
+            if (source / f"{seed}-gradients.json").exists():
+                assert history == json.loads((source / f"{seed}-gradients.json").read_text())
+            (args.output / f"{seed}-gradients.json").write_text(json.dumps(history, indent=2))
+            records.append(
+                {
+                    "seed": seed,
+                    "checkpoint_sha256": digest(source / f"{seed}-final.pt"),
+                    "parameters": sum(p.numel() for p in owner.model.parameters()),
+                    "head_parameters": sum(p.numel() for p in owner.model.action_head.parameters()),
+                    "updates": owner.metadata["steps"],
+                    "gradient_examples": owner.metadata["gradient_examples"],
+                }
+            )
+            assert time.monotonic() - started < 60
+        failed_audit = Owner.load(source / "44-trained-continuation/continuation-parent.pt")
+        (args.output / "records.json").write_text(
+            json.dumps(
+                {
+                    "status": "COMPLETE",
+                    "records": records,
+                    "failed_44_audit_updates": failed_audit.metadata["steps"],
+                    "seconds": time.monotonic() - started,
+                    "source_sha": subprocess.check_output(
+                        ["git", "rev-parse", "HEAD"], text=True
+                    ).strip(),
+                    "new_optimizer_updates": 0,
+                },
+                indent=2,
+            )
+        )
+        return
     shutil.copytree(source, args.output)
     (args.output / "failure.txt").rename(args.output / "original-failure.txt")
     original_runtime = json.loads((args.output / "runtime.json").read_text())

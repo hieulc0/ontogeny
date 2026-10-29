@@ -12,7 +12,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--revision", required=True)
     parser.add_argument("--job", type=Path, required=True)
-    parser.add_argument("--mode", choices=["smoke", "experiment", "recovery"], default="smoke")
+    parser.add_argument(
+        "--mode", choices=["smoke", "experiment", "recovery", "records"], default="smoke"
+    )
     args = parser.parse_args()
     sha = subprocess.check_output(["git", "rev-parse", args.revision], text=True).strip()
     if len(sha) != 40:
@@ -29,7 +31,7 @@ def main() -> None:
     if not published:
         raise RuntimeError("selected revision must be published in origin/main history")
     args.job.mkdir(parents=True, exist_ok=False)
-    driver = "kaggle/recover_l1.py" if args.mode == "recovery" else "kaggle/run_l1.py"
+    driver = "kaggle/recover_l1.py" if args.mode in ("recovery", "records") else "kaggle/run_l1.py"
     code = f'''import os, subprocess, sys, json, traceback
 from pathlib import Path
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
@@ -68,10 +70,10 @@ run([sys.executable, "{driver}", "--mode", "{args.mode}",
         "enable_internet": True,
         "dataset_sources": [],
     }
-    if args.mode == "recovery":
+    if args.mode in ("recovery", "records"):
         metadata["dataset_sources"] = ["sparklinghydraulics0/ontogeny-l1-recovery-input-v1"]
-        metadata["id"] = "sparklinghydraulics0/ontogeny-l1-recovery-verified"
-        metadata["title"] = "ontogeny-l1-recovery-verified"
+        metadata["id"] = f"sparklinghydraulics0/ontogeny-l1-{args.mode}-verified"
+        metadata["title"] = f"ontogeny-l1-{args.mode}-verified"
     (args.job / "kernel-metadata.json").write_text(json.dumps(metadata, indent=2))
 
 

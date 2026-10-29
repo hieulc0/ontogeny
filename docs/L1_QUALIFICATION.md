@@ -155,3 +155,17 @@ result. Recovery now uses a private dedicated version-1 dataset of allowlisted g
 artifacts only (no repository or credentials), identified in recovery-input.json by
 archive SHA-256 and then by every extracted file's committed hash. Loader refuses
 missing/wrong input. No new training is authorized by this infrastructure repair.
+
+### Recovered scientific result and sidecar audit
+
+Verified recovery kernel sparklinghydraulics0/ontogeny-l1-recovery-verified version 1
+COMPLETE, source 6a0cf716b53b2f5cf9ebd4f3ea161a1e786203c0, 36.983 seconds execution.
+All 2,400 evaluation rows are present. H1 FAIL, H2 FAIL, H3 PASS. Trained checkpoint
+hashes remain identical to the original failed run; all three show actual parameter
+changes and 256 updates each. No retraining or tuning occurred.
+
+Independent non-neural audit found 44-gradients.json absent: original export followed
+the audit that failed. Its 256-entry history remains in the immutable final checkpoint.
+A final Kaggle records-only job extracts/checks the checkpoint histories and parameter
+counts, with NO forward pass, NO optimizer update, <=60 s execution (1,200 s platform
+cap including setup). Preserve the failed local audit attempt; do not waive that check.
