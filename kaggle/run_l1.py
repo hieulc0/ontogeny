@@ -99,6 +99,8 @@ def advance(owner):
 
 
 def equal(a, b, torch, np):
+    if isinstance(a, random.Random):
+        return isinstance(b, random.Random) and a.getstate() == b.getstate()
     if isinstance(a, torch.Tensor):
         return isinstance(b, torch.Tensor) and torch.equal(a, b)
     if isinstance(a, np.ndarray):
@@ -168,7 +170,23 @@ def smoke(args, torch, np, Owner, owner=None):
     actual = json.loads((args.output / "resumed-step.json").read_text())
     assert json.loads(json.dumps(expected)) == actual
     restored = Owner.load(args.output / "resumed.pt")
-    assert equal(expected_state, comparable(restored), torch, np)
+    restored_state = comparable(restored)
+    fields = (
+        "model",
+        "optimizer",
+        "external",
+        "metadata",
+        "gradients",
+        "rng",
+        "training_mode",
+        "requires_grad",
+    )
+    matches = {
+        name: equal(a, b, torch, np)
+        for name, a, b in zip(fields, expected_state, restored_state, strict=True)
+    }
+    (args.output / "continuation-fields.json").write_text(json.dumps(matches, indent=2))
+    assert all(matches.values()), matches
     # Further experience after reload, not just inference weights.
     for obj in (owner, restored):
         obj.external["driver"] = {

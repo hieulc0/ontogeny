@@ -105,3 +105,13 @@ capturing expected global RNG could make RNG equality vacuous. Capture a deep sn
 before subprocess execution/load, compare immutable external/metadata, and audit trained
 finals too. Smoke v1 output is preserved but cannot qualify admission. Rerun required;
 no policy objective, environment, learning budget or sealed-world outcome informed this fix.
+
+### Smoke v1 actual negative result
+
+Kernel sparklinghydraulics0/ontogeny-l1-smoke version 1, source f7822a9, ERROR.
+Actual forward/action/transition and one neural update executed on Kaggle, but
+full-state comparison asserted false. Comparator treated distinct random.Random
+objects by identity rather than RNG state. Correct to getstate() equality; the
+independent immutable RNG snapshot correction is retained too. No learning experiment
+or sealed evaluation was started. Raw trace/checkpoints/logs preserved under
+runs/l1-smoke-v1/output. This is a failed admission, not a neural learning result.
