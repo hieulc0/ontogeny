@@ -45,3 +45,38 @@ Smoke v1 f7822a9: FAILED_ADMISSION, RNG comparator identity bug, raw outputs pre
 Smoke v2 6c63f35: COMPLETE / ENGINEERING PASS, exact fresh-process full-state
 continuation and genuine neural update on Kaggle T4. No learning qualification implied.
 See L1_QUALIFICATION.md and experiments/l1_single_cell/smoke-v1, smoke-v2.
+
+## 2026-10-30 — L.1 actual scientific outcome
+
+EXECUTED: 3 initializations, 768 training episodes, 26,618 interactions and 768 real
+training updates. 2,400 evaluation episodes, five controls/policies, two conditions.
+H1 FAIL (initialization 44 regresses); H2 FAIL (all paired intervals cross zero,
+resource-efficiency mean below random/frozen); H3 PASS (trained full-state exact
+fresh-process continuation). Recommendation: L.1 Learning FAIL, no promotion/no L.2.
+
+Original main run adb97ff ERROR at 44 audit after all training and 1,600 evaluations.
+Earlier audit did not ensure survival to its assumed horizon. Safe audit energy 100
+is used ONLY in continuation testing, no L.0/training/evaluation dynamics changes.
+Input-less recovery 2cb499a failed because Kaggle rejected the version-qualified mount.
+Private allowlisted hash-pinned dataset recovery 6a0cf71 COMPLETE adds only missing
+44 audit/evaluation. One submission was rejected by a transient two-session limit;
+retried after the task-owned input-less job errored. No additional training or tuning.
+
+Independent local artifact audit caught missing 44 gradient-history JSON export;
+full history is in the final checkpoint. Separate records-only GPU extraction validates
+and exports it without forward/update. A preparation attempt also refused the untracked
+result directory until the measured scientific outputs were committed; no job ran from
+an uncommitted source. Raw failures and traces are preserved, not counted as passes.
+
+Curves, all comparison means, intervals, checkpoint hashes and continuation groups:
+experiments/l1_single_cell/results. Full chronological evidence and reproduction:
+docs/L1_QUALIFICATION.md. LOCAL: non-neural tests/static/artifact analysis only.
+REMOTE: Kaggle CUDA training/inference/checkpoint loading; no Colab or local fallback.
+
+Final records extraction 7f4ba6d COMPLETE, 1.921 s, zero forward/update. Confirmed all
+3 checkpoints contain 256 real gradient records and 118,023 parameters (1,799 head).
+Full artifact audit PASS: 26,618 training and 111,316 evaluation interactions;
+287,242 training / 1,089,140 evaluation sensory tiles. Seven additional discarded
+admission/audit updates across attempts are counted separately (775 total updates).
+Final local checks: 34 non-neural tests, Ruff, Pyright and syntax PASS. Scientific
+verdict remains H1 FAIL, H2 FAIL, H3 PASS => L.1 FAIL. No checkpoint promoted.

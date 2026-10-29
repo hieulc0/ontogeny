@@ -1,0 +1,12 @@
+{
+  "kernel": "sparklinghydraulics0/ontogeny-l1-recovery",
+  "version": 1,
+  "status": "ERROR",
+  "trace": [
+    "RuntimeError: expected one immutable source bundle, found []\n"
+  ],
+  "log_sha256": "54643e336292d07f1aa99635ec1b0cc7ce24dbfdf9a0c1981a3e186e46b8e849",
+  "quota_rejection": "Maximum batch GPU session count of 2 reached; retried after task-owned session terminated.",
+  "verified_recovery": "sparklinghydraulics0/ontogeny-l1-recovery-verified/1",
+  "verified_status": "COMPLETE"
+}

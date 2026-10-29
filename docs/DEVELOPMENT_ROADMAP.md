@@ -9,7 +9,7 @@
 | L.4 | Can organization develop? | Reversible module allocation, differentiation/growth/pruning improve controlled outcomes while retaining prior competence. |
 | L.5 | Can learning processes improve themselves? | Independently qualified experience selection/learning/topology proposals improve future acquisition at matched resources with rollback. |
 
-L.0 is implemented and locally checked. L.1 is an unexecuted experimental pilot.
+L.0 is implemented and locally checked. L.1 executed: Learning FAIL (H1/H2 FAIL, H3 persistence PASS); see L1_QUALIFICATION.md.
 L.2–L.5 are research hypotheses only. Implementation completion never opens the next
 gate automatically. All architecture changes require finite envelopes and migration
 invariants; no autonomous source modification, deployment or compute acquisition.

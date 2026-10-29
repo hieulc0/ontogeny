@@ -1,5 +1,141 @@
 # L.1 qualification — preregistration and execution record
 
+**Actual verdict: L.1 Learning FAIL.** H1 FAIL, H2 FAIL, H3 PASS. Neural updates,
+source integration and full-state persistence work; reliable behavioral improvement
+through experience is not established. No checkpoint promoted; L.2 is not authorized.
+
+## Measured results
+
+768 training episodes, 26,618 training interactions and 768 scientific optimizer updates
+across three initializations. 2,400 independent evaluation episodes (1,920 sealed plus
+480 development), five policies, two variants. All outcomes retained; none selected
+for reporting. Checkpoint records, uncertainty, curves and raw artifact references:
+[qualification](../experiments/l1_single_cell/results/qualification.json),
+[comparisons](../experiments/l1_single_cell/results/comparison.csv),
+[continuation](../experiments/l1_single_cell/results/continuation.json).
+
+Each table row aggregates 192 sealed episodes: 64 worlds × 3 initializations.
+Resource efficiency is the mean episode collection/action, not a reward score.
+
+| Variant | Policy | Steps | Resources | Hazard encounters | Resources/action | Horizon % |
+|---|---|---:|---:|---:|---:|---:|
+| default | rest | 40.00 | 0.000 | 0.000 | 0.00000 | 0.00 |
+| default | random | 32.36 | 0.547 | 2.005 | 0.01219 | 0.00 |
+| default | heuristic | 98.53 | 12.672 | 0.000 | 0.12747 | 90.10 |
+| default | frozen | 30.59 | 0.469 | 2.229 | 0.01125 | 0.00 |
+| default | learning | 35.73 | 0.453 | 1.417 | 0.00991 | 0.00 |
+| hazard_shift | rest | 40.00 | 0.000 | 0.000 | 0.00000 | 0.00 |
+| hazard_shift | random | 26.98 | 0.432 | 2.844 | 0.01171 | 0.00 |
+| hazard_shift | heuristic | 97.94 | 12.490 | 0.000 | 0.12582 | 89.58 |
+| hazard_shift | frozen | 27.50 | 0.427 | 2.719 | 0.01123 | 0.00 |
+| hazard_shift | learning | 34.16 | 0.432 | 1.693 | 0.00872 | 0.00 |
+
+The trained policy's cohort mean is below rest-only duration (40) in both variants,
+and far below the fixed heuristic. Every neural/random/rest episode exhausts energy;
+only the heuristic reaches the horizon (~90%). No behavioral learning PASS is inferred
+from a smaller hazard count or positive mean duration alone.
+
+| Initialization | First 64 steps | Last 64 steps | First 64 resources | Last 64 resources |
+|---|---:|---:|---:|---:|
+| 42 | 34.797 | 35.891 | 0.625 | 0.734 |
+| 43 | 32.609 | 38.875 | 0.406 | 0.594 |
+| 44 | 35.469 | 28.906 | 0.547 | 0.266 |
+
+H1 FAIL: all three models changed and all applied genuine gradients, but 44 regressed.
+H2 FAIL: no preregistered lower confidence bound exceeds zero. Default duration
+learning-minus-random +3.370 [−15.045, +21.785], learning-minus-frozen +5.141
+[−7.091, +17.372]. Default collection differences are −0.094 and −0.016 respectively.
+Hazard-shift duration differences +7.182 [−12.154,+26.518] and +6.661
+[−11.781,+25.104]; collection differences 0.000 and +0.005. Resource efficiency is
+lower than both neural/random controls in both variants. Intervals use three
+initialization means; the wide uncertainty is a practical limitation, not a pass.
+H3 PASS: full checkpoint reload, next distribution/action/transition and neural update
+match exactly in fresh processes, including the trained students' complete optimizer,
+gradients, buffers, counters and RNG. This is same-code/runtime T4 evidence only.
+
+![Training curves](../experiments/l1_single_cell/results/training.svg)
+
+![Energy trajectories](../experiments/l1_single_cell/results/energy.svg)
+
+Energy curves average only episodes still present at that step; late-step fluctuations
+are survivor-conditioned and must not be read as whole-cohort energy improvement.
+SVG and PNG exports were rendered and visually checked. These curves show all three
+training initializations; no favorable checkpoint selection or smoothing-based gating.
+
+## Reproduction and provenance
+
+Scientific training source: `adb97ff0ccd102b9f617922b4a1b6eefce8c9a91`.
+Recovery source: `6a0cf716b53b2f5cf9ebd4f3ea161a1e786203c0`.
+Upstream: `8567836fb2c8c915d442b7c2fbedb4fd9b30396d` (unchanged).
+Kaggle CUDA T4, Torch 2.6.0+cu124, CUDA 12.4, Python 3.13.15, NumPy 2.1.3.
+Two T4 devices allocated by Kaggle, one used. Main neural execution 193.175 s;
+recovery 36.983 s, excluding image/package setup and artifact transfer. CUDA-kernel
+active time was not separately profiled; these are execution wall times on GPU jobs.
+Raw pip freeze and installation/conflict warnings remain in runtime/log artifacts.
+
+Each student has 118,023 parameters, including 1,799 in the new action head.
+Each initialization applied 256 training updates on 9,162 / 9,031 / 8,425 examples.
+Inference during training used the same respective counts. Gradient forward/backward
+processes each episode batch additionally; this is not compute-matched to frozen inference.
+Admission and discarded continuation-audit updates are additional, separately recorded
+costs, not scientific training. No audit checkpoint was substituted for a final model.
+Including failed/admission/audit copies, 7 extra optimizer updates occurred, for 775
+actual optimizer updates across all jobs; only the original 768 train the evaluated
+models. The failed 44 audit had already applied its discarded update before the harness
+stepped the ended world. The records-only extraction applied zero new updates.
+Evaluation used 111,316 interactions and 1,089,140 sensed tiles; training used 287,242
+sensed tiles. Detailed accounting and file hashes are in results/audit.json (PASS).
+
+Completed kernels (all version 1 except successful smoke version 2):
+
+- [Smoke](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-l1-smoke): v1 failed comparator, v2 COMPLETE/PASS.
+- [Original training](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-l1-experiment): ERROR at final audit; full trained states preserved.
+- [Input-less recovery](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-l1-recovery): ERROR, missing mount; no training.
+- [Verified recovery](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-l1-recovery-verified): COMPLETE; fixed audit and missing evaluation only.
+- [Records extraction](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-l1-records-verified): extraction-only artifact audit; final status recorded below.
+
+Raw original bundle: runs/l1-experiment-v1/output/l1-experiment.
+Raw completed bundle: runs/l1-recovery-verified/output/l1-recovery.
+Immutable private input version 1 and archive/file hashes: experiment-v1/recovery-input.json
+and artifacts.json under experiments/l1_single_cell. Binary checkpoints and full raw
+histories remain out of Git; small measured summaries, negative traces and curves are tracked.
+
+```bash
+# From the final report checkout, prepare the historical published source.
+uv run python kaggle/prepare.py --revision adb97ff0ccd102b9f617922b4a1b6eefce8c9a91 --mode experiment --job runs/reproduce-l1/job
+kaggle kernels push -p runs/reproduce-l1/job --accelerator NvidiaTeslaT4 -t 4200
+# This faithfully reproduces the original audit-fixture failure. To complete its
+# exact preserved models, use the immutable input recovery source and dataset:
+uv run python kaggle/prepare.py --revision 6a0cf716b53b2f5cf9ebd4f3ea161a1e786203c0 --mode recovery --job runs/reproduce-recovery/job
+kaggle kernels push -p runs/reproduce-recovery/job --accelerator NvidiaTeslaT4 -t 4200
+kaggle kernels output sparklinghydraulics0/ontogeny-l1-recovery-verified/1 -p runs/reproduced-output
+# Final checkout can also run a new complete trial with the safe audit fixture.
+# That is a new recorded run, not a replacement of these historical outcomes.
+
+# Non-neural analysis of downloaded records (no checkpoint loading locally):
+uv run --with matplotlib==3.10.1 python scripts/report_l1.py runs/l1-recovery-verified/output/l1-recovery runs/new-analysis
+uv run python scripts/audit_l1.py runs/l1-recovery-verified/output/l1-recovery runs/new-audit.json
+```
+
+Records-only output supplies the missing 44-gradients.json sidecar. Download and place
+it alongside the recovered bundle before running the full auditor:
+
+```bash
+kaggle kernels output sparklinghydraulics0/ontogeny-l1-records-verified/1 -p runs/l1-records/output
+cp runs/l1-records/output/l1-records/44-gradients.json runs/l1-recovery-verified/output/l1-recovery/44-gradients.json
+```
+
+The records job source is 7f4ba6dc817f2fe2a3bd8fb6f6156c41e689dbb8; prepare it with
+`--mode records` at that revision if re-extraction is needed. Use new output directories to
+preserve prior runs. Kaggle mounts require the owner's private dataset access.
+
+**Next decision:** stay at L.1. Diagnose instability using training/development records,
+then preregister any new single-mechanism trial with fresh sealed worlds. Do not tune
+against this sealed cohort or start L.2, architecture growth or a second cell.
+
+## Preregistered protocol and chronological evidence
+
+
 Protocol **l1-reinforce-v1**, frozen before neural execution. Starting Ontogeny
 b0caa6e91d6a2ec44f7b27d3f9a83be5a1524648; upstream unchanged at
 8567836fb2c8c915d442b7c2fbedb4fd9b30396d. The execution commit is recorded by the
@@ -169,3 +305,19 @@ the audit that failed. Its 256-entry history remains in the immutable final chec
 A final Kaggle records-only job extracts/checks the checkpoint histories and parameter
 counts, with NO forward pass, NO optimizer update, <=60 s execution (1,200 s platform
 cap including setup). Preserve the failed local audit attempt; do not waive that check.
+
+### Final artifact audit — 2026-10-30
+
+Records-only kernel ontogeny-l1-records-verified version 1 COMPLETE at
+7f4ba6dc817f2fe2a3bd8fb6f6156c41e689dbb8, 1.921 seconds extraction, zero optimizer
+updates and no forward pass. All 3 final checkpoint hashes match; each contains 256
+real update history entries. Parameter counts are 118,023 total and 1,799 action-head.
+Failed 44 audit parent records update 257, retained as a discarded audit state.
+
+The full non-neural artifact audit now PASSes coverage, training gradients, checkpoint
+hashes, sensory/energy accounting and all fresh-process continuation fields. Raw records
+remain at runs/l1-records/output and the dedicated private kernel; results/records.json
+and audit.json preserve small provenance and all recovered bundle file hashes.
+Ruff check/format, Pyright, syntax checks and 34 local-safe tests pass. The completed
+scientific recommendation is **L.1 FAIL**, not INCONCLUSIVE and not an engineering PASS
+promoted into intelligence. No architectural growth, new objective, L.2 or second cell.

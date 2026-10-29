@@ -1,0 +1,33 @@
+{
+  "status": "COMPLETE",
+  "records": [
+    {
+      "seed": 42,
+      "checkpoint_sha256": "cb5a3388729adc6e8e2c2dc28d1d9cc0c97ddbb094a8f1cff0e85ce059622e10",
+      "parameters": 118023,
+      "head_parameters": 1799,
+      "updates": 256,
+      "gradient_examples": 9162
+    },
+    {
+      "seed": 43,
+      "checkpoint_sha256": "da6479d6c0c501f6b3f3d6af830160765d1fd0369c30aa25cdd80fce163e0839",
+      "parameters": 118023,
+      "head_parameters": 1799,
+      "updates": 256,
+      "gradient_examples": 9031
+    },
+    {
+      "seed": 44,
+      "checkpoint_sha256": "1eed192d85ea577d865ed977be28e7894501ddab27842f5836ac68e183ae21c5",
+      "parameters": 118023,
+      "head_parameters": 1799,
+      "updates": 256,
+      "gradient_examples": 8425
+    }
+  ],
+  "failed_44_audit_updates": 257,
+  "seconds": 1.921324358999982,
+  "source_sha": "7f4ba6dc817f2fe2a3bd8fb6f6156c41e689dbb8",
+  "new_optimizer_updates": 0
+}

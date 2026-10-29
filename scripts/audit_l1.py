@@ -60,6 +60,9 @@ def main():
         assert all(json.loads((audit / "continuation-fields.json").read_text()).values())
     report = json.loads((args.input / "qualification.json").read_text())
     for c in report["checkpoints"]:
+        for stage in ("initial", "final"):
+            artifact = args.input / f"{c['seed']}-{stage}.pt"
+            assert hashlib.sha256(artifact.read_bytes()).hexdigest() == c[stage]
         assert c["updates"] == 256
         assert c["gradient_examples"] == sum(
             r["duration"] for r in train if r["model_seed"] == c["seed"]

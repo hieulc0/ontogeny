@@ -5,11 +5,10 @@ partially observed world, predicts consequences and learns from its actions.
 This repository supplies artificial environments and developmental experiments;
 Adaptive Mini-GPT remains the canonical neural foundation.
 
-**Current status:** L.0 engineering qualified on the declared local checks. L.1 adapter
-and REINFORCE experiment implemented; current execution/results: [L.1 qualification](docs/L1_QUALIFICATION.md).
+**Current status:** L.0 engineering qualified on the declared local checks. L.1 executed on Kaggle: **Learning FAIL** (H1/H2 FAIL, H3 persistence PASS). Results: [L.1 qualification](docs/L1_QUALIFICATION.md).
 No L.2 or multicellular execution. No inherited intelligence or historical knowledge claimed.
 
-Python 3.12, uv, pytest, Ruff and Pyright. The environment uses only the standard library.
+Python >=3.12, uv, pytest, Ruff and Pyright. The environment uses only the standard library.
 
 ```bash
 UV_CACHE_DIR=/tmp/ontogeny-uv uv sync --locked
@@ -44,3 +43,9 @@ Run completion is not scientific promotion. Large logs/checkpoints stay under ig
 After smoke PASS, prepare a separate job with `--mode experiment` and a new job directory.
 The full job repeats admission before training. Runtime pins, source SHA, checkpoint
 hashes and reproduction commands are in docs/L1_QUALIFICATION.md.
+
+The completed L.1 trial used 3 initializations, 768 training and 2,400 evaluation
+episodes. Genuine neural updates and fresh-process full-state continuation were verified;
+reliable behavioral improvement was not. The fixed heuristic remains much stronger.
+See [training curves](experiments/l1_single_cell/results/training.svg) and
+[comparison records](experiments/l1_single_cell/results/comparison.csv).

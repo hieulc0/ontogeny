@@ -1,6 +1,6 @@
 # 0001: Consequence adapter over upstream MiniGPT
 
-Status: accepted for implementation, scientific qualification pending.
+Status: archived unexecuted proposal; superseded for L.1 by decision 0002.
 
 Canonical concept loss expects tag/state supervision, incompatible with environmental
 experiences. Reuse MiniGPT and LearningState persistence/optimizer, add no Transformer

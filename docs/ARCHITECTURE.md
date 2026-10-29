@@ -40,7 +40,8 @@ sources. Episode boundaries preserve the same owner within each arm. Evaluation 
 updates; it must not become a source of training choices.
 
 Snapshot continuation of CellWorld is locally tested. Full learner fresh-process
-continuation is an outstanding remote admission gate. Arbitrary cross-version topology
+continuation is verified on Kaggle for all three trained students (L.1 H3 PASS), while
+H1/H2 behavioral gates FAIL. Arbitrary cross-version topology
 migration is unsupported. Future multi-cell work must define shared versus private state,
 communication observations/actions, costs and credit assignment, with no hidden hard-coded
 roles and a capacity-matched single-cell control. None is implemented at L.0.

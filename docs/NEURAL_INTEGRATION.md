@@ -13,8 +13,10 @@ Remote admission tests deterministic initialization, finite seven-action output,
 backbone/head gradients, nonzero parameter updates, and exact fresh-process full-state
 continuation with pending experience. Evaluation checks weights/optimizer/update count
 immutability. Source/module-path verification runs before model creation. Exact pins and
-results are recorded in L1_QUALIFICATION.md. Until executed these are implemented tests,
-not verified neural compatibility. No upstream source edits.
+results are recorded in L1_QUALIFICATION.md. Executed Kaggle smoke v2 and the completed/recovered multi-seed trial verify actual
+imports, finite gradients, 256 updates per student and exact full-state fresh-process
+continuation on trained students. Neural engineering works; behavioral qualification
+FAILS H1/H2. See L1_QUALIFICATION.md for raw lineage, runtime pins, failures and costs. No upstream source edits.
 
 The following initialization findings and unexecuted pilot limitations are preserved
 as historical context; current admission/status is L1_QUALIFICATION.md.
