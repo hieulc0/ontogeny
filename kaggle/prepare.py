@@ -69,7 +69,9 @@ run([sys.executable, "{driver}", "--mode", "{args.mode}",
         "dataset_sources": [],
     }
     if args.mode == "recovery":
-        metadata["kernel_sources"] = ["sparklinghydraulics0/ontogeny-l1-experiment/1"]
+        metadata["dataset_sources"] = ["sparklinghydraulics0/ontogeny-l1-recovery-input-v1"]
+        metadata["id"] = "sparklinghydraulics0/ontogeny-l1-recovery-verified"
+        metadata["title"] = "ontogeny-l1-recovery-verified"
     (args.job / "kernel-metadata.json").write_text(json.dumps(metadata, indent=2))
 
 

@@ -6,6 +6,7 @@ import random
 import shutil
 import subprocess
 import time
+import zipfile
 from pathlib import Path
 
 from run_l1 import comparable, episode, equal, setup, smoke
@@ -28,6 +29,19 @@ def main():
     from ontogeny.neural.policy import PolicyCell
 
     candidates = list(Path("/kaggle/input").rglob("44-final.pt"))
+    if not candidates:
+        archives = list(Path("/kaggle/input").rglob("checkpoint_bundle.zip"))
+        if len(archives) != 1:
+            raise RuntimeError("verified recovery archive unavailable")
+        identity = json.loads(
+            Path("experiments/l1_single_cell/experiment-v1/recovery-input.json").read_text()
+        )
+        if digest(archives[0]) != identity["archive_sha256"]:
+            raise RuntimeError("recovery archive hash mismatch")
+        extracted = Path("/tmp/ontogeny-recovery-input")
+        with zipfile.ZipFile(archives[0]) as archive:
+            archive.extractall(extracted)
+        candidates = list(extracted.rglob("44-final.pt"))
     if len(candidates) != 1:
         raise RuntimeError(f"expected one immutable source bundle, found {candidates}")
     source = candidates[0].parent

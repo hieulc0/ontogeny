@@ -148,3 +148,10 @@ model/checkpoint selection, no policy/hyperparameter/gate changes. Recovery is b
 at 1,800 s (Kaggle cap 4,200 s including installation); one discarded audit update only.
 Original failed fixture remains in a separate artifact directory. Historical main
 revisions are now accepted for reproducible job preparation when published in origin/main.
+
+Kaggle rejected the version-qualified kernel mount but accepted the job without it.
+Recovery v1 (ontogeny-l1-recovery) is therefore an infrastructure failure, no neural
+result. Recovery now uses a private dedicated version-1 dataset of allowlisted generated
+artifacts only (no repository or credentials), identified in recovery-input.json by
+archive SHA-256 and then by every extracted file's committed hash. Loader refuses
+missing/wrong input. No new training is authorized by this infrastructure repair.
