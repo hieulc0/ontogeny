@@ -1,0 +1,65 @@
+{
+  "42": {
+    "admission": {
+      "status": "PASS",
+      "fresh_process_exact": true,
+      "updates": 257,
+      "pending_experiences_restored": 9,
+      "initialization_exact": true,
+      "parent_sha256": "78eb7948e447da84387447e38b0d2b7e810e6efad05f28bd3385e5ac6b33d35e",
+      "uninterrupted_sha256": "dd7b764a67ea647ae1814fd370c3cff77035b7166bedfb585c0c79f88ed5397c"
+    },
+    "fields": {
+      "model": true,
+      "optimizer": true,
+      "external": true,
+      "metadata": true,
+      "gradients": true,
+      "rng": true,
+      "training_mode": true,
+      "requires_grad": true
+    }
+  },
+  "43": {
+    "admission": {
+      "status": "PASS",
+      "fresh_process_exact": true,
+      "updates": 257,
+      "pending_experiences_restored": 9,
+      "initialization_exact": true,
+      "parent_sha256": "7c7e09a847f20e26bc1c3bc85a6616ca4adaf8cb7b30a977d3dcb9c7dfa4a332",
+      "uninterrupted_sha256": "5231d3bbd3f05f5e881025c384a8782fe93dc23a15688bb0158ca2106f8e0f49"
+    },
+    "fields": {
+      "model": true,
+      "optimizer": true,
+      "external": true,
+      "metadata": true,
+      "gradients": true,
+      "rng": true,
+      "training_mode": true,
+      "requires_grad": true
+    }
+  },
+  "44": {
+    "admission": {
+      "status": "PASS",
+      "fresh_process_exact": true,
+      "updates": 257,
+      "pending_experiences_restored": 9,
+      "initialization_exact": true,
+      "parent_sha256": "0e0c8e7be18431e2cf4c86fcdf62ae13faed63b2df6f2d9d660690c22cf1b725",
+      "uninterrupted_sha256": "c8fd652d425f79f08bb75083f2c6ced15fed5785f6e23ccbaf400eb52b38ab9f"
+    },
+    "fields": {
+      "model": true,
+      "optimizer": true,
+      "external": true,
+      "metadata": true,
+      "gradients": true,
+      "rng": true,
+      "training_mode": true,
+      "requires_grad": true
+    }
+  }
+}

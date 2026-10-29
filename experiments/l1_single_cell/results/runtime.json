@@ -1,0 +1,17 @@
+{
+  "ontogeny_sha": "6a0cf716b53b2f5cf9ebd4f3ea161a1e786203c0",
+  "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d",
+  "world_version": "cellworld-v1",
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "cuda": "12.4",
+  "python": "3.13.15",
+  "gpu": "Tesla T4",
+  "gpu_count": 2,
+  "mode": "experiment",
+  "status": "COMPLETE",
+  "seconds": 36.98253388400008,
+  "training_source_sha": "adb97ff0ccd102b9f617922b4a1b6eefce8c9a91",
+  "training_seconds": 193.17452900600006,
+  "recovery": "unchanged final models; missing audit/evaluation only"
+}
