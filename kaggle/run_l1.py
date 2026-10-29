@@ -86,7 +86,7 @@ def new_owner(seed, torch, np, Owner):
 def advance(owner):
     from ontogeny.neural.policy import PolicyCell
 
-    cell = PolicyCell(owner, max_updates=256)
+    cell = PolicyCell(owner, max_updates=257)
     driver = owner.external["driver"]
     world = CellWorld.restore(driver["world"])
     observation = driver["observation"]
@@ -112,24 +112,29 @@ def equal(a, b, torch, np):
 
 def comparable(owner):
     snapshot = owner.snapshot()
+    model, optimizer, _, external, metadata = snapshot["roots"]
     return (
-        owner.model.state_dict(),
-        owner.optimizer.state_dict(),
-        owner.external,
-        owner.metadata,
+        model.state_dict(),
+        optimizer.state_dict(),
+        external,
+        metadata,
         snapshot["gradients"],
         snapshot["rng"],
+        model.training,
+        [p.requires_grad for p in model.parameters()],
     )
 
 
-def smoke(args, torch, np, Owner):
+def smoke(args, torch, np, Owner, owner=None):
     from ontogeny.neural.policy import PolicyCell
 
-    owner = new_owner(42, torch, np, Owner)
-    clone = new_owner(42, torch, np, Owner)
-    assert equal(owner.model.state_dict(), clone.model.state_dict(), torch, np)
-    del clone
-    cell = PolicyCell(owner, max_updates=256)
+    if owner is None:
+        owner = new_owner(42, torch, np, Owner)
+        clone = new_owner(42, torch, np, Owner)
+        assert equal(owner.model.state_dict(), clone.model.state_dict(), torch, np)
+        del clone
+    before_steps = owner.metadata["steps"]
+    cell = PolicyCell(owner, max_updates=257)
     world = CellWorld(WorldConfig(max_steps=10), seed=91823)
     observation = world.observe()
     initial = {k: p.detach().clone() for k, p in owner.model.named_parameters()}
@@ -142,9 +147,10 @@ def smoke(args, torch, np, Owner):
     parent = args.output / "continuation-parent.pt"
     owner.save(parent)
     expected = advance(owner)
+    expected_state = comparable(owner)
     uninterrupted = args.output / "uninterrupted.pt"
     owner.save(uninterrupted)
-    assert owner.metadata["steps"] == 1
+    assert owner.metadata["steps"] == before_steps + 1
     assert any(not torch.equal(initial[k], p) for k, p in owner.model.named_parameters())
     command = [
         sys.executable,
@@ -162,7 +168,7 @@ def smoke(args, torch, np, Owner):
     actual = json.loads((args.output / "resumed-step.json").read_text())
     assert json.loads(json.dumps(expected)) == actual
     restored = Owner.load(args.output / "resumed.pt")
-    assert equal(comparable(owner), comparable(restored), torch, np)
+    assert equal(expected_state, comparable(restored), torch, np)
     # Further experience after reload, not just inference weights.
     for obj in (owner, restored):
         obj.external["driver"] = {
@@ -173,7 +179,7 @@ def smoke(args, torch, np, Owner):
     return {
         "status": "PASS",
         "fresh_process_exact": True,
-        "updates": 1,
+        "updates": owner.metadata["steps"],
         "pending_experiences_restored": 9,
         "initialization_exact": True,
         "parent_sha256": digest(parent),
@@ -271,6 +277,11 @@ def experiment(args, spec, torch, np, Owner):
         owner.metadata["parent_sha256"] = digest(initial)
         final = args.output / f"{seed}-final.pt"
         owner.save(final)
+        audit_dir = args.output / f"{seed}-trained-continuation"
+        audit_dir.mkdir()
+        audit_args = argparse.Namespace(output=audit_dir, upstream=args.upstream)
+        trained_admission = smoke(audit_args, torch, np, Owner, Owner.load(final))
+        (audit_dir / "admission.json").write_text(json.dumps(trained_admission, indent=2))
         checkpoints.append(
             {
                 "seed": seed,

@@ -76,6 +76,10 @@ action, transition, complete model/optimizer, gradients, experience/baseline/his
 counters and all RNG states following the next neural update. Smoke saves with 9
 pending experiences and one step remaining; its child process reloads and continues.
 Admit full experiment only after smoke PASS. Experiment repeats admission itself.
+Additionally repeat fresh-process next-update equivalence on each immutable trained final
+checkpoint, using 10 new audit interactions and one discarded audit update per init
+(257 total updates per training-plus-audit lineage). Audit worlds are not evaluation
+worlds. Never promote the audit copy or count it as extra trained-policy evaluation.
 
 Overall PASS iff H1/H2/H3 pass; failed engineering admission = engineering FAIL and stop.
 A finished run failing H1/H2 = Learning FAIL. Incomplete/no remote evidence = INCONCLUSIVE.
@@ -93,3 +97,11 @@ are discarded. No evaluation state influences training.
 
 Status at preregistration: IMPLEMENTED / LOCAL CHECKS pending / REMOTE NOT SUBMITTED.
 Actual completion status, traces, kernel IDs and measured results will be appended.
+
+### Pre-admission assertion correction
+
+While smoke v1 was running, static review found that loading the resumed owner before
+capturing expected global RNG could make RNG equality vacuous. Capture a deep snapshot
+before subprocess execution/load, compare immutable external/metadata, and audit trained
+finals too. Smoke v1 output is preserved but cannot qualify admission. Rerun required;
+no policy objective, environment, learning budget or sealed-world outcome informed this fix.
