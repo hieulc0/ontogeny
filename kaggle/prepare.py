@@ -12,7 +12,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--revision", required=True)
     parser.add_argument("--job", type=Path, required=True)
-    parser.add_argument("--mode", choices=["smoke", "experiment"], default="smoke")
+    parser.add_argument("--mode", choices=["smoke", "experiment", "recovery"], default="smoke")
     args = parser.parse_args()
     sha = subprocess.check_output(["git", "rev-parse", args.revision], text=True).strip()
     if len(sha) != 40:
@@ -22,9 +22,14 @@ def main() -> None:
     remote = subprocess.check_output(
         ["git", "ls-remote", "origin", "refs/heads/main"], text=True
     ).split()[0]
-    if remote != sha:
-        raise RuntimeError("push exact main revision before preparing Kaggle job")
+    published = (
+        subprocess.run(["git", "merge-base", "--is-ancestor", sha, remote], check=False).returncode
+        == 0
+    )
+    if not published:
+        raise RuntimeError("selected revision must be published in origin/main history")
     args.job.mkdir(parents=True, exist_ok=False)
+    driver = "kaggle/recover_l1.py" if args.mode == "recovery" else "kaggle/run_l1.py"
     code = f'''import os, subprocess, sys, json, traceback
 from pathlib import Path
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
@@ -47,7 +52,7 @@ os.environ["PYTHONPATH"] = "/tmp/ontogeny/src:/tmp/adaptive-mini-gpt/src"
 run([sys.executable, "-m", "pip", "install", "--no-deps", "-e", "/tmp/ontogeny",
      "-e", "/tmp/adaptive-mini-gpt"])
 run([sys.executable, "-m", "pytest", "-q", "tests"], Path("/tmp/ontogeny"))
-run([sys.executable, "kaggle/run_l1.py", "--mode", "{args.mode}",
+run([sys.executable, "{driver}", "--mode", "{args.mode}",
      "--upstream", "/tmp/adaptive-mini-gpt",
      "--output", "/kaggle/working/l1-{args.mode}"], Path("/tmp/ontogeny"))
 '''
@@ -63,6 +68,8 @@ run([sys.executable, "kaggle/run_l1.py", "--mode", "{args.mode}",
         "enable_internet": True,
         "dataset_sources": [],
     }
+    if args.mode == "recovery":
+        metadata["kernel_sources"] = ["sparklinghydraulics0/ontogeny-l1-experiment/1"]
     (args.job / "kernel-metadata.json").write_text(json.dumps(metadata, indent=2))
 
 

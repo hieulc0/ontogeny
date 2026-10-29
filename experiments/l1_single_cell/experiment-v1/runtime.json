@@ -1,0 +1,14 @@
+{
+  "ontogeny_sha": "adb97ff0ccd102b9f617922b4a1b6eefce8c9a91",
+  "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d",
+  "world_version": "cellworld-v1",
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "cuda": "12.4",
+  "python": "3.13.15",
+  "gpu": "Tesla T4",
+  "gpu_count": 2,
+  "mode": "experiment",
+  "status": "FAILED",
+  "seconds": 193.17452900600006
+}

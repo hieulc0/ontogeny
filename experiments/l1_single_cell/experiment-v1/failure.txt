@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 417, in main
+    experiment(args, spec, torch, np, Owner)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 301, in experiment
+    trained_admission = smoke(audit_args, torch, np, Owner, Owner.load(final))
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 151, in smoke
+    expected = advance(owner)
+  File "/tmp/ontogeny/kaggle/run_l1.py", line 95, in advance
+    outcome = world.step(action)
+  File "/tmp/ontogeny/src/ontogeny/world/environment.py", line 60, in step
+    raise RuntimeError("episode ended")
+RuntimeError: episode ended

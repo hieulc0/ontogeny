@@ -126,3 +126,25 @@ Initialization exact; finite action distribution and genuine gradient update exe
 Fresh-process action distribution/transition and all 8 state groups exactly match.
 Full experiment is now admitted; H1/H2 are still NOT RUN. Versioned small evidence:
 experiments/l1_single_cell/smoke-v2; raw checkpoints/logs: runs/l1-smoke-v2/output.
+
+### Full run v1 interruption and bounded recovery
+
+Kernel sparklinghydraulics0/ontogeny-l1-experiment version 1, source adb97ff,
+ERROR after 193.175 seconds of execution (plus setup). All 768 training episodes and
+256 updates per initialization completed. Final checkpoints for all 3 are preserved.
+1,600 of 2,400 evaluation episodes completed (initializations 42/43); their trained
+checkpoint fresh-process continuation audits PASS. The 44 audit fixture exhausted
+energy before its assumed tenth step; the harness tried stepping a terminated world.
+This is an audit-fixture failure, not a neural-gradient failure or a complete H2 result.
+No scientific outcome metrics were inspected to select a repair.
+
+Recovery changes only audit energy capacity/start to 100, provably greater than the
+worst 10-step cost (80), within the unchanged observation encoding. Training/evaluation
+CellWorld remains defaults/declared hazard variant. Mount immutable experiment v1
+outputs, verify EVERY input file against a committed hash manifest before unpickling,
+retain all trained models and the 1,600 original evaluation rows, complete only the
+44 continuation audit and its missing 800 evaluation episodes. No retraining, no new
+model/checkpoint selection, no policy/hyperparameter/gate changes. Recovery is bounded
+at 1,800 s (Kaggle cap 4,200 s including installation); one discarded audit update only.
+Original failed fixture remains in a separate artifact directory. Historical main
+revisions are now accepted for reproducible job preparation when published in origin/main.

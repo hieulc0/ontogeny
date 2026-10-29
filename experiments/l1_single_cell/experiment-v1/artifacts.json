@@ -1,0 +1,194 @@
+{
+  "runtime.json": {
+    "sha256": "7a9a01f64077a127fef9a5ead7694937f071ef21691a8e43a942a08f713618d9",
+    "bytes": 19573
+  },
+  "43-gradients.json": {
+    "sha256": "1352acfabecdb42789ebeb093f88dd6b3fd11b7f1b7672c3cb60bab4df64bd83",
+    "bytes": 52309
+  },
+  "43-episode-256.pt": {
+    "sha256": "45b09eb04eb0008fe07f6b2b6ce6ea7b059bc0ff9a876884fc00c58915a13842",
+    "bytes": 2131122
+  },
+  "resumed.pt": {
+    "sha256": "1bd2e7b54166c222e7b2dc964d4ab97aa6caf0760ade1d15f233964bd73c0761",
+    "bytes": 2104306
+  },
+  "42-episode-256.pt": {
+    "sha256": "0a3b92a68f0fbfb16eb9052d81ff9824b4b03ad3bd80b6935add2c5024555411",
+    "bytes": 2131058
+  },
+  "uninterrupted.pt": {
+    "sha256": "c99360bc13e6df52b2ea60bb23b6d88d1b9e6ebeb1b3ebda4d29581c4b69cb72",
+    "bytes": 2104178
+  },
+  "44-final.pt": {
+    "sha256": "1eed192d85ea577d865ed977be28e7894501ddab27842f5836ac68e183ae21c5",
+    "bytes": 2125490
+  },
+  "44-episode-192.pt": {
+    "sha256": "016df470257cb7c2dee81c16397a92b8e0c4d2e9b0e5862a124f6fab3b9b83a4",
+    "bytes": 2126322
+  },
+  "44-initial.pt": {
+    "sha256": "638f5b0e30de2cb95c5f2cc01af5bb26a829e91eeaaaa19f82578a306dfef4ec",
+    "bytes": 642666
+  },
+  "post-admission.pt": {
+    "sha256": "50f7035307fc8d7ce65e45e9a2f6f4277101f463732763b6499f06ab79ef2382",
+    "bytes": 2104370
+  },
+  "evaluation.jsonl": {
+    "sha256": "ec1698e2331005cc71d92a644f7860b86d50a31116f212c06476c7092f7c73e4",
+    "bytes": 968276
+  },
+  "42-episode-64.pt": {
+    "sha256": "e2fbb6681560590421d66fdbc2aefa1a9cb5bea399f621adebf2bfd2f5790a8f",
+    "bytes": 2115506
+  },
+  "continuation-parent.pt": {
+    "sha256": "76d277022284ee97fccbe66aedfff4b1ceb6fd24746338e0efad7d52429227a6",
+    "bytes": 651818
+  },
+  "resumed-step.json": {
+    "sha256": "0db19757f98b6f286760cc7c5b616b1b32ae7ef8e57c7f7a918f8090e807da26",
+    "bytes": 520
+  },
+  "42-episode-128.pt": {
+    "sha256": "d8cc7d694459cd874c9a63c68406f00bff1268921fc903ff7d006803fb86e05b",
+    "bytes": 2131442
+  },
+  "failure.txt": {
+    "sha256": "99e9f4cce24bc16a3ac4a192aa6719ddeb7eab3dab8653d92bf63a081a5a408b",
+    "bytes": 655
+  },
+  "experiences.jsonl": {
+    "sha256": "9d5b822a326d337b2ed99f1eced317a7853bfec62afbb892ee79d6d6a3bf7029",
+    "bytes": 17959457
+  },
+  "43-episode-64.pt": {
+    "sha256": "6c1c9e5ddadf39c69a188420cd8b325bc289b69cf6c76c218a7fb829299d789f",
+    "bytes": 2111794
+  },
+  "43-episode-128.pt": {
+    "sha256": "a83c280057a7fe17f7d2ce19a6e1b6b4d7fa0382620eea92e8d770cf3368c535",
+    "bytes": 2118258
+  },
+  "44-episode-128.pt": {
+    "sha256": "2a9111368bfd52b2418e8a265944a77315543ecc42c34f252213d428fafae629",
+    "bytes": 2118514
+  },
+  "42-gradients.json": {
+    "sha256": "6bc22e656b6fae4710db7b46824602408dac6444daf0b51c70ca3fabdc7c14d1",
+    "bytes": 52256
+  },
+  "43-episode-192.pt": {
+    "sha256": "bc19fb59a87d50001f8abda4d2fc81ddb7eba5664d20aecb8f430f5bef5095a2",
+    "bytes": 2126514
+  },
+  "continuation-fields.json": {
+    "sha256": "9d335ce84b34f173507db86e6509c689f07b8c0cace3c2590c012101eb037ba2",
+    "bytes": 166
+  },
+  "43-final.pt": {
+    "sha256": "da6479d6c0c501f6b3f3d6af830160765d1fd0369c30aa25cdd80fce163e0839",
+    "bytes": 2131186
+  },
+  "admission.json": {
+    "sha256": "6a76544d07a59a32e39d90d69f02a1d7e08429771a195e16d9025bec3329b34f",
+    "bytes": 319
+  },
+  "44-episode-64.pt": {
+    "sha256": "e9ab7a2c7048ce4d13ad0940a7bc76eb90a2eb132b7eb45fb3c53c5e5c6d857c",
+    "bytes": 2116210
+  },
+  "42-initial.pt": {
+    "sha256": "12bbfb6c5aeb7745f937c249922ff38a10d8890c4a1bfc7f440bbbb8513f7ceb",
+    "bytes": 642730
+  },
+  "44-episode-256.pt": {
+    "sha256": "bea1cea31e8f972af4a58e66443a78adf0de88939a419dfe13e3e66a92634be8",
+    "bytes": 2125362
+  },
+  "training.jsonl": {
+    "sha256": "94e5f6f3e5796e9c23c1235b4dcdfe1c187ad4bec72c57e5a8d9a82ca0230856",
+    "bytes": 347971
+  },
+  "42-episode-192.pt": {
+    "sha256": "919333cb325530aa2ec4f2771ed8fd385d35e648c13ff06c6c53504faa2fa25a",
+    "bytes": 2129458
+  },
+  "43-initial.pt": {
+    "sha256": "e2732a0b7142e022d5d1b54fd67b91ad82627611884b95114746ca29e1136813",
+    "bytes": 642602
+  },
+  "protocol.toml": {
+    "sha256": "a0edb7b1cb082e81585fa7a3a8500d0e94efebfd62172f6b7703a04e755ca37a",
+    "bytes": 282
+  },
+  "42-final.pt": {
+    "sha256": "cb5a3388729adc6e8e2c2dc28d1d9cc0c97ddbb094a8f1cff0e85ce059622e10",
+    "bytes": 2131186
+  },
+  "43-trained-continuation/resumed.pt": {
+    "sha256": "c2a919cdab9317b8b56841051d62363cfde03ad4b21624778ff7c4db77276afe",
+    "bytes": 2122354
+  },
+  "43-trained-continuation/uninterrupted.pt": {
+    "sha256": "5231d3bbd3f05f5e881025c384a8782fe93dc23a15688bb0158ca2106f8e0f49",
+    "bytes": 2122226
+  },
+  "43-trained-continuation/post-admission.pt": {
+    "sha256": "9dd2e84aa1c911299e62e6ef49a593e146dab63661c039ebaac3f4f3e6ee159e",
+    "bytes": 2122418
+  },
+  "43-trained-continuation/continuation-parent.pt": {
+    "sha256": "7c7e09a847f20e26bc1c3bc85a6616ca4adaf8cb7b30a977d3dcb9c7dfa4a332",
+    "bytes": 2134642
+  },
+  "43-trained-continuation/resumed-step.json": {
+    "sha256": "553980c5e99a74200e0c4f76c6217da4832ebc40a28ce2db46d7139780644571",
+    "bytes": 538
+  },
+  "43-trained-continuation/continuation-fields.json": {
+    "sha256": "9d335ce84b34f173507db86e6509c689f07b8c0cace3c2590c012101eb037ba2",
+    "bytes": 166
+  },
+  "43-trained-continuation/admission.json": {
+    "sha256": "66c97f25d67022ea2c6fd774f13daa796d5da374579816209a857ace16529e78",
+    "bytes": 321
+  },
+  "42-trained-continuation/resumed.pt": {
+    "sha256": "799008145d0c5e5a86184cdd075440f3766b7904121692f338ac99beeded777c",
+    "bytes": 2122098
+  },
+  "42-trained-continuation/uninterrupted.pt": {
+    "sha256": "dd7b764a67ea647ae1814fd370c3cff77035b7166bedfb585c0c79f88ed5397c",
+    "bytes": 2121970
+  },
+  "42-trained-continuation/post-admission.pt": {
+    "sha256": "6e24663806d6c58f8f4abeb92343e79085d8b43571623f4f48b4e13e4657a5d0",
+    "bytes": 2122162
+  },
+  "42-trained-continuation/continuation-parent.pt": {
+    "sha256": "78eb7948e447da84387447e38b0d2b7e810e6efad05f28bd3385e5ac6b33d35e",
+    "bytes": 2134322
+  },
+  "42-trained-continuation/resumed-step.json": {
+    "sha256": "93a8aff6945a7a68cb0ba62c0c1f10f03f22ace898c5fcd3b5d9c89d35423656",
+    "bytes": 530
+  },
+  "42-trained-continuation/continuation-fields.json": {
+    "sha256": "9d335ce84b34f173507db86e6509c689f07b8c0cace3c2590c012101eb037ba2",
+    "bytes": 166
+  },
+  "42-trained-continuation/admission.json": {
+    "sha256": "a321019e198812692b1b58c7dfbf92306efe0b2668f40b990cbae2e6b7434f16",
+    "bytes": 321
+  },
+  "44-trained-continuation/continuation-parent.pt": {
+    "sha256": "12a5eaf5e3d6fdbe24ef7dfd858dbb3fabf1973acdbe911317c06932b7b35a06",
+    "bytes": 2121970
+  }
+}

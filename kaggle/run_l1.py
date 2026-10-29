@@ -137,7 +137,11 @@ def smoke(args, torch, np, Owner, owner=None):
         del clone
     before_steps = owner.metadata["steps"]
     cell = PolicyCell(owner, max_updates=257)
-    world = CellWorld(WorldConfig(max_steps=10), seed=91823)
+    config = WorldConfig(max_steps=10, initial_energy=100, max_energy=100)
+    assert config.initial_energy > config.max_steps * (
+        max(config.action_cost, config.inspect_cost) + config.hazard_cost
+    )
+    world = CellWorld(config, seed=91823)
     observation = world.observe()
     initial = {k: p.detach().clone() for k, p in owner.model.named_parameters()}
     for _ in range(9):
