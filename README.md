@@ -6,7 +6,7 @@ This repository supplies artificial environments and developmental experiments;
 Adaptive Mini-GPT remains the canonical neural foundation.
 
 **Current status:** L.0 engineering qualified on the declared local checks. L.1 adapter
-and remote pilot implemented, neural compatibility and learning qualification NOT RUN.
+and REINFORCE experiment implemented; current execution/results: [L.1 qualification](docs/L1_QUALIFICATION.md).
 No L.2 or multicellular execution. No inherited intelligence or historical knowledge claimed.
 
 Python 3.12, uv, pytest, Ruff and Pyright. The environment uses only the standard library.
@@ -32,11 +32,15 @@ Remote pilot preparation (after admission gates in the integration document):
 
 ```bash
 # Commit and push the exact executable source first.
-uv run python kaggle/prepare.py --revision HEAD --job runs/kaggle-l1/job
-kaggle kernels push -p runs/kaggle-l1/job
-kaggle kernels status sparklinghydraulics0/ontogeny-l1-pilot
-kaggle kernels output sparklinghydraulics0/ontogeny-l1-pilot -p runs/kaggle-l1/output
+uv run python kaggle/prepare.py --revision HEAD --mode smoke --job runs/kaggle-l1/job
+kaggle kernels push -p runs/kaggle-l1/job --accelerator NvidiaTeslaT4 -t 4200
+kaggle kernels status sparklinghydraulics0/ontogeny-l1-smoke
+kaggle kernels output sparklinghydraulics0/ontogeny-l1-smoke -p runs/kaggle-l1/output
 ```
 
 This prepares a private, pinned Kaggle CUDA pilot; preparation never submits it.
 Run completion is not scientific promotion. Large logs/checkpoints stay under ignored runs/.
+
+After smoke PASS, prepare a separate job with `--mode experiment` and a new job directory.
+The full job repeats admission before training. Runtime pins, source SHA, checkpoint
+hashes and reproduction commands are in docs/L1_QUALIFICATION.md.

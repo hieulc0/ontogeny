@@ -31,3 +31,11 @@ class HeuristicPolicy(RandomPolicy):
                 safe, key=lambda a: abs(target[0] - MOVES[a][0]) + abs(target[1] - MOVES[a][1])
             )
         return self.rng.choice(safe) if safe else Action.REST
+
+
+class RestPolicy:
+    def act(self, observation: Observation) -> Action:
+        return Action.REST
+
+    def learn(self, experience: Experience) -> None:
+        pass

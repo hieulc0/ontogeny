@@ -25,11 +25,12 @@ observed experience through a callback without supplying hidden maps to the lear
 Episode metrics are outside the policy. Internal state is owned by a persistent policy
 and, for the neural pilot, upstream LearningState.external; no duplicate state owner.
 
-The experimental adapter encodes local observations plus a candidate action, invokes
-MiniGPT logits and predicts energy-delta categories. Expected immediate energy change
-provides action preferences with fixed stochastic exploration. One CE objective updates
-from the selected action's observed outcome. No planner, resource map or action labels
-are supplied. This myopic hypothesis may fail long-horizon viability.
+The active L.1 policy uses the upstream MiniGPT public logits interface plus a fresh
+seven-action linear head. A masked 29-token partial observation produces a stochastic
+action distribution. Actual energy-change returns weight an episode REINFORCE objective.
+One objective only; no predictor/planner or heuristic supervision. The unexecuted original
+consequence predictor remains available as historical experimental code, not an active
+learning objective. See L1_QUALIFICATION.md for the frozen design.
 
 LearningState owns the upstream model, optimizer, scheduler, RNG snapshot and declared
 external graph. Policy RNG, bounded experience history, driver world snapshots and update

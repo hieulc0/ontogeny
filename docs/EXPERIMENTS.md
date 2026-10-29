@@ -31,3 +31,10 @@ No Kaggle submission or kernel/session result exists. NOT PASSED LEARNING QUALIF
 Admission requires remote fresh-process next-update equivalence, independently audited
 evaluator/controls/variations and runtime provenance. See NEURAL_INTEGRATION.md.
 L.2–L.5 NOT STARTED. No checkpoint promoted and no upstream edits.
+
+## 2026-10-29 — L.1 REINFORCE v1 preregistration
+
+Supersedes the unexecuted immediate-consequence proposal before any neural outcomes.
+Existing CellWorld is frozen. New task-specific action head on actual MiniGPT; one
+REINFORCE objective. Kaggle/GitHub access verified, upstream remains clean/pinned.
+Protocol, H1/H2/H3 and resource budgets frozen in L1_QUALIFICATION.md. No L.2.

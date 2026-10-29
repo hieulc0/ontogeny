@@ -1,3 +1,24 @@
+# Active L.1 integration update
+
+Current protocol: [L1_QUALIFICATION.md](L1_QUALIFICATION.md), l1-reinforce-v1.
+Upstream source remains unchanged at the revision recorded below. New PolicyNetwork
+wraps actual MiniGPT with a separately initialized Linear(vocab_size,7) head over the
+public final-token logit vector. No hidden traversal copy, language-head policy claim
+or historical weight continuity. PolicyCell uses upstream LearningState's AdamW and
+full trusted checkpoint APIs; concept-specific step() is deliberately not used.
+Its episode buffer, baseline, policy RNG, update history, recent experience and driver
+world snapshot are owned external state. The earlier consequence adapter stays historical.
+
+Remote admission tests deterministic initialization, finite seven-action output,
+backbone/head gradients, nonzero parameter updates, and exact fresh-process full-state
+continuation with pending experience. Evaluation checks weights/optimizer/update count
+immutability. Source/module-path verification runs before model creation. Exact pins and
+results are recorded in L1_QUALIFICATION.md. Until executed these are implemented tests,
+not verified neural compatibility. No upstream source edits.
+
+The following initialization findings and unexecuted pilot limitations are preserved
+as historical context; current admission/status is L1_QUALIFICATION.md.
+
 # Verified neural integration findings
 
 Inspected upstream: ../adaptive-mini-gpt, clean HEAD

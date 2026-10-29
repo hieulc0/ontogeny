@@ -20,3 +20,16 @@ def encode(observation: Observation, action: Action) -> list[int]:
         CONSEQUENCES[observation.consequence],
         160 + int(action),
     ]
+
+
+def encode_policy(observation: Observation) -> list[int]:
+    """Fixed 29-token partial observation; 0 means outside the sensed patch."""
+    if observation.radius not in (1, 2) or not 0 <= observation.energy <= 127:
+        raise ValueError("policy encoding envelope exceeded")
+    tiles = {(x, y): KINDS[k] for x, y, k in observation.tiles}
+    return [tiles.get((x, y), 0) for y in range(-2, 3) for x in range(-2, 3)] + [
+        16 + observation.radius,
+        32 + observation.energy,
+        CONSEQUENCES[observation.consequence],
+        167,
+    ]

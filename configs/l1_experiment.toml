@@ -1,9 +1,13 @@
-# PLANNED; no learning qualification from this file.
-protocol = "l1-immediate-consequence-v1"
+protocol = "l1-reinforce-v1"
 model_seeds = [42, 43, 44]
-train_seeds = [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007]
-dev_seeds = [2000, 2001, 2002, 2003]
-sealed_seeds = [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007]
-max_updates = 800
-max_seconds = 1800
-replay_capacity = 128
+train_seed_start = 10000
+train_episodes = 256
+dev_seed_start = 20000
+dev_worlds = 16
+sealed_seed_start = 30000
+sealed_worlds = 64
+max_updates = 256
+max_seconds = 3600
+learning_rate = 0.0005
+gamma = 0.97
+history_capacity = 100
