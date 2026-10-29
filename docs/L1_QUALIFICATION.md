@@ -321,3 +321,10 @@ and audit.json preserve small provenance and all recovered bundle file hashes.
 Ruff check/format, Pyright, syntax checks and 34 local-safe tests pass. The completed
 scientific recommendation is **L.1 FAIL**, not INCONCLUSIVE and not an engineering PASS
 promoted into intelligence. No architectural growth, new objective, L.2 or second cell.
+
+Final local inspection found ../adaptive-mini-gpt HEAD at
+5bd7b39b3d0b7df7566f136b723eb6fc8669614d with a clean working tree, advanced from the
+starting revision during this session. Ontogeny made no upstream edits or reset.
+Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
+the newer local checkout was not used or claimed compatible. Default source verification
+correctly rejects it until a separately qualified integration revision is adopted.

@@ -80,3 +80,10 @@ Full artifact audit PASS: 26,618 training and 111,316 evaluation interactions;
 admission/audit updates across attempts are counted separately (775 total updates).
 Final local checks: 34 non-neural tests, Ruff, Pyright and syntax PASS. Scientific
 verdict remains H1 FAIL, H2 FAIL, H3 PASS => L.1 FAIL. No checkpoint promoted.
+
+Final local inspection found ../adaptive-mini-gpt HEAD at
+5bd7b39b3d0b7df7566f136b723eb6fc8669614d with a clean working tree, advanced from the
+starting revision during this session. Ontogeny made no upstream edits or reset.
+Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
+the newer local checkout was not used or claimed compatible. Default source verification
+correctly rejects it until a separately qualified integration revision is adopted.

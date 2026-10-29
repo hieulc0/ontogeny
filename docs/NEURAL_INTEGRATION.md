@@ -89,3 +89,10 @@ and image/version capture must be completed before reproducibility qualification
 Set CUBLAS_WORKSPACE_CONFIG=:4096:8 before Python. Kaggle CUDA is mandatory; no fallback.
 Commit/push executable source, render kaggle/prepare.py from exact SHA, submit private job,
 wait for COMPLETE, retrieve all output and failures, then independently audit gates.
+
+Final local inspection found ../adaptive-mini-gpt HEAD at
+5bd7b39b3d0b7df7566f136b723eb6fc8669614d with a clean working tree, advanced from the
+starting revision during this session. Ontogeny made no upstream edits or reset.
+Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
+the newer local checkout was not used or claimed compatible. Default source verification
+correctly rejects it until a separately qualified integration revision is adopted.
