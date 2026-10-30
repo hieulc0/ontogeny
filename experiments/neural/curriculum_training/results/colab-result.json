@@ -1,0 +1,83 @@
+{
+  "execution": "SUCCEEDED",
+  "science": "NOT_QUALIFIED",
+  "parent_sha256": "8e4ea63d5e3c3719b30364614005b631d202dbf09cb666796f89f0fd2b35df7d",
+  "data_sha256": "f2841088feefa520c1d545326585d158e61c31c990071937140357191c49708f",
+  "continuation_exact": true,
+  "state_groups": [
+    "model",
+    "optimizer",
+    "scheduler",
+    "external",
+    "metadata",
+    "gradients",
+    "rng",
+    "training_mode",
+    "requires_grad"
+  ],
+  "task_wall_seconds": 26.97847858099999,
+  "updates": 3,
+  "audit_updates": 1,
+  "gpu": "Tesla T4",
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "source_revision": "2a80a54c70697a761c8aa98e7ec4a86f4b0c0ea2",
+  "files": {
+    "after.json": {
+      "sha256": "bad7eaf082c8b25bdd8f05ccfaa92788fb165c5cd1eab4c379a37c67a947ed00",
+      "size_bytes": 548
+    },
+    "audit.json": {
+      "sha256": "96220d1a6215e7d9b235b2032635009fe7028db909284b92b03b1b98c9501072",
+      "size_bytes": 725
+    },
+    "before.json": {
+      "sha256": "6b9a1a2b7dc1299235e245013a922dc86c96c6785ca4395546af8ce721d6132a",
+      "size_bytes": 547
+    },
+    "student/segment-start.pt": {
+      "sha256": "baa1c7d48aa5cc7dd067c3e4eb8c976e66c26c3068a3b085f4685a98d5071d5b",
+      "size_bytes": 162304090
+    },
+    "student/step-4.pt": {
+      "sha256": "4c4ba25da152ae104b5f7f66502954950ec49aaa7f2a8a97390dc01527615d29",
+      "size_bytes": 162304090
+    },
+    "student/step-5.pt": {
+      "sha256": "1b712fd967ef31148925fa79bdfa092cf5eb64a6c3ad5f3e1ee9b492b9008e42",
+      "size_bytes": 162304090
+    },
+    "student/updates.jsonl": {
+      "sha256": "80a2d193f765be3fd8e4b6d5dd5c8d577d22968305670b97ae59994acb1745b7",
+      "size_bytes": 341
+    },
+    "student/step-3.pt": {
+      "sha256": "e79a871e11b44ae06ff245413236383881c5e6185d2633522061550cb7ceb9cd",
+      "size_bytes": 162304090
+    },
+    "student/resources.json": {
+      "sha256": "c84290c6d28a08c7ff7caf7b5350ce39621a77635cf971a66e341a517efea9ae",
+      "size_bytes": 68
+    },
+    "data/train.jsonl": {
+      "sha256": "0d93afb8df732ec21328a3d54aff5f4bdab67009725f48127028d81ecdfd5496",
+      "size_bytes": 298093
+    },
+    "data/development.jsonl": {
+      "sha256": "a011545e560c15a3c376bd7dcacf13291bd5625ea06c2d0a1742907f36df88a2",
+      "size_bytes": 39461
+    },
+    "data/test.jsonl": {
+      "sha256": "687751813de8f118fb5439c6b1de0be76d260c53aeaecb6e6dc5efca9a01348f",
+      "size_bytes": 39644
+    },
+    "data/train-batches.json": {
+      "sha256": "f2841088feefa520c1d545326585d158e61c31c990071937140357191c49708f",
+      "size_bytes": 791231
+    },
+    "data/manifest.json": {
+      "sha256": "f4b59b27315cd42527c938addb6407ef9a964fe88e2c771dc4e37072a1494163",
+      "size_bytes": 635
+    }
+  }
+}

@@ -213,3 +213,14 @@ or training. Quota was 2.61→2.56 h, with a 2.5 h reserve. No new learner state
 continuation qualification or scientific result was produced. A controller correction
 checks dataset readiness and rejected-input responses for future runs. Full evidence and
 exact source/job identities: experiments/neural/curriculum_training/REPORT.md.
+
+## Curriculum continuation on Colab
+
+The chunked transfer attempt at source 2a80a54c70697a761c8aa98e7ec4a86f4b0c0ea2
+completed on a Colab T4. The verified original student continued for three updates;
+a separate first-update replay matched all nine full-state groups. Complete checkpoints
+and the 650,392,013-byte output archive were recovered and hash-verified before confirmed
+cleanup. Development answer-byte loss was 5.8343→3.7633 and teacher-forced byte accuracy
+2/82→25/82 on 24 examples sharing familiar templates. One initialization and no frozen
+control: learning-to-learn and broad knowledge NOT QUALIFIED. L.1 remains FAIL. Exact
+measurements, source and lineage: experiments/neural/curriculum_training/REPORT.md.

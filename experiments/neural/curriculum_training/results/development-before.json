@@ -1,0 +1,32 @@
+{
+  "programming": {
+    "examples": 5,
+    "bytes": 16,
+    "correct": 0,
+    "loss_sum": 93.91629695892334
+  },
+  "physics": {
+    "examples": 4,
+    "bytes": 14,
+    "correct": 0,
+    "loss_sum": 83.30887174606323
+  },
+  "chemistry": {
+    "examples": 8,
+    "bytes": 25,
+    "correct": 0,
+    "loss_sum": 147.99568796157837
+  },
+  "math": {
+    "examples": 5,
+    "bytes": 14,
+    "correct": 0,
+    "loss_sum": 82.91789054870605
+  },
+  "language": {
+    "examples": 2,
+    "bytes": 13,
+    "correct": 2,
+    "loss_sum": 70.27178907394409
+  }
+}
