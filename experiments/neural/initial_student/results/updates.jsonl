@@ -1,0 +1,2 @@
+{"step": 1, "loss": 5.67104959487915, "gradient_norm": 24.373260498046875, "peak_torch_memory_bytes": 272260608}
+{"step": 2, "loss": 4.371760368347168, "gradient_norm": 10.765905380249023, "peak_torch_memory_bytes": 440290304}

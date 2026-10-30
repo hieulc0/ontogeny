@@ -1,8 +1,8 @@
 # Unified neural foundation migration
 
 Status: the audited engine at the migration test revision passed six remote neural checks,
-independent token training and organism continuation. Complete artifact recovery remains
-in progress; subsequent removal of archival references from the active core and the 10M
+independent token training and organism continuation. The 31-file organism bundle was subsequently recovered and verified locally;
+subsequent removal of archival references from the active core and the 10M
 pilot are separately documented. No scientific acquisition is claimed.
 This is an engineering consolidation. It changes no historical scientific verdict.
 
@@ -138,11 +138,12 @@ finished COMPLETE. The result record reports six neural tests PASS, independent 
 training PASS and organism training/continuation PASS; its organism bundle was verified
 remotely with 31 files. The reference comparison included an actual checkpoint with
 existing optimizer moments and an exact subsequent interaction/update. Source for that
-run is the migration test revision recorded in its output. Two local bulk-download
-attempts failed during DNS resolution; partial files and private logs remain under
-runs/neural-consolidation/. The small result record was recovered separately. Do not
-confuse verified remote checks with complete local artifact recovery. No GPU rerun was
-performed because download failed.
+run is the migration test revision recorded in its output. Two local bulk-download attempts failed during DNS resolution. Eight missing organism
+files were then recovered individually; the complete 31-file bundle passed local hash
+verification. The original partial files and private logs remain under runs/neural-consolidation/.
+No GPU rerun was performed because download failed. Selected non-secret evidence is
+in experiments/integration/results; neural test temporary artifacts are not all locally
+recovered. The checkpoint input remains immutable.
 
 Following the user's direction, archival source identities and the one-time historical
 conversion tool are kept in experiments/integration and migration records, outside the
@@ -150,3 +151,12 @@ active mini_gpt package. Normal engine imports never fetch or select an external
 A training run records its own source for reproducibility; that record is not a choice
 of neural engine. The continuing learner's own checkpoint remains its learned state.
 The later archival-boundary cleanup and 10M pilot need their own verification.
+
+
+After the remote test, a local static AST comparison verified that model configuration,
+attention, Transformer operations, optimizer grouping and LearningState operations are
+unchanged by the archival-boundary cleanup (ignoring docstrings and replacing the old
+imported format constant with its same value, 2). The active package no longer contains
+a repository name, external revision or Git dependency. The independent CLI uses its
+loaded internal engine and checkpoint contract; it does not require a Git checkout.
+The 10M pilot separately tests the current source, not the old experimental engine.

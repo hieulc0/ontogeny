@@ -25,3 +25,30 @@ def test_historical_request_remains_readable_without_becoming_current():
     assert json.loads(json.dumps(old.to_dict())) == value
     with pytest.raises(RuntimeError, match="historical"):
         bootstrap(old, ExecutionContext("colab", "owned", "attempt-1"), "/content/work")
+
+
+def test_request_defaults_to_current_internal_source(tmp_path, monkeypatch, capsys):
+    import sys
+
+    from ontogeny.execution import cli
+
+    protocol = tmp_path / "protocol.md"
+    protocol.write_text("test protocol")
+    output = tmp_path / "request.json"
+    monkeypatch.setattr(cli.subprocess, "check_output", lambda *a, **kw: "a" * 40 + "\n")
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "ontogeny-exec",
+            "qualification-request",
+            "--protocol",
+            str(protocol),
+            "--output",
+            str(output),
+        ],
+    )
+    cli.main()
+    request = Request.read(output)
+    assert request.source == {"ontogeny_sha": "a" * 40, "engine": "mini_gpt"}
+    assert json.loads(capsys.readouterr().out)["request_sha256"] == request.sha256

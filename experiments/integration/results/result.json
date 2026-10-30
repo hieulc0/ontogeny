@@ -1,0 +1,19 @@
+{
+  "execution": "SUCCEEDED",
+  "science": "NOT_RUN",
+  "native_id": "sparklinghydraulics0/ontogeny-neural-consolidation-a3a26ba630",
+  "neural_tests": "PASS",
+  "neural_test_count": 6,
+  "independent_training": "PASS",
+  "organism_receipt": {
+    "request_sha256": "46af54a1a22e60c776a358128d515658a2a75ddb01185f79d8f6b28046ff32cb",
+    "artifacts_sha256": "0f7be62ad9d2eb847031ab54b3c9c40e9255a9dc872d907111f3f7f78aa2f28e",
+    "execution": "SUCCEEDED",
+    "science": "NOT_RUN",
+    "verified_files": 31
+  },
+  "organism_training": "PASS",
+  "historical_input_sha256": "08a34400dc7aade6bc5e2601ce914b7635613f3d33e324f46ec5b68bdb2d5931",
+  "scope": "engineering-only exact dense equivalence, trusted import and continuation",
+  "wall_seconds": 41.39791541499994
+}

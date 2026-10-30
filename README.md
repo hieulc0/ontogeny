@@ -54,7 +54,7 @@ the policy. Auto-routing is Colab-readiness-first with quota-aware Kaggle fallba
 checkpoint continuation still requires an explicit provider.
 
 ```bash
-ontogeny-exec qualification-request --source-sha FULL_PUBLISHED_SHA --protocol docs/MIGRATION.md --output runs/request.json
+ontogeny-exec qualification-request --protocol docs/MIGRATION.md --output runs/request.json
 ontogeny-exec run --request runs/request.json --inputs empty-inputs/ --directory runs/new-job --ledger runs/controller --provider auto
 # Independent neural learning, inside a validated CUDA worker only:
 mini-gpt-train --config model.json --data batches.json --updates 2 --output independent-run/
@@ -79,3 +79,10 @@ Read [vision](docs/VISION.md), [roadmap](docs/DEVELOPMENT_ROADMAP.md),
 [L.1 results](docs/L1_QUALIFICATION.md), [diagnosis](docs/LEARNING_DIAGNOSIS.md) and
 [defect register](docs/RESEARCH_DEFECTS.md). Historical runners remain in Git at the
 revisions recorded in those reports; their scientific artifacts are preserved.
+
+
+The first internal research student has **10,054,016 parameters**. A bounded two-update
+Kaggle pilot saved and verified complete checkpoints and exact fresh-process continuation.
+That is an engineering result, not a language or learning-to-learn qualification.
+See [the measured pilot](experiments/neural/initial_student/REPORT.md). Continuing it onto
+new subjects needs an explicit training-segment interface, which is the next build.

@@ -1,0 +1,17 @@
+{
+  "execution": "SUCCEEDED",
+  "science": "NOT_RUN",
+  "verified_files": 8,
+  "source_revision": "05ff24b082933b08d7d47545a06cafd281279a94",
+  "continuation_exact": true,
+  "checkpoints": {
+    "student/step-1.pt": {
+      "size_bytes": 162303514,
+      "sha256": "3f93ebb0a162304f279081267555bf875965acab3cea4b43279f3e0c00c3a5c6"
+    },
+    "student/step-2.pt": {
+      "size_bytes": 162303514,
+      "sha256": "8e4ea63d5e3c3719b30364614005b631d202dbf09cb666796f89f0fd2b35df7d"
+    }
+  }
+}

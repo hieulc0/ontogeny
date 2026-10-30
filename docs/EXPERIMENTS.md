@@ -161,3 +161,33 @@ periodic off-VM-ACK recovery remain unqualified. Automatic checkpoint routing st
 blocked. L.1 remains Learning FAIL; no later stage. Details: CHECKPOINT_QUALIFICATION.md;
 selected evidence: experiments/checkpoint_transport; complete raw runs under ignored
 runs/checkpoint-transport. Failures and original preregistration preserved.
+
+## Internal engine consolidation
+
+At source a3a26ba630b283333f352b7779ce85b4173d3982, Kaggle job
+sparklinghydraulics0/ontogeny-neural-consolidation-a3a26ba630/1 completed: six remote
+neural checks passed, independent token training passed and the organism fixture passed
+with exact continuation. The checks compared all three position representations against
+the historical source and converted a trained checkpoint with existing optimizer state.
+The organism bundle's 31 files were recovered and verified locally after bulk-download
+DNS failures. One-time reference code is confined to the research experiment; it is not
+an active Mini-GPT dependency. A subsequent static AST comparison found no change in the
+neural model/optimizer/state operations during archival-boundary cleanup. Detailed scope:
+MIGRATION.md. L.1 remains Learning FAIL; no developmental promotion.
+
+## Initial ten-million-parameter student
+
+At source 05ff24b082933b08d7d47545a06cafd281279a94, Kaggle job
+sparklinghydraulics0/ontogeny-student-fresh-05ff24b082/1 completed a separately
+preregistered fresh independent student: 10,054,016 parameters, two updates, 128 training
+input tokens and one discarded audit update. Complete fresh-process continuation matched
+all nine state groups. Two full checkpoints and six other files were recovered and
+hash-verified. Peak Torch allocation565,831,168 bytes, task wall13.99 seconds; quota
+2.67→2.61 h with a 2.5 h reserve. Held-out loss4.24892 on40 tokens is a diagnostic,
+not a learning claim. Science NOT_RUN; L.1 remains FAIL.
+
+The first Colab assignment failed after an execution WebSocket closed. Its possible
+partial work is unknown; no archive was recovered and its owned session was stopped.
+The Kaggle run was an explicitly recorded new fresh lineage, not a claim of continuation.
+Full protocol, actual costs, failure, lineage and checkpoint paths:
+experiments/neural/initial_student/REPORT.md. Old reports and learner states are preserved.

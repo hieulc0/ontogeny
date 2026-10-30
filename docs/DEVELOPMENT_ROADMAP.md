@@ -4,7 +4,10 @@
 
 One canonical mini_gpt engine now supports independent neural training and organism
 learning. Migration verification is recorded in MIGRATION.md; source consolidation
-cannot promote a scientific stage. The previous integration/provider records remain
+cannot promote a scientific stage. The initial 10,054,016-parameter student completed
+a two-update engineering pilot with exact checkpoint continuation. Its next engineering
+step is explicit new training segments carrying optimizer/state across subjects; see
+experiments/neural/initial_student/REPORT.md. The previous integration/provider records remain
 valid only at their original source/runtime revisions.
 
 L.0 environment engineering passed. L.1 acquisition/held-out behavior failed; continuity

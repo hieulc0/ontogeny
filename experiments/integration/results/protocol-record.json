@@ -1,0 +1,14 @@
+{
+  "checkpoint_sha256": "08a34400dc7aade6bc5e2601ce914b7635613f3d33e324f46ec5b68bdb2d5931",
+  "checkpoint_size": 2105076,
+  "dataset": "sparklinghydraulics0/ontogeny-migration-08a34400dc7aade6",
+  "historical_ontogeny_sha": "a88d7d386eb502e4ffae5bde7dc504441824c76d",
+  "max_interactions": 64,
+  "max_updates": 32,
+  "native_id": "sparklinghydraulics0/ontogeny-neural-consolidation-a3a26ba630",
+  "platform_seconds": 720,
+  "protocol_sha256": "0753b72c693a0111ac81d31d8ccf1e807019174eddb9a6568c9af45da3516632",
+  "reference_sha": "87e8928c440fecc4f3a6f6c5ea3c869a6a8537e6",
+  "reserve_hours": 2.5,
+  "source_sha": "a3a26ba630b283333f352b7779ce85b4173d3982"
+}

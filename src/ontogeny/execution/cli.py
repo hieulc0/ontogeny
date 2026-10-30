@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from dataclasses import asdict
 from pathlib import Path
 
@@ -95,7 +96,9 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(dest="command", required=True)
     example = commands.add_parser("qualification-request")
-    example.add_argument("--source-sha", required=True)
+    example.add_argument(
+        "--source-sha", help="optional source revision; defaults to the current checkout"
+    )
     example.add_argument("--protocol", type=Path, required=True)
     example.add_argument("--output", type=Path, required=True)
     checkpoint = commands.add_parser("checkpoint-request")
@@ -160,8 +163,12 @@ def main() -> None:
             reserve_hours=args.reserve_hours,
         )
     elif args.command == "qualification-request":
+        source = (
+            args.source_sha
+            or subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+        )
         request = qualification_request(
-            args.source_sha, hashlib.sha256(args.protocol.read_bytes()).hexdigest()
+            source, hashlib.sha256(args.protocol.read_bytes()).hexdigest()
         )
         write_json(args.output, request.to_dict())
         result = {"request_sha256": request.sha256}
