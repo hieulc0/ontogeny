@@ -224,3 +224,15 @@ cleanup. Development answer-byte loss was 5.8343→3.7633 and teacher-forced byt
 2/82→25/82 on 24 examples sharing familiar templates. One initialization and no frozen
 control: learning-to-learn and broad knowledge NOT QUALIFIED. L.1 remains FAIL. Exact
 measurements, source and lineage: experiments/neural/curriculum_training/REPORT.md.
+
+## Fixed-capacity concept acquisition
+
+Source 07b07198877a632f37790c53757cfc1a5e840172 completed 12 fresh research students
+on validated Colab T4 session ontogeny-373c0fd59f859857. All 1536 updates completed;
+full initial/final checkpoints and raw outcomes were recovered and hash-verified,
+with confirmed session cleanup. All four prespecified conditions FAILED the requirement
+of >=90% held-out accuracy for every initialization. More examples and byte representation
+helped in the paired observations, but the strongest condition reached only 85.58–90.38%.
+No tuning/retry or promotion followed. Existing student/organism histories are preserved;
+L.1 and structural-development gates are unchanged. Protocol, costs, limitations and
+all outcomes: experiments/neural/concept_acquisition/REPORT.md.

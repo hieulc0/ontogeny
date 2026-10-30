@@ -87,3 +87,8 @@ That is an engineering result, not a language or learning-to-learn qualification
 See [the measured pilot](experiments/neural/initial_student/REPORT.md). An explicit training-segment interface and a small synthetic curriculum are now available;
 their neural continuation has not yet been verified remotely. See [data](data/README.md)
 and [learning-to-learn study direction](docs/LEARNING_TO_LEARN.md).
+
+A fixed-capacity comparison-concept experiment completed 12 fresh research students on
+Colab. Training fit improved, but all four conditions failed the preregistered across-seed
+acquisition gate. See [results](experiments/neural/concept_acquisition/REPORT.md) and the
+[inactive structural-development research sequence](docs/STRUCTURAL_DEVELOPMENT.md).

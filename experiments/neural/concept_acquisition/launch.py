@@ -86,7 +86,9 @@ finally:
         kaggle.journal(journal, record)
     except BaseException as error:
         record["reason"] = str(error)
-        if record["state"] == "RUNNING":
+        if isinstance(error, colab.ColabError) and not error.fallback_safe:
+            record.update(state="UNKNOWN", cleanup="unconfirmed; reconcile owned assignment")
+        elif record["state"] == "RUNNING":
             record.update(state="UNKNOWN", cleanup="not attempted; reconcile worker before release")
         else:
             try:
