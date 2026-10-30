@@ -9,7 +9,7 @@ from pathlib import Path
 from ontogeny.execution.artifacts import verify_bundle, write_json
 from ontogeny.execution.contracts import Request, fingerprint
 from ontogeny.execution.providers import kaggle
-from ontogeny.neural.persistence import UPSTREAM_SHA
+from ontogeny.neural.persistence import UPSTREAM_SHA, digest
 from ontogeny.world.state import WorldConfig
 
 
@@ -66,6 +66,31 @@ def qualification_request(source_sha: str, protocol_sha: str) -> Request:
     )
 
 
+def checkpoint_request(parent: Request, checkpoint: Path, operation: str) -> Request:
+    """Declare an explicit full-state input without changing its continuing lineage."""
+    if operation not in ("train", "evaluate"):
+        raise ValueError("checkpoint operation must be train or evaluate")
+    value = parent.to_dict()
+    value["operation"] = operation
+    value["split"] = "train" if operation == "train" else "development"
+    value["initialization"] = {"kind": "resume", "seed": None, "checkpoint": "parent"}
+    value["inputs"] = [
+        {
+            "name": "parent",
+            "path": "checkpoints/parent.pt",
+            "sha256": digest(checkpoint),
+            "size_bytes": checkpoint.stat().st_size,
+            "role": "checkpoint",
+            "trusted": True,
+        }
+    ]
+    if operation == "evaluate":
+        value["world"]["seed"] = 92823
+        value["world"]["episodes"] = 2
+        value["split_manifest_sha256"] = fingerprint(value["world"])
+    return Request.parse(value)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(dest="command", required=True)
@@ -73,12 +98,22 @@ def main() -> None:
     example.add_argument("--source-sha", required=True)
     example.add_argument("--protocol", type=Path, required=True)
     example.add_argument("--output", type=Path, required=True)
+    checkpoint = commands.add_parser("checkpoint-request")
+    checkpoint.add_argument("--parent-request", type=Path, required=True)
+    checkpoint.add_argument("--checkpoint", type=Path, required=True)
+    checkpoint.add_argument("--operation", choices=["train", "evaluate"], required=True)
+    checkpoint.add_argument("--output", type=Path, required=True)
+    upload = commands.add_parser("upload-inputs")
+    upload.add_argument("--request", type=Path, required=True)
+    upload.add_argument("--inputs", type=Path, required=True)
+    upload.add_argument("--directory", type=Path, required=True)
     for name in ("validate", "prepare", "status", "collect", "verify"):
         p = commands.add_parser(name)
         p.add_argument("--request", type=Path, required=True)
         if name == "prepare":
             p.add_argument("--job", type=Path, required=True)
             p.add_argument("--dataset", action="append", default=[])
+            p.add_argument("--platform-seconds", type=int, default=1200)
         if name in ("status", "collect"):
             p.add_argument("--ledger", type=Path, required=True)
         if name in ("collect", "verify"):
@@ -99,7 +134,17 @@ def main() -> None:
     reconciliation.add_argument("--directory", type=Path, required=True)
     reconciliation.add_argument("--ledger", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "reconcile":
+    if args.command == "checkpoint-request":
+        request = checkpoint_request(
+            Request.read(args.parent_request), args.checkpoint, args.operation
+        )
+        write_json(args.output, request.to_dict())
+        result = {"request_sha256": request.sha256}
+    elif args.command == "upload-inputs":
+        result = {
+            "dataset": kaggle.upload_inputs(Request.read(args.request), args.inputs, args.directory)
+        }
+    elif args.command == "reconcile":
         from ontogeny.execution.routing import reconcile
 
         result = reconcile(Request.read(args.request), args.directory, args.ledger)
@@ -127,7 +172,14 @@ def main() -> None:
         if args.command == "validate":
             result = {"request_sha256": request.sha256, "valid": True}
         elif args.command == "prepare":
-            result = vars(kaggle.prepare(request, args.job, dataset_sources=tuple(args.dataset)))
+            result = vars(
+                kaggle.prepare(
+                    request,
+                    args.job,
+                    dataset_sources=tuple(args.dataset),
+                    platform_seconds=args.platform_seconds,
+                )
+            )
         elif args.command == "status":
             result = kaggle.status(request, args.ledger)
         elif args.command == "collect":

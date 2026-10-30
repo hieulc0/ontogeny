@@ -4,8 +4,10 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import random
 import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -15,6 +17,7 @@ from typing import Any
 
 from ontogeny.execution.artifacts import confined, write_json
 from ontogeny.execution.contracts import ExecutionContext, Request
+from ontogeny.execution.state_identity import fingerprints
 from ontogeny.execution.worker import remote_runtime
 from ontogeny.learning.experience import Experience
 from ontogeny.neural.encoding import encode_policy
@@ -162,6 +165,7 @@ def run_task(
     *,
     resume_probe: Path | None = None,
     expected_hash: str | None = None,
+    interrupt_after_save: Path | None = None,
 ) -> None:
     remote_runtime(request, context, upstream)
     from ontogeny.neural.policy import PolicyCell
@@ -192,6 +196,13 @@ def run_task(
 
     cell = RecordedCell(owner, max_updates=request.limits.updates)
     initial_steps = owner.metadata["steps"]
+    write_json(output / "loaded_state.json", fingerprints(state(owner), torch, np))
+    if interrupt_after_save is not None:
+        if request.operation != "continuation_check" or resume_probe is None:
+            raise RuntimeError("interruption injection requires the bounded continuation fixture")
+        owner.save(interrupt_after_save)
+        os.kill(os.getpid(), signal.SIGKILL)
+        raise RuntimeError("SIGKILL did not terminate the injected child")
     checkpoint_records = []
 
     def save(name: str, parent: str | None = None) -> Path:
@@ -210,6 +221,7 @@ def run_task(
 
     if resume_probe is not None:
         row = act_step(owner, cell, request, torch, output, learning=True, deadline=deadline)
+        owner.metadata["episode_cursor"] = 1
         torch.save(state(owner), output / "resumed_state.pt")
         write_json(output / "resumed_step.json", row)
         save("resumed.pt", expected_hash)
@@ -229,12 +241,15 @@ def run_task(
             )
         if len(owner.external["experience"]) != 9:
             raise RuntimeError("pending experience fixture did not reach intended boundary")
-        parent = save("pending.pt", checkpoint_parent)
+        parent = save("pending.pt", digest(initial))
+        write_json(output / "pending_state.json", fingerprints(state(owner), torch, np))
         expected_row = act_step(
             owner, cell, request, torch, output, learning=True, deadline=deadline
         )
         rows.append(expected_row)
+        owner.metadata["episode_cursor"] = 1
         expected_state = state(owner)
+        write_json(output / "expected_state.json", fingerprints(expected_state, torch, np))
         save("uninterrupted.pt", digest(parent))
         child = output / "resumed"
         child.mkdir()
@@ -257,6 +272,43 @@ def run_task(
             "--expected-hash",
             digest(parent),
         ]
+        # Fault injection occurs after atomic checkpoint publication, before any new action.
+        interrupted = output / "interrupted"
+        interrupted.mkdir()
+        recovered_checkpoint = interrupted / "recovery.pt"
+        crash_command = [*command]
+        crash_command[crash_command.index(str(child))] = str(interrupted)
+        crash_command += ["--interrupt-after-save", str(recovered_checkpoint)]
+        crash = subprocess.run(crash_command, timeout=max(1, int(deadline - time.monotonic())))
+        if crash.returncode != -signal.SIGKILL or not recovered_checkpoint.is_file():
+            raise RuntimeError("checkpoint-publication interruption was not observed")
+        checkpoint_records.append(
+            {
+                "path": recovered_checkpoint.relative_to(output).as_posix(),
+                "sha256": digest(recovered_checkpoint),
+                "parent_sha256": digest(parent),
+                "updates": 0,
+                "interactions": 9,
+            }
+        )
+        recovered = Owner.load(recovered_checkpoint)
+        recovered_identity = fingerprints(state(recovered), torch, np)
+        parent_identity = fingerprints(state(Owner.load(parent)), torch, np)
+        if recovered_identity != parent_identity:
+            raise RuntimeError("interrupted checkpoint lost complete state")
+        write_json(
+            output / "interruption.json",
+            {
+                "signal": "SIGKILL",
+                "returncode": crash.returncode,
+                "parent_sha256": digest(parent),
+                "recovery_sha256": digest(recovered_checkpoint),
+                "complete_state_exact": True,
+                "new_actions_before_interruption": 0,
+            },
+        )
+        command[command.index(str(parent))] = str(recovered_checkpoint)
+        command[command.index(digest(parent))] = digest(recovered_checkpoint)
         subprocess.run(command, check=True, timeout=max(1, int(deadline - time.monotonic())))
         actual_row = json.loads((child / "resumed_step.json").read_text())
         # Exclude no state fields: global RNG was captured before loading the other branch.
@@ -302,6 +354,7 @@ def run_task(
                 stream.write(json.dumps(asdict(experience)) + "\n")
 
         run_episode(reference_world, reference_policy, learning=True, record=record_reference)
+        reference.metadata["episode_cursor"] = 1
         reference_matches = equal(expected_state, state(reference), torch, np)
         if not reference_matches or reference_actions != [r["action"] for r in rows]:
             raise RuntimeError("common worker altered historical learner behavior")
@@ -330,6 +383,7 @@ def run_task(
         actual_updates = 3
         physical_interactions = len(rows) + 1 + len(reference_actions)
     else:
+        evaluation_snapshot = owner.snapshot() if request.operation == "evaluate" else None
         before_evaluation = state(owner) if request.operation == "evaluate" else None
         cursor = owner.metadata["episode_cursor"] if request.operation == "train" else 0
         while cursor < request.world["episodes"]:
@@ -380,6 +434,18 @@ def run_task(
                     raise RuntimeError("evaluation mutated learning counters/metadata")
             if owner.metadata["steps"] != initial_steps:
                 raise RuntimeError("evaluation performed learning")
+            owner.restore(evaluation_snapshot)
+            restored = state(owner)
+            if not equal(before_evaluation, restored, torch, np):
+                raise RuntimeError("evaluation failed to restore complete input learner state")
+            write_json(
+                output / "evaluation.json",
+                {
+                    "complete_state_restored": True,
+                    "updates": 0,
+                    "input_checkpoint_sha256": request.inputs[0].sha256,
+                },
+            )
             path = output / "checkpoints" / "evaluated.pt"
             shutil.copyfile(confined(inputs, request.inputs[0].path), path)
             checkpoint_records.append(
@@ -393,6 +459,7 @@ def run_task(
             )
         actual_updates = owner.metadata["steps"] - initial_steps
         physical_interactions = len(rows)
+    write_json(output / "final_state.json", fingerprints(state(owner), torch, np))
     with (output / "learning.jsonl").open("a") as log:
         new_updates = owner.metadata["steps"] - initial_steps
         for record in owner.external["history"][-new_updates:] if new_updates else []:
@@ -434,6 +501,7 @@ def main() -> None:
     parser.add_argument("--context", required=True)
     parser.add_argument("--resume-probe", type=Path)
     parser.add_argument("--expected-hash")
+    parser.add_argument("--interrupt-after-save", type=Path)
     args = parser.parse_args()
     run_task(
         Request.read(args.request),
@@ -443,6 +511,7 @@ def main() -> None:
         args.output,
         resume_probe=args.resume_probe,
         expected_hash=args.expected_hash,
+        interrupt_after_save=args.interrupt_after_save,
     )
 
 

@@ -1,4 +1,4 @@
-"""Provider-neutral orchestration with a currently Kaggle-qualified remote boundary."""
+"""Provider-neutral orchestration with a validated provider-specific CUDA boundary."""
 
 import argparse
 import importlib

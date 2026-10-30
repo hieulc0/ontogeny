@@ -141,9 +141,12 @@ try:
     run([sys.executable,'-m','pip','install','torch==2.6.0','--index-url','https://download.pytorch.org/whl/cu124'])
     run([sys.executable,'-m','pip','install','numpy==2.1.3','pyyaml==6.0.2'])
     os.environ['PYTHONPATH']=str(root/'ontogeny/src')+':'+str(root/'adaptive-mini-gpt/src')
+    run([sys.executable,'-m','ontogeny.execution.artifacts','--request',str(request),
+         '--source',{("/content/ontogeny-input-" + context.native_id)!r},
+         '--output',str(root/'staged-inputs')])
     run([sys.executable,'-m','ontogeny.execution.worker','--request',str(request),
          '--context',{json.dumps(vars(context))!r},'--upstream',str(root/'adaptive-mini-gpt'),
-         '--inputs',str(inputs),'--output',str(root/'result')],root/'ontogeny')
+         '--inputs',str(root/'staged-inputs'),'--output',str(root/'result')],root/'ontogeny')
 finally:
     with zipfile.ZipFile(root/'result.zip','w',compression=zipfile.ZIP_DEFLATED) as archive:
         if (root/'result').exists():
@@ -177,9 +180,26 @@ def execute(session: Session, request: Request, inputs: Path, directory: Path) -
     script = session.directory / "worker_bootstrap.py"
     context = ExecutionContext("colab", session.name, "attempt-1")
     script.write_text(bootstrap(request, context, remote_root))
-    # Fresh qualification is implemented first; private checkpoint transport is explicit.
+    # Only declared files cross this boundary. The remote worker verifies their bytes
+    # before deserializing the trusted complete state; CLI exit zero is insufficient.
+    remote_inputs = "/content/ontogeny-input-" + session.name
     if request.inputs:
-        raise ColabError("checkpoint_upload_not_qualified")
+        setup = session.directory / "input_directory.py"
+        setup.write_text(f"from pathlib import Path\nPath({remote_inputs!r}).mkdir()\n")
+        session.invoke(["exec", "-s", session.name, "-f", str(setup), "--timeout", "20"], 30)
+    for item in request.inputs:
+        result = session.invoke(
+            [
+                "upload",
+                "-s",
+                session.name,
+                str(confined(inputs, item.path)),
+                remote_inputs + "/" + Path(item.path).name,
+            ],
+            60,
+        )
+        if result.returncode:
+            raise ColabError("checkpoint_upload_failed")
     try:
         session.invoke(["exec", "-s", session.name, "-f", str(script), "--timeout", "1000"], 1050)
     except subprocess.TimeoutExpired:

@@ -23,8 +23,10 @@ def run(
     if provider not in ("auto", "colab", "kaggle"):
         raise ValueError("unsupported provider preference")
     verify_inputs(request, inputs)
-    if request.inputs and provider != "kaggle":
-        raise ValueError("Colab checkpoint input transport must be qualified before auto resume")
+    if request.inputs and provider == "auto":
+        raise ValueError(
+            "checkpoint continuation requires an explicit provider; migration is not automatic"
+        )
     if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise ValueError("publish clean executable source before allocation")
     published = subprocess.check_output(
@@ -100,7 +102,10 @@ def run(
             record["selected_provider"] = "kaggle"
             if not eligible:
                 record["colab_reason"] = "cached_unavailable"
-            kaggle.prepare(request, directory / "kaggle-job")
+            datasets = ()
+            if request.inputs:
+                datasets = (kaggle.upload_inputs(request, inputs, directory / "kaggle-inputs"),)
+            kaggle.prepare(request, directory / "kaggle-job", dataset_sources=datasets)
             submitted = kaggle.submit(
                 directory / "kaggle-job", ledger / "kaggle", reserve_hours=reserve_hours
             )

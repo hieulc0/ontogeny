@@ -10,7 +10,7 @@ import time
 from contextlib import contextmanager
 from pathlib import Path
 
-from ontogeny.execution.artifacts import verify_bundle, write_json
+from ontogeny.execution.artifacts import confined, verify_bundle, verify_inputs, write_json
 from ontogeny.execution.contracts import ExecutionContext, Request, canonical
 
 
@@ -63,6 +63,47 @@ def locked(root: Path):
     with (root / "controller.lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         yield
+
+
+def upload_inputs(
+    request: Request, inputs: Path, directory: Path, *, owner: str = "sparklinghydraulics0"
+) -> str:
+    """Create a private allowlisted dataset; never update a prior dataset version."""
+    import shutil
+
+    if not re.fullmatch("[a-z0-9_-]+", owner) or len(request.inputs) != 1:
+        raise ProviderError("one declared checkpoint and a valid owner are required")
+    verify_inputs(request, inputs)
+    directory.mkdir(parents=True, exist_ok=False, mode=0o700)
+    item = request.inputs[0]
+    # The request digest prevents unrelated task uploads from sharing mutable identity.
+    native_id = f"{owner}/ontogeny-input-{request.sha256[:20]}"
+    shutil.copyfile(confined(inputs, item.path), directory / Path(item.path).name)
+    write_json(
+        directory / "dataset-metadata.json",
+        {
+            "id": native_id,
+            "title": native_id.split("/")[1],
+            "licenses": [{"name": "other"}],
+        },
+    )
+    response = command(
+        ["kaggle", "datasets", "create", "-p", str(directory), "--keep-tabular"], timeout=180
+    )
+    if native_id not in response or "being created" not in response:
+        raise ProviderError(
+            "private checkpoint dataset creation unconfirmed; reconcile before retry"
+        )
+    write_json(
+        directory / "upload_receipt.json",
+        {
+            "dataset": native_id,
+            "checkpoint_sha256": item.sha256,
+            "request_sha256": request.sha256,
+            "response": response,
+        },
+    )
+    return native_id
 
 
 def prepare(
