@@ -49,3 +49,5 @@ episodes. Genuine neural updates and fresh-process full-state continuation were 
 reliable behavioral improvement was not. The fixed heuristic remains much stronger.
 See [training curves](experiments/l1_single_cell/results/training.svg) and
 [comparison records](experiments/l1_single_cell/results/comparison.csv).
+
+Development conventions: [CONTRIBUTING.md](CONTRIBUTING.md). Mandatory agent rules: [AGENTS.md](AGENTS.md).
