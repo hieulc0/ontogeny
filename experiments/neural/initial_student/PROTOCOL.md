@@ -29,3 +29,15 @@ ambiguous allocation/cleanup blocks provider fallback. The pilot has its own lea
 must not be merged into the developmental organism or represented as historical continuity.
 Full checkpoints are trusted objects, archived outside Git. Successful delivery requires
 export and verification before releasing Colab; native Kaggle completion alone is not enough.
+
+## Explicit fresh recovery attempt
+
+The first Colab assignment was acquired, but its execution WebSocket closed and no result
+archive was recovered before the owned session was stopped. Whether any model work began
+is unknown. Preserve that failed attempt and do not claim continuity with it.
+
+Admit one separately recorded, explicitly fresh Kaggle attempt using the same model,
+data, update/token/task limits and continuation gate. No checkpoint from the failed
+attempt is claimed or substituted. One T4, one visible CUDA device, native platform cap
+480 seconds, fresh quota check and 2.5-hour reserve. Its physical work is additional to
+any unknown work in the first attempt. No further automatic retry or provider switching.

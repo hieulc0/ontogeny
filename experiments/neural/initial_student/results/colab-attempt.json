@@ -1,0 +1,20 @@
+{
+  "cleanup": "confirmed",
+  "error_kind": "FileNotFoundError",
+  "preference": "colab-first",
+  "provider": "colab",
+  "readiness": {
+    "colab": true,
+    "cuda": true,
+    "gpu": "Tesla T4",
+    "nonce": "0eee1c6c4983c81be73497a4dddadfd4"
+  },
+  "reason": "[Errno 2] No such file or directory: 'runs/initial-student/result.zip'",
+  "session": "ontogeny-db2cba96dcb52953",
+  "source": "6de6bd34715736ffd3a341d0333b385183a4a199",
+  "state": "FAILED",
+  "transport_failure": "WebSocketConnectionClosedException",
+  "execution_started": "unknown",
+  "checkpoint_recovered": false,
+  "continuity_claim": false
+}

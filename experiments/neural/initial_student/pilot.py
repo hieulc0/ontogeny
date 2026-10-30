@@ -147,7 +147,9 @@ def main() -> None:
         "cuda": torch.version.cuda,
         "files": files,
         "provider": "colab" if os.environ.get("COLAB_RELEASE_TAG") else "kaggle",
-        "source_revision": training_resources["source_revision"],
+        "source_revision": subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=source, text=True
+        ).strip(),
         "protocol_sha256": file_digest(fixture / "PROTOCOL.md"),
         "python": platform.python_version(),
         "physical_gpus": subprocess.check_output(

@@ -47,8 +47,10 @@ def test_public_package_imports_do_not_load_neural_frameworks():
 
 
 def test_core_has_no_organism_or_external_repository_imports():
-    root = Path(__file__).resolve().parents[2] / ".." / "src/mini_gpt"
-    for path in root.rglob("*.py"):
+    root = Path(__file__).resolve().parents[2] / "src/mini_gpt"
+    files = list(root.rglob("*.py"))
+    assert files
+    for path in files:
         tree = ast.parse(path.read_text())
         for node in ast.walk(tree):
             names = (
@@ -64,10 +66,19 @@ def test_core_has_no_organism_or_external_repository_imports():
 
 
 def test_core_has_no_external_revision_or_import_compatibility_layer():
-    root = Path(__file__).resolve().parents[2] / ".." / "src/mini_gpt"
+    root = Path(__file__).resolve().parents[2] / "src/mini_gpt"
     assert not (root / "provenance.py").exists()
     assert not (root / "checkpoint/legacy.py").exists()
-    for path in root.rglob("*.py"):
+    files = list(root.rglob("*.py"))
+    assert files
+    for path in files:
         text = path.read_text()
         assert "adaptive_mini_gpt" not in text
         assert "adaptive-mini-gpt" not in text
+
+
+def test_independent_training_does_not_require_a_git_checkout():
+    path = Path(__file__).resolve().parents[2] / "src/mini_gpt/cli.py"
+    text = path.read_text()
+    assert '"git"' not in text
+    assert "adaptive_mini_gpt" not in text

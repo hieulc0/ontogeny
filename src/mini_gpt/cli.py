@@ -3,7 +3,6 @@
 import argparse
 import json
 import random
-import subprocess
 import time
 from pathlib import Path
 
@@ -36,12 +35,6 @@ def main() -> None:
         parser.error("data must be a nonempty array of {tokens, targets} batches")
     torch, np = configure_determinism()
     torch.cuda.reset_peak_memory_stats()
-    repository = Path(__file__).resolve().parents[2]
-    revision = subprocess.check_output(
-        ["git", "rev-parse", "HEAD"], cwd=repository, text=True
-    ).strip()
-    if subprocess.check_output(["git", "status", "--porcelain"], cwd=repository, text=True).strip():
-        raise RuntimeError("independent research requires a clean source revision")
     from mini_gpt.learning.state import LearningState
     from mini_gpt.learning.trainer import train_tokens
     from mini_gpt.model.transformer import MiniGPT
@@ -58,9 +51,6 @@ def main() -> None:
         owner = LearningState.load(args.resume)
         if owner.metadata.get("training_envelope") != envelope:
             raise ValueError("resume cannot silently change the training envelope")
-        history = owner.metadata.setdefault("code_history", [owner.metadata.get("source_revision")])
-        if history[-1] != revision:
-            history.append(revision)
     else:
         random.seed(args.seed)
         np.random.seed(args.seed)
@@ -72,7 +62,6 @@ def main() -> None:
             external={"batch_cursor": 0},
             metadata={
                 "individual_kind": "research",
-                "source_revision": revision,
                 "architecture": "dense-causal-transformer",
                 "training_envelope": envelope,
             },
@@ -103,7 +92,6 @@ def main() -> None:
         json.dumps(
             {
                 "peak_torch_memory_bytes": torch.cuda.max_memory_allocated(),
-                "source_revision": revision,
                 "max_torch_memory_mib": args.max_torch_memory_mib,
             }
         )
