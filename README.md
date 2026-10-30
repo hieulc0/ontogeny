@@ -63,5 +63,11 @@ and [provider-neutral Colab/Kaggle execution design](docs/REMOTE_EXECUTION.md).
 Execution foundation: [contract, usage and measured qualification](docs/EXECUTION_QUALIFICATION.md).
 `ontogeny-exec` provides strict request validation, common worker tasks and Kaggle
 prepare/submit/status/collect/verify. The Kaggle continuation fixture passes exact
-fresh-process and historical-runner comparisons. Colab and auto-routing are not implemented.
+fresh-process and historical-runner comparisons. Fresh-job Colab-first routing is now implemented and qualified separately;
+see [readiness-based routing](docs/COLAB_ROUTING.md).
 This is infrastructure qualification; L.1 remains Learning FAIL.
+
+`ontogeny-exec run --provider auto` requires verified Colab T4 readiness, not a 503-only
+check, then falls back to quota-admitted Kaggle on confirmed unavailability. Ambiguous
+allocation or cleanup blocks blind retries. Colab exports are verified before release.
+Public checkpoint upload/migration remains unqualified.

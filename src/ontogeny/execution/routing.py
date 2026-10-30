@@ -6,7 +6,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-from ontogeny.execution.artifacts import verify_inputs
+from ontogeny.execution.artifacts import verify_bundle, verify_inputs
 from ontogeny.execution.contracts import Request
 from ontogeny.execution.providers import colab, kaggle
 
@@ -42,7 +42,8 @@ def run(
         if path.exists():
             return json.loads(path.read_text())
         if any(
-            json.loads(p.read_text()).get("state") in ("ALLOCATING", "RUNNING", "UNKNOWN")
+            json.loads(p.read_text()).get("state")
+            in ("ALLOCATING", "RUNNING", "UNKNOWN", "SUBMITTED")
             for p in ledger.glob("*.json")
             if p.name != "colab_cooldown.json"
         ):
@@ -120,5 +121,41 @@ def run(
                     session.release()
                 except Exception:
                     record.update(state="UNKNOWN", cleanup="unconfirmed")
+                else:
+                    bundle = directory / "download" / "result"
+                    if record.get("selected_provider") == "colab" and bundle.exists():
+                        try:
+                            receipt = verify_bundle(bundle, request)
+                        except Exception:
+                            pass
+                        else:
+                            record.update(
+                                state="COMPLETE",
+                                cleanup="confirmed",
+                                receipt=receipt,
+                                cleanup_retry=True,
+                            )
+                            kaggle.journal(path, record)
+                            return record
             kaggle.journal(path, record)
             raise
+
+
+def reconcile(request: Request, directory: Path, ledger: Path) -> dict:
+    """Recover completed work after a cleanup/transport error, never create another VM."""
+    with kaggle.locked(ledger):
+        path = ledger / (request.sha256 + ".json")
+        record = json.loads(path.read_text())
+        if record.get("selected_provider") != "colab":
+            raise ValueError("use the Kaggle status/collect commands for its native journal")
+        session = colab.Session.reopen(directory / "private-colab", record["session"])
+        session.release()
+        status = session.invoke(["status", "-s", session.name], 30)
+        if status.returncode != 0 or session.assigned():
+            raise colab.ColabError("cleanup_unconfirmed")
+        receipt = verify_bundle(directory / "download" / "result", request)
+        record.update(
+            state="COMPLETE", cleanup="confirmed", receipt=receipt, reconciled_at=time.time()
+        )
+        kaggle.journal(path, record)
+        return record

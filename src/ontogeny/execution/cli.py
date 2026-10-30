@@ -94,8 +94,16 @@ def main() -> None:
     route.add_argument("--inputs", type=Path, required=True)
     route.add_argument("--provider", choices=["auto", "colab", "kaggle"], default="auto")
     route.add_argument("--reserve-hours", type=float, default=2.5)
+    reconciliation = commands.add_parser("reconcile")
+    reconciliation.add_argument("--request", type=Path, required=True)
+    reconciliation.add_argument("--directory", type=Path, required=True)
+    reconciliation.add_argument("--ledger", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "run":
+    if args.command == "reconcile":
+        from ontogeny.execution.routing import reconcile
+
+        result = reconcile(Request.read(args.request), args.directory, args.ledger)
+    elif args.command == "run":
         from ontogeny.execution.routing import run
 
         result = run(

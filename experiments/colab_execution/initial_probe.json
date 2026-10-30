@@ -1,0 +1,17 @@
+{
+  "session": "ontogeny-fe1a6ed4f047",
+  "allocation_attempts": 1,
+  "state": "READY",
+  "allocation_exit": 0,
+  "owned_assignment": true,
+  "probe_exit": 0,
+  "download_exit": 0,
+  "proof": {
+    "nonce": "fe1a6ed4f0474c32b7932e3e1bec2bdd",
+    "cuda": true,
+    "name": "Tesla T4",
+    "visible": 1,
+    "colab_release": true
+  },
+  "stop_exit": 0
+}

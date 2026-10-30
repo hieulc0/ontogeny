@@ -208,3 +208,8 @@ flag and no CPU fallback. Only after per-provider qualification should routing, 
 caching and automatic recovery be enabled. Cross-provider numerical continuation remains
 unqualified even with a single visible device. Scientific matched credit/binding work
 can proceed separately on qualified Kaggle; do not turn infrastructure PASS into L.1 PASS.
+
+Subsequent provider increment: fresh-job Colab readiness/common-worker execution is
+now qualified; see COLAB_ROUTING.md for its different tested source and actual cleanup
+recovery. The earlier remaining-scope list is historical. Uploaded-checkpoint and
+cross-provider continuation qualification remain outstanding.

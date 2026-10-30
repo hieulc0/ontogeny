@@ -119,3 +119,17 @@ from raw traces; local regression test covers that accounting-only addition. His
 remote outputs remain unchanged. All72 local-safe tests/static checks pass. Initial
 local build fetch failed under restricted DNS, then authorized packaging succeeded.
 Details and exact limitations: EXECUTION_QUALIFICATION.md. Evidence: experiments/execution_foundation.
+
+## Colab readiness and fresh-job routing
+
+Source 2a005b43900a93b49eda91f7398ace0b3d17a684; unchanged upstream 8567836fb2c8c915d442b7c2fbedb4fd9b30396d.
+One readiness-only T4 probe succeeded/released, then one pinned common-worker Colab
+trial SUCCEEDED/science NOT_RUN. Actual proof rather than HTTP 503 controls selection.
+One assignment required a second readiness probe; no second create. Common-worker
+state/reference equivalence exact; 21 indexed files verified before release. Cleanup
+DNS failure required reconciliation; owned session confirmed stopped, no retraining.
+An initial reconciliation import error was corrected and regression-tested; automatic
+cleanup-retry reconciliation subsequently hardened locally. 86 local-safe tests pass.
+Kaggle fallback mocked; no live outage forced. No credentials committed, local neural
+execution, source/capacity/learning-objective change or old checkpoint migration.
+Details: COLAB_ROUTING.md; safe records: experiments/colab_execution. L.1 remains FAIL.

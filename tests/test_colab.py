@@ -13,7 +13,7 @@ from ontogeny.execution.providers import colab
 
 
 @pytest.mark.parametrize(
-    "exit_code,text", [(0, ""), (1, "Allocation refused"), (0, "503 Service Unavailable")]
+    "exit_code,text", [(0, ""), (1, ""), (1, "Allocation refused"), (0, "503 Service Unavailable")]
 )
 def test_missing_assignment_never_becomes_ready(tmp_path, monkeypatch, exit_code, text):
     session = colab.Session(tmp_path / "private")
@@ -142,3 +142,79 @@ def test_started_trial_failure_never_provider_hops(tmp_path, monkeypatch):
             tmp_path / "ledger",
             tmp_path,
         )
+
+
+def test_other_submitted_provider_job_blocks_new_allocation(tmp_path, monkeypatch):
+    mock_publication(monkeypatch)
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    (ledger / "other.json").write_text('{"state":"SUBMITTED"}')
+    monkeypatch.setattr(colab.Session, "allocate", lambda self: pytest.fail("duplicate allocation"))
+    with pytest.raises(ValueError, match="another routing"):
+        routing.run(qualification_request("a" * 40, "b" * 64), tmp_path / "job", ledger, tmp_path)
+
+
+def test_wrong_gpu_proof_is_rejected_and_released(tmp_path, monkeypatch):
+    session = colab.Session(tmp_path / "private")
+
+    def invoke(args, timeout):
+        if args[0] == "new":
+            session.config.write_text(json.dumps({session.name: {"endpoint": "owned"}}))
+        if args[0] == "download":
+            Path(args[-1]).write_text(
+                json.dumps(
+                    {"nonce": session.nonce, "cuda": True, "gpu": "wrong GPU", "colab": True}
+                )
+            )
+        if args[0] == "stop":
+            session.config.write_text("{}")
+        return subprocess.CompletedProcess(args, 0, "", "")
+
+    monkeypatch.setattr(session, "invoke", invoke)
+    with pytest.raises(colab.ColabError, match="readiness_failed"):
+        session.allocate()
+    assert not session.assigned()
+
+
+def test_cleanup_reconciliation_never_restarts_trial(tmp_path, monkeypatch):
+    request = qualification_request("a" * 40, "b" * 64)
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    record = {"selected_provider": "colab", "state": "UNKNOWN", "session": "owned"}
+    (ledger / (request.sha256 + ".json")).write_text(json.dumps(record))
+    private = tmp_path / "job/private-colab"
+    private.mkdir(parents=True)
+    (private / "ownership.json").write_text('{"session":"owned","nonce":"probe"}')
+    calls = []
+    monkeypatch.setattr(colab.Session, "release", lambda self: calls.append("release"))
+    monkeypatch.setattr(
+        colab.Session, "invoke", lambda *a, **kw: subprocess.CompletedProcess([], 0)
+    )
+    monkeypatch.setattr(routing, "verify_bundle", lambda *a: {"execution": "SUCCEEDED"})
+    result = routing.reconcile(request, tmp_path / "job", ledger)
+    assert result["state"] == "COMPLETE" and result["cleanup"] == "confirmed"
+    assert calls == ["release"]
+
+
+def test_cleanup_retry_accepts_verified_work_without_new_allocation(tmp_path, monkeypatch):
+    mock_publication(monkeypatch)
+    monkeypatch.setattr(colab.Session, "allocate", lambda self: {"cuda": True})
+    releases = []
+
+    def release(self):
+        releases.append(1)
+        if len(releases) == 1:
+            raise colab.ColabError("cleanup_unconfirmed")
+
+    monkeypatch.setattr(colab.Session, "release", release)
+
+    def completed(session, request, inputs, directory):
+        (directory / "result").mkdir(parents=True)
+        return {"execution": "SUCCEEDED"}
+
+    monkeypatch.setattr(colab, "execute", completed)
+    monkeypatch.setattr(routing, "verify_bundle", lambda *a: {"execution": "SUCCEEDED"})
+    request = qualification_request("a" * 40, "b" * 64)
+    result = routing.run(request, tmp_path / "job", tmp_path / "ledger", tmp_path)
+    assert result["state"] == "COMPLETE" and result["cleanup_retry"]
+    assert len(releases) == 2

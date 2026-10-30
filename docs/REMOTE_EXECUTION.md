@@ -1,10 +1,11 @@
 # Portable remote execution — design draft
 
-Status: Kaggle foundation implemented and engineering-qualified; Colab/routing remain
-PROPOSED. Research checked 2026-10-30. Actual implemented scope, tested source and limits:
+Status: Kaggle foundation and fresh-job Colab readiness/routing implemented;
+Colab common-worker engineering qualification PASS. Checkpoint migration/durable
+interruption recovery remain proposed. See [COLAB_ROUTING.md](COLAB_ROUTING.md). Research checked 2026-10-30. Actual implemented scope, tested source and limits:
 [EXECUTION_QUALIFICATION.md](EXECUTION_QUALIFICATION.md). The larger design below includes
-unimplemented scheduling/portability features. Executable training remains Kaggle-only;
-no guards or historical experiments were silently amended.
+unimplemented scheduling/portability features. Fresh jobs now accept validated Colab
+or Kaggle CUDA; historical experiments and checkpoint identities remain unchanged.
 
 ## Decision
 
@@ -159,8 +160,8 @@ Preflight checks source/import identity, GPU model/CUDA availability, memory, vi
 GPU count, dependency profile, deterministic settings, observation/action dimensions,
 input hashes, trusted checkpoint lineage and external budgets. No model operation until
 remote admission succeeds. Do not set a fake KAGGLE environment flag on Colab to bypass
-current guards. Later implementation must deliberately replace the Kaggle-only runtime
-boundary with verified provider execution context while preserving local refusal.
+runtime admission. The worker now validates provider-specific execution context and
+real environment markers while preserving local refusal.
 
 Every result bundle has:
 
@@ -301,7 +302,7 @@ Proposed user surface (not existing commands): `ontogeny train --spec ... --prov
 same across providers. Output reports selection, rejection reason, checkpoint lineage
 and usage; no promise that free infrastructure is always available.
 
-Before implementation, update Ontogeny's Kaggle-only AGENTS/runtime rule explicitly to
-permit validated remote Colab. This document alone does not change executable policy.
+AGENTS and runtime admission now explicitly permit validated remote Colab. The broader
+features proposed here still need their own implementation and qualification.
 Use functional module names and retain historical import paths/checkpoints. CLI sessions,
 outputs and existing serialized classes must not be renamed as cosmetic cleanup.

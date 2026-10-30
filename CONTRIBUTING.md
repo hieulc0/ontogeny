@@ -94,7 +94,7 @@ failure. Do not swallow exceptions, invent a result or fall back to local neural
 - Test observable behavior, invariants and boundary failures, not private implementation
   details or a copy of the algorithm. Add regression tests for actual bugs.
 - Keep local-safe tests explicitly identifiable. Neural execution, checkpoint loads and
-  continuation checks run on Kaggle CUDA. Inspect tests before running them locally.
+  continuation checks run on validated Kaggle or Colab CUDA. Inspect tests before running them locally.
 - Keep refactoring separate from changes to objectives, world dynamics, data splits,
   budgets or qualification gates. A structural refactor still requires verification.
 - Preserve pinned historical code/artifacts and their results. Never rename a past FAIL

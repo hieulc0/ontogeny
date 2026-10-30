@@ -1,6 +1,6 @@
 # Readiness-based provider routing
 
-Status: implemented; local tests pass; common-worker Colab GPU qualification pending.
+Status: implemented; 86 local-safe tests pass; common-worker Colab GPU engineering PASS.
 No scientific cohort, new objective, architecture change or old checkpoint migration.
 
 The next increment addresses allocation/readiness semantics, not only HTTP errors.
@@ -24,7 +24,9 @@ so a local permission error must not be presented as GPU quota exhaustion.
    (internal backoff, not a claim about Google's actual cooldown). No Colab polling
    during that period. Recheck on a later eligible request, never in a tight loop.
 5. Allocation timeout is ambiguous: server-side resources may exist. Mark UNKNOWN,
-   reconcile owned sessions and block blind fallback/new creation. Cleanup uncertainty
+   require ownership-aware manual reconciliation and block blind fallback/new creation.
+   The current reconcile command recovers completed Colab bundles; it cannot resolve
+   an allocation timeout that never recorded a usable assignment. Cleanup uncertainty
    is also UNKNOWN. Do not terminate unrelated sessions.
 6. Once the worker starts, a numerical/validation/training failure does NOT cause a
    provider switch or fresh-model retry. Preserve outputs and fail the trial. Only
@@ -55,8 +57,8 @@ implementation. It is a transport probe, not training or neural quality evidence
 Common-worker test: one new fresh lineage with the existing ten-step engineering
 fixture, three physical optimizer steps maximum (main/resume/historical reference),
 22 physical interactions maximum, one visible CUDA device. Same policy, optimizer and
-exact upstream8567836fb2c8c915d442b7c2fbedb4fd9b30396d. Worker120s,64MiB output,
-128MiB Torch-allocated memory. Allow <=1,050 seconds for pinned setup/execution and
+exact upstream 8567836fb2c8c915d442b7c2fbedb4fd9b30396d. Worker 120 s, 64 MiB output,
+128 MiB Torch-allocated memory. Allow <=1,050 seconds for pinned setup/execution and
 bounded download/cleanup; at most one successful Colab trial. Preserve original inputs,
 complete checkpoints, package inventory and all state comparisons. No L.1 PASS claim.
 
@@ -79,4 +81,66 @@ nonce-bound remote proof; ambiguous timeout; unsafe/archive oversized artifacts;
 one fallback submission and idempotency; no provider hopping after the worker starts.
 Mock tests never import Torch or create a real session. Sandbox CLI-help logging failed
 under read-only home config; actual authorized CLI invocation was used for the probe.
-Actual outcomes and source IDs will be appended after qualification.
+Actual outcomes and source IDs follow below.
+
+## Actual result
+
+**Colab common-worker engineering PASS, verified export and confirmed cleanup.**
+Source `2a005b43900a93b49eda91f7398ace0b3d17a684`; request digest
+`ccab269b026e1330ca3a0c00546a68aae0ad537b7695203b7e7fb0f3e286740f`.
+Installed Google Colab CLI 0.7.5. The real allocation selected a Tesla T4, one physical/
+visible device, Python 3.13.16, driver 580.82.07, Torch 2.6.0+cu124 and CUDA12.4.
+
+The first readiness proof download was absent; a second probe of the SAME assignment
+confirmed remote CUDA. No second create. The worker's 8.808 s task completed 3 physical
+updates and 21 interactions, exact fresh-process continuation in all nine state groups,
+and exact historical-runner comparison. All 21 required/indexed files recovered and
+verified before shutdown. Candidate logical state 1 update/10 interactions; physical
+sensory cost 253 tiles. No scientific qualification or old checkpoint migration claimed.
+
+Initial release hit a transient DNS failure. The bounded retry actually stopped the
+owned session, but the original routing record remained UNKNOWN. A new reconcile command
+confirmed server/session absence and reverified the already-exported bundle without
+allocation or training; state is now COMPLETE/cleanup confirmed. The failed initial
+cleanup reason remains in the evidence as historical context. The first reconciliation
+helper had a missing import, caught by local tests and its first invocation; corrected
+before successful reconciliation. No repeat neural trial was used to hide those errors.
+
+Current code also automatically accepts a verified completed bundle after a successful
+bounded cleanup retry. That post-run controller hardening, submitted-job concurrency
+protection and strict cleanup-return checks are covered by local regression tests,
+not an extra GPU trial. Unresolved cleanup remains UNKNOWN and blocks a new allocation.
+
+86 local-safe tests, Ruff check/format, Pyright and syntax checks PASS. Real Colab READY
+and worker execution are tested. Kaggle availability fallback is mock-tested using the
+previously GPU-qualified Kaggle adapter; a live Colab outage was not induced and no
+Kaggle quota was spent in this increment. Cross-provider next-update exactness remains
+unqualified despite the canonical single-visible-device configuration.
+
+Selected safe evidence: experiments/colab_execution. Complete raw result:
+runs/colab-worker/attempt/download/result. CLI session stores/raw CLI traces are private
+under ignored runs/ and must NOT be committed or included in exported model artifacts.
+The evidence directory holds selected records, not all binary checkpoint files indexed
+by artifacts.json. The initial separate readiness-only test also stopped its session.
+
+## Use and next work
+
+```bash
+# Request source must identify published code; use a new work directory.
+ontogeny-exec run --request request.json --inputs inputs/ --directory runs/new-job --ledger runs/controller --provider auto
+# If a completed Colab trial's export/cleanup state needs reconciliation:
+ontogeny-exec reconcile --request request.json --directory runs/new-job --ledger runs/controller
+```
+
+Colab success returns a verified receipt after release. Kaggle fallback returns its
+asynchronous native submission record; use existing status/collect with the nested
+`runs/controller/kaggle` ledger and returned native identity. `--provider colab` and
+`--provider kaggle` give explicit choices without changing the scientific request.
+Do not reuse a request with a new ledger as an automatic retry: that is a new explicit
+execution, whose costs/outcomes must be retained. The same shared ledger is idempotent.
+
+Immediate next work: qualify public checkpoint input transport/resume/evaluation on
+both providers, then test cross-provider compatibility and interruption recovery from
+a durable checkpoint. Fresh-job auto-selection does not yet mean safe mid-training
+migration. Keep the matched learning diagnosis on a separate scientific protocol;
+L.1 remains Learning FAIL and no L.2/two-cell work is admitted.

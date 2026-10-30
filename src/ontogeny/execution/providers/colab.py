@@ -27,6 +27,21 @@ class Session:
         self.nonce = secrets.token_hex(16)
         self.commands = 0
 
+    @classmethod
+    def reopen(cls, directory: Path, expected_name: str) -> "Session":
+        ownership = json.loads((directory / "ownership.json").read_text())
+        if ownership["session"] != expected_name:
+            raise ColabError("session_ownership_mismatch")
+        instance = cls.__new__(cls)
+        instance.directory = directory.resolve()
+        instance.config = instance.directory / "sessions.json"
+        instance.name = expected_name
+        instance.nonce = ownership["nonce"]
+        instance.commands = max(
+            (int(p.stem.split("-")[1]) for p in directory.glob("command-*.log")), default=0
+        )
+        return instance
+
     def invoke(self, args: list[str], timeout: int) -> subprocess.CompletedProcess:
         self.commands += 1
         result = subprocess.run(
@@ -53,35 +68,24 @@ class Session:
 
     def release(self) -> None:
         if self.assigned():
-            self.invoke(["stop", "-s", self.name], 45)
+            stopped = self.invoke(["stop", "-s", self.name], 45)
             # status synchronizes server assignments; exit zero alone is insufficient.
-            self.invoke(["status", "-s", self.name], 30)
-            if self.assigned():
+            status = self.invoke(["status", "-s", self.name], 30)
+            if stopped.returncode != 0 or status.returncode != 0 or self.assigned():
                 raise ColabError("cleanup_unconfirmed")
 
     def allocate(self) -> dict:
         write_json(self.directory / "ownership.json", {"session": self.name, "nonce": self.nonce})
         try:
-            result = self.invoke(["new", "-s", self.name, "--gpu", "T4"], 90)
+            self.invoke(["new", "-s", self.name, "--gpu", "T4"], 90)
         except subprocess.TimeoutExpired as error:
             # The server may have assigned a VM before the client timed out.
             # No second allocation and no concurrent GPU fallback without reconciliation.
             raise ColabError("allocation_unknown") from error
         if not self.assigned():
-            text = (result.stdout + result.stderr).lower()
-            explicit_refusal = any(
-                s in text
-                for s in (
-                    "allocation refused",
-                    "backend rejected",
-                    "service unavailable",
-                    "503",
-                    "quota",
-                )
-            )
-            if explicit_refusal or result.returncode is not None:
-                raise ColabError("allocation_unavailable", fallback_safe=True)
-            raise ColabError("allocation_or_auth_unconfirmed")
+            # A completed CLI call without a usable owned assignment is unavailable,
+            # regardless of HTTP wording or process exit code. Timeout is distinct above.
+            raise ColabError("allocation_unavailable", fallback_safe=True)
         # Successful-looking output is not enough; warm up this one assignment only.
         remote = "/content/ontogeny-ready-" + self.nonce + ".json"
         probe = self.directory / "probe.py"

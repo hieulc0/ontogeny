@@ -1,0 +1,33 @@
+{
+  "checkpoints": [
+    {
+      "interactions": 0,
+      "parent_sha256": null,
+      "path": "checkpoints/initial.pt",
+      "sha256": "700a06099548b2f2bf2568884f3575934923e374188f606ec6d479e30ff29e95",
+      "updates": 0
+    },
+    {
+      "interactions": 9,
+      "parent_sha256": null,
+      "path": "checkpoints/pending.pt",
+      "sha256": "6643fca3f1adc4b500a3a0acff01f3991e18bd06bb244e9389414490de3c07eb",
+      "updates": 0
+    },
+    {
+      "interactions": 10,
+      "parent_sha256": "6643fca3f1adc4b500a3a0acff01f3991e18bd06bb244e9389414490de3c07eb",
+      "path": "checkpoints/uninterrupted.pt",
+      "sha256": "f62990315e64aa1f66d6ba39e3ec6feada2936471b87d9da675a9367c5c0e238",
+      "updates": 1
+    },
+    {
+      "interactions": 10,
+      "parent_sha256": "700a06099548b2f2bf2568884f3575934923e374188f606ec6d479e30ff29e95",
+      "path": "checkpoints/reference.pt",
+      "sha256": "cfc3402bbd5028015537f7423a5f8867f4a09d9c32e9dad454576f90d15dbe9d",
+      "updates": 1
+    }
+  ],
+  "schema_version": 1
+}
