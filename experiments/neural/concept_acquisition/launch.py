@@ -12,14 +12,15 @@ from ontogeny.execution.providers import colab, colab_transfer, kaggle
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", type=Path, required=True)
-    parser.add_argument("--study", choices=("coverage", "retention"), default="coverage")
+    parser.add_argument("--study", choices=("coverage", "retention", "joint"), default="coverage")
     args = parser.parse_args()
-    worker = (
-        "experiments/neural/"
-        + ("sequential_retention" if args.study == "retention" else "concept_acquisition")
-        + "/worker.py"
-    )
-    protocol = "ordering-retention-001" if args.study == "retention" else "comparison-coverage-001"
+    settings = {
+        "coverage": ("concept_acquisition", "comparison-coverage-001"),
+        "retention": ("sequential_retention", "ordering-retention-001"),
+        "joint": ("joint_acquisition", "ordering-joint-001"),
+    }
+    folder, protocol = settings[args.study]
+    worker = f"experiments/neural/{folder}/worker.py"
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     published = subprocess.check_output(
         ["git", "ls-remote", "origin", "refs/heads/main"], text=True
@@ -81,14 +82,16 @@ finally:
             if hashlib.sha256((destination / name).read_bytes()).hexdigest() != digest:
                 raise RuntimeError("artifact hash mismatch")
         result = json.loads((destination / "result.json").read_text())
-        expected_records = (9 if result.get("admitted") else 0) if args.study == "retention" else 6
+        expected_records = 9 if args.study == "joint" else 6
+        if args.study == "retention":
+            expected_records = 9 if result.get("admitted") else 0
         if (
             response.returncode
             or result["source"] != revision
             or result["execution"] != "COMPLETE"
             or result.get("protocol") != protocol
             or len(result["records"]) != expected_records
-            or (args.study == "retention" and len(result.get("parents", [])) != 3)
+            or (args.study in ("retention", "joint") and len(result.get("parents", [])) != 3)
         ):
             raise RuntimeError("incomplete cohort; inspect recovered evidence")
         session.release()

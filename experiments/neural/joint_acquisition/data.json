@@ -1,0 +1,34 @@
+{
+  "A-train": {
+    "count": 256,
+    "sha256": "60b31756fa3944240d6ca57188fc51a6204813d398585a8d3950b5220a64c8bb"
+  },
+  "A-development": {
+    "count": 368,
+    "sha256": "aeac6c2119daa175b186b0d005806c9803c4873c1849c2e98b5ecd8a58680ae3"
+  },
+  "A-test": {
+    "count": 368,
+    "sha256": "352d473b4847eefac0296640656f99994775c26fffdaa19b08e6a6328121938e"
+  },
+  "B-train": {
+    "count": 256,
+    "sha256": "90e4c59002f9d2eb7552105541de1aa8557728cbf4035eb6d9e5095372058c28"
+  },
+  "B-development": {
+    "count": 368,
+    "sha256": "7db01276529fb29aabf37cc89a31caec1a09978bda5d2f03c1a21e7ef0fe1ab9"
+  },
+  "B-test": {
+    "count": 368,
+    "sha256": "f23114299f6e99aba97996f0988cc0ebd2a3c28aaa9fb47af5e2feb9681c93f2"
+  },
+  "A-stream": {
+    "count": 8192,
+    "sha256": "81b1caf37b6f3f0e74b74e203754e4abd37aa70f59b79895bf3d0691f0a18bfb"
+  },
+  "B-stream": {
+    "count": 8192,
+    "sha256": "021a9333de75a7cdb415d29560eb7b3406a7b0be8487455407d906a8d346cf1e"
+  }
+}
