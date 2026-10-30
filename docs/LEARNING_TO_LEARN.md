@@ -43,7 +43,7 @@ before any update; each update then publishes a full checkpoint. A new dataset s
 its own cursor; returning to an earlier dataset uses its recorded cursor. Segment resumption
 uses the existing segment's fixed data and end step. Loading is only for trusted same-code
 checkpoints in a validated remote CUDA worker. This implementation has local contract tests;
-its new segment behavior has **not yet received remote neural verification**.
+its first-update continuation was verified remotely on Colab; a longer interruption/resume comparison is tracked in experiments/neural/continuation/.
 
 ```bash
 # In a validated GPU worker; config must match the parent checkpoint.
@@ -60,3 +60,6 @@ mini-gpt-train --config experiments/neural/initial_student/model.json \
 
 The commands describe the interface, not a claimed completed training run. Respect the
 remote-provider admission policy and commit the exact source before executing them.
+
+The rule-task generator and paired curve-analysis contracts are documented in
+`experiments/neural/rule_transfer/README.md`. The neural four-arm cohort is not yet run.

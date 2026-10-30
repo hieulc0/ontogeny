@@ -38,7 +38,7 @@ cursor, config/data hash/budget, full state and update logs. --resume requires t
 checkpoint hash and unchanged envelope; it does not reseed. Explicit new segments allow
 a new dataset and finite update budget while preserving the existing state and recording
 parent lineage; active segments can be resumed with the same data and end step. These new
-segment paths have local contract coverage but await remote neural verification. See
+segment paths have local contract coverage and first-update remote continuation verification; a longer interruption/resume test is tracked separately. See
 LEARNING_TO_LEARN.md and data/README.md. It is an experimental
 training interface, not evidence of concept generalization or learning-to-learn.
 

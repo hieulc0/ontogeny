@@ -4,6 +4,13 @@ import re
 from typing import Any
 
 
+def checkpoint_due(step: int, invocation_start: int, stop_at: int, interval: int) -> bool:
+    """Publish at the stop boundary even if it is not on the periodic schedule."""
+    if interval <= 0 or not invocation_start < step <= stop_at:
+        raise ValueError("invalid checkpoint schedule")
+    return step == stop_at or (step - invocation_start) % interval == 0
+
+
 def begin_segment(
     metadata: dict[str, Any],
     external: dict[str, Any],

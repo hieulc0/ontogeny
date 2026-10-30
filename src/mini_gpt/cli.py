@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 
 from mini_gpt.checkpoint.identity import file_digest
-from mini_gpt.learning.segments import begin_segment
+from mini_gpt.learning.segments import begin_segment, checkpoint_due
 from mini_gpt.model.config import ModelConfig
 from mini_gpt.runtime import configure_determinism
 
@@ -21,6 +21,8 @@ def main() -> None:
     parser.add_argument("--new-segment")
     parser.add_argument("--additional-updates", type=int)
     parser.add_argument("--resume-segment")
+    parser.add_argument("--checkpoint-every", type=int, default=1)
+    parser.add_argument("--stop-after-updates", type=int)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--wall-seconds", type=int, default=120)
     parser.add_argument("--max-torch-memory-mib", type=int, default=3072)
@@ -29,6 +31,12 @@ def main() -> None:
     args = parser.parse_args()
     if not 0 < args.wall_seconds <= 3600 or args.max_torch_memory_mib <= 0:
         parser.error("finite positive update/time envelope required")
+    if args.checkpoint_every <= 0 or (
+        args.stop_after_updates is not None and args.stop_after_updates <= 0
+    ):
+        parser.error("checkpoint and stop intervals must be positive")
+    if args.stop_after_updates is not None and not (args.new_segment or args.resume_segment):
+        parser.error("bounded interruption requires an explicit segment")
     if args.new_segment:
         if not args.resume or args.resume_segment or args.updates is not None:
             parser.error("a new segment requires a checkpoint and additional updates")
@@ -115,7 +123,11 @@ def main() -> None:
             raise ValueError("missing update budget")
         limit = args.updates
     deadline = time.monotonic() + args.wall_seconds
-    while owner.metadata["steps"] < limit:
+    invocation_start = owner.metadata["steps"]
+    stop_at = (
+        min(limit, invocation_start + args.stop_after_updates) if args.stop_after_updates else limit
+    )
+    while owner.metadata["steps"] < stop_at:
         if time.monotonic() >= deadline:
             raise TimeoutError("independent training deadline")
         cursor = owner.external["batch_cursor"]
@@ -131,7 +143,10 @@ def main() -> None:
             raise RuntimeError("Torch allocation exceeds the experiment envelope")
         row["peak_torch_memory_bytes"] = peak
         owner.external["batch_cursor"] = cursor + 1
-        owner.save(args.output / f"step-{owner.metadata['steps']}.pt")
+        if checkpoint_due(
+            owner.metadata["steps"], invocation_start, stop_at, args.checkpoint_every
+        ):
+            owner.save(args.output / f"step-{owner.metadata['steps']}.pt")
         if torch.cuda.max_memory_allocated() > args.max_torch_memory_mib * 1024**2:
             raise RuntimeError("checkpoint allocation exceeds the experiment envelope")
         with (args.output / "updates.jsonl").open("a") as stream:
