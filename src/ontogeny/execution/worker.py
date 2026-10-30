@@ -27,8 +27,9 @@ from ontogeny.neural.persistence import digest
 
 
 def remote_runtime(request: Request, context: ExecutionContext, upstream: Path) -> dict[str, Any]:
-    if context.provider != "kaggle" or not os.environ.get("KAGGLE_KERNEL_RUN_TYPE"):
-        raise ContractError("this release admits only real Kaggle CUDA runtimes; no local fallback")
+    marker = {"kaggle": "KAGGLE_KERNEL_RUN_TYPE", "colab": "COLAB_RELEASE_TAG"}[context.provider]
+    if not os.environ.get(marker):
+        raise ContractError("unverified remote provider context; no local fallback")
     source = Path(__file__).resolve().parents[3]
     sha = subprocess.check_output(
         ["git", "-C", str(source), "rev-parse", "HEAD"], text=True, timeout=30

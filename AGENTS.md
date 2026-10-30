@@ -5,8 +5,8 @@ experiment record before changing behavior. Inspect Git state and preserve exist
 
 LOCAL-SAFE: editing, packaging, lint/type/syntax checks, bounded environment-only
 simulation and manually inspected non-neural tests. REMOTE-REQUIRED: every real neural
-forward/backward, checkpoint load/evaluation and scientific neural experiment, on Kaggle
-CUDA under ../adaptive-mini-gpt/AGENTS.md. No local CPU fallback. State this boundary in reports.
+forward/backward, checkpoint load/evaluation and scientific neural experiment, on validated Kaggle or Colab
+CUDA runtimes under ../adaptive-mini-gpt/AGENTS.md. No local CPU fallback. State this boundary in reports.
 
 Never modify upstream silently. Pin its exact SHA and verify imported source identity;
 read its actual APIs before integration. No copying Transformer implementations.

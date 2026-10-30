@@ -87,8 +87,26 @@ def main() -> None:
     submit.add_argument("--job", type=Path, required=True)
     submit.add_argument("--ledger", type=Path, required=True)
     submit.add_argument("--reserve-hours", type=float, default=2.5)
+    route = commands.add_parser("run")
+    route.add_argument("--request", type=Path, required=True)
+    route.add_argument("--directory", type=Path, required=True)
+    route.add_argument("--ledger", type=Path, required=True)
+    route.add_argument("--inputs", type=Path, required=True)
+    route.add_argument("--provider", choices=["auto", "colab", "kaggle"], default="auto")
+    route.add_argument("--reserve-hours", type=float, default=2.5)
     args = parser.parse_args()
-    if args.command == "qualification-request":
+    if args.command == "run":
+        from ontogeny.execution.routing import run
+
+        result = run(
+            Request.read(args.request),
+            args.directory,
+            args.ledger,
+            args.inputs,
+            provider=args.provider,
+            reserve_hours=args.reserve_hours,
+        )
+    elif args.command == "qualification-request":
         request = qualification_request(
             args.source_sha, hashlib.sha256(args.protocol.read_bytes()).hexdigest()
         )

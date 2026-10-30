@@ -342,6 +342,7 @@ def test_training_cannot_access_final_split(specification):
 
 def test_runtime_gate_cannot_be_bypassed_by_colab_context(tmp_path, request_file, monkeypatch):
     monkeypatch.setenv("KAGGLE_KERNEL_RUN_TYPE", "Batch")
+    monkeypatch.delenv("COLAB_RELEASE_TAG", raising=False)
     result = worker.run(
         request_file,
         ExecutionContext("colab", "session", "attempt-1"),
@@ -349,7 +350,7 @@ def test_runtime_gate_cannot_be_bypassed_by_colab_context(tmp_path, request_file
         tmp_path,
         tmp_path / "result",
     )
-    assert result["execution"] == "FAILED" and "only real Kaggle" in result["reason"]
+    assert result["execution"] == "FAILED" and "unverified remote" in result["reason"]
     assert "torch" not in sys.modules
 
 

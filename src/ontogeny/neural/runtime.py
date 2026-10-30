@@ -17,7 +17,7 @@ def initialize(root: Path) -> tuple[Any, Any, Any]:
     sys.path.insert(0, str(root.resolve() / "src"))
     torch, np = importlib.import_module("torch"), importlib.import_module("numpy")
     if not torch.cuda.is_available() or torch.__version__ != "2.6.0+cu124":
-        raise RuntimeError("pinned Kaggle CUDA runtime required")
+        raise RuntimeError("pinned remote CUDA runtime required")
     if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
         raise RuntimeError("numerical policy must precede Python startup")
     torch.set_num_threads(2)

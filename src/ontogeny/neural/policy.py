@@ -1,4 +1,4 @@
-"""Kaggle-only REINFORCE policy. No simulator truth enters this module."""
+"""Remote-CUDA REINFORCE policy. No simulator truth enters this module."""
 
 import importlib
 import random

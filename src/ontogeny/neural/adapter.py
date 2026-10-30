@@ -12,8 +12,8 @@ from ontogeny.world.observations import Observation
 
 
 def require_remote() -> None:
-    if not os.environ.get("KAGGLE_KERNEL_RUN_TYPE"):
-        raise RuntimeError("neural execution requires Kaggle CUDA; no local fallback")
+    if not (os.environ.get("KAGGLE_KERNEL_RUN_TYPE") or os.environ.get("COLAB_RELEASE_TAG")):
+        raise RuntimeError("neural execution requires Kaggle or Colab CUDA; no local fallback")
 
 
 class ConsequenceCell:
