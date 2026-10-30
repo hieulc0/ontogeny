@@ -5,7 +5,6 @@ import hashlib
 import json
 import math
 import os
-import random
 import shutil
 import signal
 import subprocess
@@ -15,6 +14,8 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
+from mini_gpt.checkpoint.comparison import capture_state as state
+from mini_gpt.checkpoint.comparison import equal
 from ontogeny.execution.artifacts import confined, write_json
 from ontogeny.execution.contracts import ExecutionContext, Request
 from ontogeny.execution.state_identity import fingerprints
@@ -24,40 +25,6 @@ from ontogeny.neural.encoding import encode_policy
 from ontogeny.neural.persistence import digest
 from ontogeny.world.environment import CellWorld
 from ontogeny.world.state import WorldConfig
-
-
-def equal(left: Any, right: Any, torch: Any, np: Any) -> bool:
-    if isinstance(left, random.Random):
-        return isinstance(right, random.Random) and left.getstate() == right.getstate()
-    if isinstance(left, torch.Tensor):
-        return isinstance(right, torch.Tensor) and torch.equal(left, right)
-    if isinstance(left, np.ndarray):
-        return isinstance(right, np.ndarray) and np.array_equal(left, right)
-    if isinstance(left, dict):
-        return left.keys() == right.keys() and all(
-            equal(left[k], right[k], torch, np) for k in left
-        )
-    if isinstance(left, (tuple, list)):
-        return len(left) == len(right) and all(
-            equal(a, b, torch, np) for a, b in zip(left, right, strict=True)
-        )
-    return left == right
-
-
-def state(owner: Any) -> tuple:
-    snapshot = owner.snapshot()
-    model, optimizer, scheduler, external, metadata = snapshot["roots"]
-    return (
-        model.state_dict(),
-        optimizer.state_dict(),
-        scheduler,
-        external,
-        metadata,
-        snapshot["gradients"],
-        snapshot["rng"],
-        model.training,
-        [p.requires_grad for p in model.parameters()],
-    )
 
 
 def bind(owner: Any, request: Request) -> None:
@@ -159,7 +126,6 @@ def physical_observation_tiles(output: Path, logical_tiles: int) -> int:
 def run_task(
     request: Request,
     context: ExecutionContext,
-    upstream: Path,
     inputs: Path,
     output: Path,
     *,
@@ -167,11 +133,11 @@ def run_task(
     expected_hash: str | None = None,
     interrupt_after_save: Path | None = None,
 ) -> None:
-    remote_runtime(request, context, upstream)
+    remote_runtime(request, context)
     from ontogeny.neural.policy import PolicyCell
     from ontogeny.neural.runtime import fresh_owner, initialize
 
-    torch, np, Owner = initialize(upstream)
+    torch, np, Owner = initialize()
     torch.cuda.reset_peak_memory_stats()
     (output / "checkpoints").mkdir(exist_ok=True)
     (output / "predictions.jsonl").touch(exist_ok=True)
@@ -261,8 +227,6 @@ def run_task(
             str(output / "request.json"),
             "--context",
             json.dumps(vars(context)),
-            "--upstream",
-            str(upstream),
             "--inputs",
             str(inputs),
             "--output",
@@ -496,7 +460,7 @@ def run_task(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    for name in ("request", "upstream", "inputs", "output"):
+    for name in ("request", "inputs", "output"):
         parser.add_argument("--" + name, type=Path, required=True)
     parser.add_argument("--context", required=True)
     parser.add_argument("--resume-probe", type=Path)
@@ -506,7 +470,6 @@ def main() -> None:
     run_task(
         Request.read(args.request),
         ExecutionContext(**json.loads(args.context)),
-        args.upstream,
         args.inputs,
         args.output,
         resume_probe=args.resume_probe,

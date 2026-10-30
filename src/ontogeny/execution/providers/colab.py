@@ -120,6 +120,8 @@ class Session:
 
 
 def bootstrap(request: Request, context: ExecutionContext, remote_root: str) -> str:
+    if request.schema_version != 2:
+        raise ColabError("historical_request_requires_original_worker")
     return f"""import os,subprocess,sys,zipfile
 from pathlib import Path
 os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
@@ -133,19 +135,17 @@ inputs.mkdir(exist_ok=True)
 def run(args,cwd=None):
     subprocess.run(args,cwd=cwd,check=True,timeout=900)
 try:
-    for name,revision in [('ontogeny',{request.source["ontogeny_sha"]!r}),
-                          ('adaptive-mini-gpt',{request.source["upstream_sha"]!r})]:
-        repo=root/name
-        run(['git','clone','https://github.com/hieulc0/'+name+'.git',str(repo)])
-        run(['git','checkout','--detach',revision],repo)
+    repo=root/'ontogeny'
+    run(['git','clone','https://github.com/hieulc0/ontogeny.git',str(repo)])
+    run(['git','checkout','--detach',{request.source["ontogeny_sha"]!r}],repo)
     run([sys.executable,'-m','pip','install','torch==2.6.0','--index-url','https://download.pytorch.org/whl/cu124'])
-    run([sys.executable,'-m','pip','install','numpy==2.1.3','pyyaml==6.0.2'])
-    os.environ['PYTHONPATH']=str(root/'ontogeny/src')+':'+str(root/'adaptive-mini-gpt/src')
+    run([sys.executable,'-m','pip','install','numpy==2.1.3'])
+    os.environ['PYTHONPATH']=str(root/'ontogeny/src')
     run([sys.executable,'-m','ontogeny.execution.artifacts','--request',str(request),
          '--source',{("/content/ontogeny-input-" + context.native_id)!r},
          '--output',str(root/'staged-inputs')])
     run([sys.executable,'-m','ontogeny.execution.worker','--request',str(request),
-         '--context',{json.dumps(vars(context))!r},'--upstream',str(root/'adaptive-mini-gpt'),
+         '--context',{json.dumps(vars(context))!r},
          '--inputs',str(root/'staged-inputs'),'--output',str(root/'result')],root/'ontogeny')
 finally:
     with zipfile.ZipFile(root/'result.zip','w',compression=zipfile.ZIP_DEFLATED) as archive:

@@ -130,7 +130,7 @@ def test_symlink_input_cannot_escape(tmp_path, specification):
         verify_inputs(req, inputs)
 
 
-def fake_task(request, context, upstream, inputs, output, cancel_file):
+def fake_task(request, context, inputs, output, cancel_file):
     (output / "predictions.jsonl").write_text("{}\n")
     (output / "learning.jsonl").write_text("{}\n")
     (output / "checkpoint.pt").write_bytes(b"opaque-fake-checkpoint")
@@ -157,7 +157,6 @@ def test_worker_publishes_verifiable_bundle_with_science_not_run(
         request_file,
         ExecutionContext("kaggle", "owner/id", "attempt-1"),
         tmp_path,
-        tmp_path,
         output,
     )
     assert result["execution"] == "SUCCEEDED" and result["science"] == "NOT_RUN"
@@ -174,7 +173,7 @@ def test_worker_preserves_failure_and_partial_checkpoint(
     monkeypatch.setattr(worker, "remote_runtime", lambda *args: {"mock": True})
 
     def failed(*args):
-        (args[4] / "pending.pt").write_bytes(b"opaque-pending")
+        (args[3] / "pending.pt").write_bytes(b"opaque-pending")
         raise failure("injected failure")
 
     monkeypatch.setattr(worker, "execute", failed)
@@ -182,7 +181,6 @@ def test_worker_preserves_failure_and_partial_checkpoint(
     result = worker.run(
         request_file,
         ExecutionContext("kaggle", "owner/id", "attempt-1"),
-        tmp_path,
         tmp_path,
         output,
     )
@@ -200,7 +198,6 @@ def test_missing_outputs_never_become_success(tmp_path, request_file, monkeypatc
         request_file,
         ExecutionContext("kaggle", "owner/id", "attempt-1"),
         tmp_path,
-        tmp_path,
         tmp_path / "result",
     )
     assert result["execution"] == "FAILED"
@@ -211,7 +208,6 @@ def test_local_refusal_before_torch_import(tmp_path, request_file, monkeypatch):
     result = worker.run(
         request_file,
         ExecutionContext("kaggle", "owner/id", "attempt-1"),
-        tmp_path,
         tmp_path,
         tmp_path / "result",
     )
@@ -226,7 +222,6 @@ def test_unindexed_artifact_rejected(tmp_path, request_file, monkeypatch):
     worker.run(
         request_file,
         ExecutionContext("kaggle", "owner/id", "attempt-1"),
-        tmp_path,
         tmp_path,
         output,
     )
@@ -347,7 +342,6 @@ def test_runtime_gate_cannot_be_bypassed_by_colab_context(tmp_path, request_file
         request_file,
         ExecutionContext("colab", "session", "attempt-1"),
         tmp_path,
-        tmp_path,
         tmp_path / "result",
     )
     assert result["execution"] == "FAILED" and "unverified remote" in result["reason"]
@@ -373,7 +367,6 @@ def test_hard_timeout_reaps_task_process(tmp_path, specification, monkeypatch):
             Request.parse(specification),
             ExecutionContext("kaggle", "id", "attempt-1"),
             tmp_path,
-            tmp_path,
             output,
             None,
         )
@@ -385,7 +378,7 @@ def test_counter_overrun_fails_before_success_publication(tmp_path, request_file
 
     def overrun(*args):
         fake_task(*args)
-        path = args[4] / "metrics.json"
+        path = args[3] / "metrics.json"
         path.unlink()
         write_json(path, {"updates": 999, "interactions": 10, "peak_torch_memory_bytes": 1})
 
@@ -393,7 +386,6 @@ def test_counter_overrun_fails_before_success_publication(tmp_path, request_file
     result = worker.run(
         request_file,
         ExecutionContext("kaggle", "id", "attempt-1"),
-        tmp_path,
         tmp_path,
         tmp_path / "result",
     )

@@ -43,19 +43,12 @@ def update(owner: Any, episode: list, torch: Any) -> dict:
     actions = torch.tensor([a for _, a, _ in episode], device="cuda")
     logp = logits.log_softmax(-1).gather(1, actions[:, None]).squeeze(1)
     loss = -(logp * torch.tensor(advantages, device="cuda")).mean()
-    owner.optimizer.zero_grad(set_to_none=True)
-    loss.backward()
-    norm = torch.nn.utils.clip_grad_norm_(owner.model.parameters(), 1.0)
-    if not torch.isfinite(loss) or not torch.isfinite(norm):
-        raise RuntimeError("nonfinite canary update")
-    owner.optimizer.step()
-    owner.metadata["steps"] += 1
+    owner.backward(loss)
+    norm = owner.step(clip_norm=1.0)
     for i, value in enumerate(returns):
         baseline[i] = 0.9 * baseline[i] + 0.1 * value
     owner.external["canary_experience"] = episode
-    record = dict(
-        loss=loss.item(), gradient_norm=norm.item(), returns=returns, advantages=advantages
-    )
+    record = dict(loss=loss.item(), gradient_norm=norm, returns=returns, advantages=advantages)
     owner.external.setdefault("canary_history", []).append(record)
     return record
 

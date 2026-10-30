@@ -1,3 +1,13 @@
+# Unified foundation priority
+
+The current engineering consolidation is documented in MIGRATION.md. It extracts one
+canonical mini_gpt engine for independent neural research and organism learning. No new
+scientific stage or architecture growth is admitted by a package merge. After numerical/
+state equivalence, the next research priority is reliable learning from finite feedback:
+minimal concept acquisition and matched action/credit diagnostics under the shared engine.
+Keep separate continuing individuals; future consolidation requires retained competence.
+The detailed diagnostic proposal below remains proposed, not automatically executed.
+
 # Capability-gated research and engineering roadmap
 
 Status: DRAFT PLAN, not an experiment preregistration or implementation authorization.

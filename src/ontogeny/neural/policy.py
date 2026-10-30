@@ -89,8 +89,7 @@ class PolicyCell:
         loss = -(log_probs * torch.tensor(advantages, device="cuda")).mean()
         if not torch.isfinite(loss):
             raise RuntimeError("nonfinite policy loss")
-        owner.optimizer.zero_grad(set_to_none=True)
-        loss.backward()
+        owner.backward(loss)
         backbone_grad = sum(
             float(p.grad.square().sum().item())
             for p in owner.model.backbone.parameters()
@@ -101,17 +100,15 @@ class PolicyCell:
             for p in owner.model.action_head.parameters()
             if p.grad is not None
         )
-        norm = torch.nn.utils.clip_grad_norm_(owner.model.parameters(), 1.0)
-        if not torch.isfinite(norm) or not backbone_grad > 0 or not head_grad > 0:
+        if not backbone_grad > 0 or not head_grad > 0:
             raise RuntimeError("nonfinite or absent neural gradient")
-        owner.optimizer.step()
-        owner.metadata["steps"] += 1
+        norm = owner.step(clip_norm=1.0)
         owner.metadata["gradient_examples"] += len(episode)
         owner.external["history"].append(
             {
                 "step": owner.metadata["steps"],
                 "loss": loss.item(),
-                "gradient_norm": norm.item(),
+                "gradient_norm": norm,
                 "backbone_gradient_squared": backbone_grad,
                 "head_gradient_squared": head_grad,
             }

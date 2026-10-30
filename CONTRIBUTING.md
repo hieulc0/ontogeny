@@ -16,7 +16,8 @@ historical evidence or breaking existing checkpoint compatibility.
 - Prefer descriptive names over generic buckets such as `utils`, `helpers`, `misc`,
   or unexplained abbreviations. Conventional mathematical notation is appropriate
   within a small, documented mathematical calculation.
-- Put reusable behavior in `src/ontogeny`. Scripts parse arguments and call package
+- Put neural mechanisms in `src/mini_gpt` and organism/environment behavior in
+  `src/ontogeny`; the neural package must not import the organism. Scripts parse arguments and call package
   interfaces; other scripts must not depend on their internal functions.
 - Keep trial-specific seeds, gates, cohorts, artifact identifiers and recovery logic
   with the experiment configuration/driver. Do not add them to general algorithms.

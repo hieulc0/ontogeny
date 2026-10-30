@@ -122,6 +122,8 @@ def prepare(
     dataset_sources: tuple[str, ...] = (),
     batch: tuple[tuple[Request, dict[str, str]], ...] = (),
 ) -> ExecutionContext:
+    if request.schema_version != 2:
+        raise ProviderError("historical requests require their original pinned worker")
     if not re.fullmatch("[a-z0-9_-]+", owner):
         raise ProviderError("invalid Kaggle owner")
     if not request.limits.wall_seconds + 120 <= platform_seconds <= 3600:
@@ -176,15 +178,13 @@ if not torch.cuda.is_available():
     raise RuntimeError('CUDA required; refusing CPU')
 def run(args, cwd=None):
     subprocess.run(args, cwd=cwd, check=True, timeout={platform_seconds})
-for name, revision in [('ontogeny', {request.source["ontogeny_sha"]!r}),
-                       ('adaptive-mini-gpt', {request.source["upstream_sha"]!r})]:
-    root = Path('/tmp') / name
-    run(['git', 'clone', 'https://github.com/hieulc0/' + name + '.git', str(root)])
-    run(['git', 'checkout', '--detach', revision], root)
+root = Path('/tmp/ontogeny')
+run(['git','clone','https://github.com/hieulc0/ontogeny.git',str(root)])
+run(['git','checkout','--detach',{request.source["ontogeny_sha"]!r}],root)
 run([sys.executable, '-m', 'pip', 'install', 'torch==2.6.0',
      '--index-url', 'https://download.pytorch.org/whl/cu124'])
-run([sys.executable, '-m', 'pip', 'install', 'numpy==2.1.3', 'pyyaml==6.0.2'])
-os.environ['PYTHONPATH'] = '/tmp/ontogeny/src:/tmp/adaptive-mini-gpt/src'
+run([sys.executable, '-m', 'pip', 'install', 'numpy==2.1.3'])
+os.environ['PYTHONPATH'] = '/tmp/ontogeny/src'
 import json
 entries = json.loads({encoded_batch!r})
 for index, entry in enumerate(entries):
@@ -199,7 +199,7 @@ for index, entry in enumerate(entries):
     run([sys.executable, '-m', 'ontogeny.execution.artifacts', '--request', str(request),
          '--source', '/kaggle/input', '--output', str(inputs)])
     run([sys.executable, '-m', 'ontogeny.execution.worker', '--request', str(request),
-         '--context', {encoded_context!r}, '--upstream', '/tmp/adaptive-mini-gpt',
+         '--context', {encoded_context!r},
          '--inputs', str(inputs), '--output', str(output)], Path('/tmp/ontogeny'))
     if entry['expected_state']:
         actual = json.loads((output / 'final_state.json').read_text())

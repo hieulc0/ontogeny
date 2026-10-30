@@ -1,0 +1,1 @@
+{"vocab_size":32,"d_model":16,"n_layers":1,"n_heads":2,"d_ff":32,"context_length":16,"dropout":0.0}

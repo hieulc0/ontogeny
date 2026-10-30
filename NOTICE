@@ -1,0 +1,8 @@
+Mini-GPT contains selected source derived from hieulc0/adaptive-mini-gpt
+https://github.com/hieulc0/adaptive-mini-gpt
+Source revision: 87e8928c440fecc4f3a6f6c5ea3c869a6a8537e6
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Modified in Ontogeny: extracted dense-only configuration/traversal, descriptive package
+paths, runtime admission, shared optimizer and persistence contracts. Original source
+paths, hashes, exclusions and qualification are recorded in docs/MIGRATION.md.

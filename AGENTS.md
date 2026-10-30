@@ -1,47 +1,63 @@
-# Ontogeny research execution rules
+# Ontogeny operating contract
 
-Read README.md, docs/RESEARCH_PROTOCOL.md, docs/NEURAL_INTEGRATION.md and the current
-experiment record before changing behavior. Inspect Git state and preserve existing work.
+Read README.md, docs/ARCHITECTURE.md, docs/RESEARCH_PROTOCOL.md, docs/NEURAL_LEARNING.md
+and the current experiment/migration record. Inspect Git state first; preserve other work.
 
-LOCAL-SAFE: editing, packaging, lint/type/syntax checks, bounded environment-only
-simulation and manually inspected non-neural tests. REMOTE-REQUIRED: every real neural
-forward/backward, checkpoint load/evaluation and scientific neural experiment, on validated Kaggle or Colab
-CUDA runtimes under ../adaptive-mini-gpt/AGENTS.md. No local CPU fallback. State this boundary in reports.
+## Packages and code
 
-Never modify upstream silently. Pin its exact SHA and verify imported source identity;
-read its actual APIs before integration. No copying Transformer implementations.
-One persistent LearningState per continuing arm, including optimizer, RNG and external
-experience. Episode resets must not reset neural knowledge. Fresh initialization must be
-labeled and cannot assert continuity with historical students.
+- mini_gpt is the single canonical neural engine. It must not import ontogeny or an
+  external adaptive_mini_gpt runtime. Ontogeny owns worlds, policies/readouts, observations,
+  action consequences, organism development and behavioral evaluation.
+- Follow CONTRIBUTING.md. Name reusable code for behavior/domain/algorithm, never a
+  milestone, phase, date or cosmetic version. Keep real schema versions and immutable
+  research identifiers. Comments explain contracts/reasons, not edit/agent history.
+- Keep interfaces explicit, typed and small. Contain dynamic types at real serialization
+  and optional-runtime boundaries. No unused architecture placeholders or copied engines.
+- Historical source/launchers are reproducible at recorded Git revisions. Never alter
+  historical results, rename serialized classes casually or silently load replacement state.
+- The sibling ../adaptive-mini-gpt is reference/archive only. Do not modify or delete it.
+  The selective migration is authorized; provenance/attribution live in docs/MIGRATION.md.
 
-Pass only immutable observations to a policy. Full simulator snapshots are privileged
-checkpoint/evaluation data. Heuristics are controls, never hidden neural assistance.
-No real-world persistence, survival or resource acquisition. Stop externally at finite budgets.
-No structural growth, L.2 or multicellular experiments before independent prior-stage gates.
-Preserve failures, preregister revisions/splits and never pick a checkpoint on test results.
-Engineering tests cannot promote a learning claim. See docs/PRINCIPLES.md.
+## Execution boundary
 
-# Code and contribution conventions
+LOCAL-SAFE: editing, dependency installation/packaging, lint/type/syntax checks, bounded
+non-neural simulations and manually inspected mock/configuration/JSON/hash/import tests.
+No local neural construction, forward/backward, real checkpoint load/evaluation or GPU
+benchmark. Installing a framework for static analysis is not permission to execute it.
 
-Follow [CONTRIBUTING.md](CONTRIBUTING.md) for naming, interfaces, comments, errors,
-tests and dependency conventions.
+REMOTE-REQUIRED: all real neural/model/checkpoint/learning checks on validated Kaggle or
+Colab CUDA. Enforce platform and CUDA admission, exact committed source/import identity,
+pinned runtime, finite budgets and complete outputs. Never fall back to CPU. Commit/push
+executable source before remote submission; report actual completion and raw failures.
+Do not run unknown/full test suites locally. Tests marked remote skip before framework
+imports outside an actual remote runtime; select inspected non-neural tests explicitly.
 
-- Name reusable code for its behavior, domain or algorithm. Do not introduce milestone,
-  phase or cosmetic version names such as `l1.py`, `phase_two` or `PolicyV2`.
-- Keep milestone labels and trial history in research records. Preserve real package,
-  schema/checkpoint versions, source pins and immutable artifact identities.
-- Comments explain reasons, invariants and compatibility constraints; do not narrate
-  milestones, phases, skill usage, agent activity or a chronological edit history.
-- Keep reusable mechanisms separate from experiment-specific seeds, gates and recovery
-  scripts. Scripts call package APIs rather than importing other scripts' internals.
-- Use explicit typed interfaces and validated configuration. Contain dynamic imports
-  and `Any` at integration boundaries; avoid hidden constants and duplicated settings.
-- Use explicit exceptions for runtime admission, budget and provenance checks. Do not
-  rely on `assert` for checks that must survive `python -O`.
-- Keep cleanup/refactoring separate from scientific behavior changes. Renaming serialized
-  classes or modules requires a checkpoint compatibility plan and remote verification.
-- Use skills for relevant repeatable workflows, not as milestone scaffolding or a second
-  copy of these rules. Add no framework or abstraction without a demonstrated need.
+Prefer verified usable Colab T4 capacity for ordinary routing, then quota-admitted Kaggle.
+A known assignment may warm up within a finite readiness budget; refusal means no new
+allocation retry/polling. Unknown allocation/cleanup blocks duplicate jobs. Do not stop
+unrelated sessions. Follow current provider protocols; migration qualification explicitly
+uses bounded Kaggle. Never assume fixed free-provider availability or reset schedules.
 
-These rules guide future changes; they do not authorize altering historical results,
-checkpoint identities, preregistered experiments or the upstream repository.
+## State and research integrity
+
+- One persistent LearningState per continuing individual/arm, owning model, optimizer,
+  scheduler, RNGs and declared memory/replay/sampler/driver history. Environment resets
+  must not reset neural knowledge. Label fresh students and their distinct histories.
+- Research students and developmental organisms share code, not mutable state. Independent
+  research weights never automatically replace the organism. Consolidation needs a
+  separate preregistered experiment and retained-competence evidence.
+- Checkpoints are trusted same-code full states, immutable and parent-linked. Preserve
+  gradients, optimizer moments, flags and RNGs. Explicit versioned conversion must reject
+  unsupported topology, preserve the parent and verify next-update behavior remotely.
+- Give a policy only immutable partial observations. Simulator snapshots/seed/oracle data
+  are driver/evaluation state. Heuristic controls are never hidden training assistance.
+- Preregister hypotheses, source/checkpoint identity, splits, controls, final checkpoints,
+  resource limits and stop gates. No test-driven checkpoint selection or tuning on consumed
+  sealed worlds. Preserve negative evidence and distinguish FAIL/NOT RUN/INCONCLUSIVE.
+- Engineering checks do not establish learning or intelligence. Preserve A.13/B.0 and L.1
+  limitations. No L.2, extra cells or structural growth without prior scientific gates.
+- No permanent architecture ceilings; each experiment is finite, externally interruptible
+  and reversible. No unrestricted real-world persistence or resource-acquisition goals.
+
+Report LOCAL versus REMOTE checks, exact sources/native jobs, state compatibility,
+observed outcomes, resource costs and blockers. Do not claim a queued/unrun job passed.

@@ -1,76 +1,81 @@
 # Ontogeny
 
-Developing intelligence through experience: one persistent neural learner encounters a
-partially observed world, predicts consequences and learns from its actions.
-This repository supplies artificial environments and developmental experiments;
-Adaptive Mini-GPT remains the canonical neural foundation.
+Ontogeny investigates how one persistent neural learner can acquire knowledge through
+experience, retain it and improve its future learning. **Mini-GPT** is its canonical
+neural engine; **CellWorld** is the first embodied environment.
 
-**Current status:** L.0 engineering qualified on the declared local checks. L.1 executed on Kaggle: **Learning FAIL** (H1/H2 FAIL, H3 persistence PASS). Results: [L.1 qualification](docs/L1_QUALIFICATION.md).
-No L.2 or multicellular execution. No inherited intelligence or historical knowledge claimed.
+Two paths share one implementation:
 
-Python >=3.12, uv, pytest, Ruff and Pyright. The environment uses only the standard library.
+- Independent neural research: representations, concepts, reasoning, retention and
+  learning from finite feedback, without requiring an artificial world.
+- Organism learning: partial observation → neural action → environmental consequence →
+  persistent update. Research students and the continuing organism own separate states.
+
+mini_gpt owns the dense Transformer, attention/positions, optimizer and LearningState.
+ontogeny owns perception encoding, action head/policy objective, world, experience driver
+and behavioral evaluation. The sibling repository is no longer a runtime dependency.
+See [architecture](docs/ARCHITECTURE.md), [neural learning](docs/NEURAL_LEARNING.md) and
+[migration provenance/verification](docs/MIGRATION.md).
+
+**Scientific status is unchanged:** A.13 entity-binding qualification failed. B.0 preserved
+one learning state but did not qualify strong initial competence, positive transfer or
+benefit from a learned practice policy. Ontogeny L.0 engineering passed; L.1 acquisition/
+held-out improvement failed while full continuation passed. Immediate canary passed,
+delayed canary failed. No L.2, structural growth or additional cell is admitted.
+Engineering consolidation is a separate gate, not a learning claim.
+
+## Development
+
+Python >=3.12, uv, pytest, Ruff and Pyright; Arch Linux is the primary workstation.
+The world and configuration contracts require no neural dependencies. For complete static
+analysis, install the optional neural dependencies (installation permits no local training):
 
 ```bash
-UV_CACHE_DIR=/tmp/ontogeny-uv uv sync --locked
-uv run ruff check .
-uv run ruff format --check .
-uv run pyright
-uv run pytest -q tests/test_world.py tests/test_actions.py tests/test_observations.py tests/test_determinism.py tests/test_resource_invariants.py tests/test_neural_contracts.py tests/test_runner.py
-uv run ontogeny --seeds 10 --output runs/l0-new.json
+UV_CACHE_DIR=/tmp/ontogeny-uv uv sync --locked --extra neural
+uv run --extra neural ruff check .
+uv run --extra neural ruff format --check .
+uv run --extra neural pyright
+# Inspected local-safe suites; do not run real model tests locally.
+uv run --extra neural pytest -q tests/test_world.py tests/test_actions.py tests/test_observations.py tests/test_determinism.py tests/test_resource_invariants.py tests/test_neural_contracts.py tests/test_runner.py tests/mini_gpt/test_config.py tests/integration/test_unified_contracts.py
+uv run ontogeny --seeds 10 --output runs/new-world-smoke.json
 ```
 
-Output paths are exclusive: use a new name to preserve earlier runs. All listed tests
-are local-safe environment or fake/encoding/guard contracts; none imports torch.
-Read [the measured qualification](experiments/l0_cellworld/REPORT.md),
-[vision](docs/VISION.md), [architecture](docs/ARCHITECTURE.md),
-[protocol](docs/RESEARCH_PROTOCOL.md), [roadmap](docs/DEVELOPMENT_ROADMAP.md),
-[integration findings](docs/NEURAL_INTEGRATION.md), [world specification](docs/CELLWORLD_SPEC.md)
-and [append-only history](docs/EXPERIMENTS.md).
+Both src packages ship in one wheel. Importing their root/configuration modules does
+not import Torch. Real neural construction, forward/backward and checkpoint loading
+require remote CUDA. No CPU fallback. See [AGENTS](AGENTS.md) and
+[conventions](CONTRIBUTING.md).
 
-Remote pilot preparation (after admission gates in the integration document):
+## Remote execution
+
+Commit/push the exact source, freeze the request/configuration and admit a finite budget.
+Active Kaggle/Colab transports clone only Ontogeny, pin Torch2.6.0+cu124/NumPy2.1.3, verify
+source and CUDA, and recover immutable hash-verified results. Provider choice stays outside
+the policy. Auto-routing is Colab-readiness-first with quota-aware Kaggle fallback;
+checkpoint continuation still requires an explicit provider.
 
 ```bash
-# Commit and push the exact executable source first.
-uv run python kaggle/prepare.py --revision HEAD --mode smoke --job runs/kaggle-l1/job
-kaggle kernels push -p runs/kaggle-l1/job --accelerator NvidiaTeslaT4 -t 4200
-kaggle kernels status sparklinghydraulics0/ontogeny-l1-smoke
-kaggle kernels output sparklinghydraulics0/ontogeny-l1-smoke -p runs/kaggle-l1/output
+ontogeny-exec qualification-request --source-sha FULL_PUBLISHED_SHA --protocol docs/MIGRATION.md --output runs/request.json
+ontogeny-exec run --request runs/request.json --inputs empty-inputs/ --directory runs/new-job --ledger runs/controller --provider auto
+# Independent neural learning, inside a validated CUDA worker only:
+mini-gpt-train --config model.json --data batches.json --updates 2 --output independent-run/
 ```
 
-This prepares a private, pinned Kaggle CUDA pilot; preparation never submits it.
-Run completion is not scientific promotion. Large logs/checkpoints stay under ignored runs/.
+The qualification-request helper is an engineering fixture. Generic scientific studies
+need explicit preregistration and independent evaluation; a smoke result cannot promote
+L.1. New request schema2 identifies the internal engine. Old schema1 requests remain
+readable for artifact audits but execute only at their historical source revision.
 
-After smoke PASS, prepare a separate job with `--mode experiment` and a new job directory.
-The full job repeats admission before training. Runtime pins, source SHA, checkpoint
-hashes and reproduction commands are in docs/L1_QUALIFICATION.md.
+Trusted dense historical checkpoints have an explicit remote conversion command;
+unsupported architectures remain loadable with their original repository/source. No
+weights, optimizer state or continuing history are reset silently. Exact support and
+commands: [migration](docs/MIGRATION.md).
 
-The completed L.1 trial used 3 initializations, 768 training and 2,400 evaluation
-episodes. Genuine neural updates and fresh-process full-state continuation were verified;
-reliable behavioral improvement was not. The fixed heuristic remains much stronger.
-See [training curves](experiments/l1_single_cell/results/training.svg) and
-[comparison records](experiments/l1_single_cell/results/comparison.csv).
+The earlier provider study qualified three origin/destination fixture pairs; reverse
+Kaggle→Colab was blocked. Those results belong to their original source/runtime, not an
+automatic portability claim for a new package version. [Checkpoint report](docs/CHECKPOINT_QUALIFICATION.md).
 
-Development conventions: [CONTRIBUTING.md](CONTRIBUTING.md). Mandatory agent rules: [AGENTS.md](AGENTS.md).
-
-Failure diagnosis: [report](docs/LEARNING_DIAGNOSIS.md) and
-[defect register](docs/RESEARCH_DEFECTS.md). Immediate cue learning passed on all three
-initializations; the delayed sequence failed. L.1 remains FAIL; no navigation repair
-or later stage was admitted.
-
-Next-work planning: [research roadmap](docs/DEVELOPMENT_ROADMAP.md)
-and [provider-neutral Colab/Kaggle execution design](docs/REMOTE_EXECUTION.md).
-
-Execution foundation: [contract, usage and measured qualification](docs/EXECUTION_QUALIFICATION.md).
-`ontogeny-exec` provides strict request validation, common worker tasks and Kaggle
-prepare/submit/status/collect/verify. The Kaggle continuation fixture passes exact
-fresh-process and historical-runner comparisons. Fresh-job Colab-first routing is now implemented and qualified separately;
-see [readiness-based routing](docs/COLAB_ROUTING.md).
-This is infrastructure qualification; L.1 remains Learning FAIL.
-
-`ontogeny-exec run --provider auto` requires verified Colab T4 readiness, not a 503-only
-check, then falls back to quota-admitted Kaggle on confirmed unavailability. Ambiguous
-allocation or cleanup blocks blind retries. Colab exports are verified before release.
-Explicit-provider checkpoint upload/resume/evaluation passes the declared fixture on both
-providers. Colab→Kaggle continuation passes; Kaggle→Colab was blocked by allocation refusal.
-See [checkpoint qualification](docs/CHECKPOINT_QUALIFICATION.md). Automatic checkpoint
-routing/migration remains disabled; previously trained optimizer inputs remain unqualified.
+Read [vision](docs/VISION.md), [roadmap](docs/DEVELOPMENT_ROADMAP.md),
+[research protocol](docs/RESEARCH_PROTOCOL.md), [append-only history](docs/EXPERIMENTS.md),
+[L.1 results](docs/L1_QUALIFICATION.md), [diagnosis](docs/LEARNING_DIAGNOSIS.md) and
+[defect register](docs/RESEARCH_DEFECTS.md). Historical runners remain in Git at the
+revisions recorded in those reports; their scientific artifacts are preserved.

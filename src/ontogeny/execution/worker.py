@@ -26,7 +26,7 @@ from ontogeny.execution.contracts import ContractError, ExecutionContext, Reques
 from ontogeny.neural.persistence import digest
 
 
-def remote_runtime(request: Request, context: ExecutionContext, upstream: Path) -> dict[str, Any]:
+def remote_runtime(request: Request, context: ExecutionContext) -> dict[str, Any]:
     marker = {"kaggle": "KAGGLE_KERNEL_RUN_TYPE", "colab": "COLAB_RELEASE_TAG"}[context.provider]
     if not os.environ.get(marker):
         raise ContractError("unverified remote provider context; no local fallback")
@@ -41,7 +41,9 @@ def remote_runtime(request: Request, context: ExecutionContext, upstream: Path) 
         raise ContractError("Ontogeny source identity mismatch or dirty checkout")
     from ontogeny.neural.runtime import initialize
 
-    torch, _, _ = initialize(upstream)
+    if request.schema_version != 2:
+        raise ContractError("historical requests require their original pinned worker")
+    torch, _, _ = initialize()
     actual = {
         "torch": torch.__version__,
         "cuda": torch.version.cuda,
@@ -88,7 +90,6 @@ def stop(process: subprocess.Popen) -> None:
 def execute(
     request: Request,
     context: ExecutionContext,
-    upstream: Path,
     inputs: Path,
     output: Path,
     cancel_file: Path | None,
@@ -99,8 +100,6 @@ def execute(
         "ontogeny.execution.tasks",
         "--request",
         str(output / "request.json"),
-        "--upstream",
-        str(upstream),
         "--inputs",
         str(inputs),
         "--output",
@@ -134,7 +133,6 @@ def execute(
 def run(
     request_path: Path,
     context: ExecutionContext,
-    upstream: Path,
     inputs: Path,
     output: Path,
     cancel_file: Path | None = None,
@@ -149,9 +147,9 @@ def run(
         verify_inputs(request, inputs)
         if cancel_file is not None and cancel_file.exists():
             raise InterruptedError("cancelled before remote admission")
-        runtime = remote_runtime(request, context, upstream)
+        runtime = remote_runtime(request, context)
         write_json(output / "runtime.json", runtime)
-        execute(request, context, upstream, inputs, output, cancel_file)
+        execute(request, context, inputs, output, cancel_file)
         if not all(
             (output / name).is_file()
             for name in request.required_outputs
@@ -223,13 +221,12 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--request", type=Path, required=True)
     parser.add_argument("--context", required=True)
-    parser.add_argument("--upstream", type=Path, required=True)
     parser.add_argument("--inputs", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--cancel-file", type=Path)
     args = parser.parse_args()
     context = ExecutionContext(**json.loads(args.context))
-    result = run(args.request, context, args.upstream, args.inputs, args.output, args.cancel_file)
+    result = run(args.request, context, args.inputs, args.output, args.cancel_file)
     raise SystemExit(0 if result["execution"] == "SUCCEEDED" else 1)
 
 

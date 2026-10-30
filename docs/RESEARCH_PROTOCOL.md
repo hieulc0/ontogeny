@@ -28,3 +28,12 @@ Follow-up diagnosis protocol and actual gated outcomes are recorded separately i
 LEARNING_DIAGNOSIS.md. Its canaries do not amend the original L.1 preregistration or
 reopen consumed sealed worlds; the delayed prerequisite failed, so navigation repair
 was not admitted.
+
+
+Unified engine: independent neural studies, organism development and future controlled
+consolidation share mini_gpt code but own distinct learner histories. Every state import
+records exact source, format, parent hashes and intended individual. No independently
+trained research student can replace the organism without an explicit consolidation/
+retention protocol. Engineering source equivalence is tested separately from scientific
+acquisition. Current consolidation gates and actual outcomes: MIGRATION.md. Historical
+protocols/consumed sealed worlds and their verdicts remain immutable.

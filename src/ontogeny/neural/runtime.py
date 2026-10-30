@@ -1,56 +1,48 @@
-"""Verified remote dependency boundary for diagnostic experiments."""
+"""Thin organism factory over the internal canonical neural engine."""
 
 import importlib
-import os
 import random
-import sys
 from pathlib import Path
 from typing import Any
 
-from ontogeny.neural.adapter import require_remote
-from ontogeny.neural.persistence import verify_import, verify_source
+from mini_gpt.runtime import configure_determinism
 
 
-def initialize(root: Path) -> tuple[Any, Any, Any]:
-    require_remote()
-    verify_source(root)
-    sys.path.insert(0, str(root.resolve() / "src"))
-    torch, np = importlib.import_module("torch"), importlib.import_module("numpy")
-    if not torch.cuda.is_available() or torch.__version__ != "2.6.0+cu124":
-        raise RuntimeError("pinned remote CUDA runtime required")
-    if os.environ.get("CUBLAS_WORKSPACE_CONFIG") != ":4096:8":
-        raise RuntimeError("numerical policy must precede Python startup")
-    torch.set_num_threads(2)
-    torch.use_deterministic_algorithms(True)
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cuda.matmul.allow_tf32 = False
-    torch.backends.cudnn.allow_tf32 = False
+def initialize() -> tuple[Any, Any, Any]:
+    torch, np = configure_determinism()
+    from mini_gpt.learning.state import LearningState
+    from mini_gpt.provenance import verify_import
+
+    package_root = Path(__file__).resolve().parents[2] / "mini_gpt"
     for name in (
-        "model.config",
-        "model.transformer",
-        "training.learning_state",
-        "training.optimizer_contract",
+        "mini_gpt.model.transformer",
+        "mini_gpt.model.attention",
+        "mini_gpt.learning.state",
     ):
-        verify_import(root, importlib.import_module("adaptive_mini_gpt." + name))
-    Owner = importlib.import_module("adaptive_mini_gpt.training.learning_state").LearningState
-    return torch, np, Owner
+        verify_import(importlib.import_module(name), package_root)
+
+    return torch, np, LearningState
 
 
 def fresh_owner(seed: int, torch: Any, np: Any, Owner: Any) -> Any:
+    from mini_gpt.model.config import ModelConfig
+    from mini_gpt.model.transformer import MiniGPT
     from ontogeny.neural.policy import PolicyNetwork
 
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
-    config = importlib.import_module("adaptive_mini_gpt.model.config").ModelConfig
-    model = importlib.import_module("adaptive_mini_gpt.model.transformer").MiniGPT
     network = PolicyNetwork(
-        model(config(d_model=64, n_layers=2, n_heads=4, d_ff=128, dropout=0.0))
+        MiniGPT(ModelConfig(d_model=64, n_layers=2, n_heads=4, d_ff=128, dropout=0.0))
     ).cuda()
     return Owner(
         network,
         lr=0.0005,
         external={"policy_rng": random.Random(seed)},
-        metadata={"initialization": "fresh-no-historical-knowledge", "seed": seed},
+        metadata={
+            "initialization": "fresh-no-historical-knowledge",
+            "seed": seed,
+            "individual_kind": "developmental_organism",
+        },
     )

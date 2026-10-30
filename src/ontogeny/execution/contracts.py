@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Literal
 
-from ontogeny.neural.persistence import UPSTREAM_SHA
+from mini_gpt.provenance import HISTORICAL_REVISION
 from ontogeny.world.state import WorldConfig
 
 
@@ -125,7 +125,7 @@ class Request:
             "split split_manifest_sha256 operation "
             "source runtime initialization world objective targets limits inputs required_outputs",
         )
-        if type(data["schema_version"]) is not int or data["schema_version"] != 1:
+        if type(data["schema_version"]) is not int or data["schema_version"] not in (1, 2):
             raise ContractError("unsupported request schema")
         operation = data["operation"]
         if operation not in ("train", "evaluate", "continuation_check"):
@@ -138,11 +138,17 @@ class Request:
         if data["split"] not in allowed_splits[operation]:
             raise ContractError("operation cannot access this split")
         hexadecimal(data["split_manifest_sha256"], 64)
-        source = fields(data["source"], "ontogeny_sha upstream_sha")
-        for value in source.values():
-            hexadecimal(value, 40)
-        if source["upstream_sha"] != UPSTREAM_SHA:
-            raise ContractError("unqualified upstream source revision")
+        if data["schema_version"] == 1:
+            source = fields(data["source"], "ontogeny_sha upstream_sha")
+            for value in source.values():
+                hexadecimal(value, 40)
+            if source["upstream_sha"] != HISTORICAL_REVISION:
+                raise ContractError("unqualified historical source revision")
+        else:
+            source = fields(data["source"], "ontogeny_sha engine")
+            hexadecimal(source["ontogeny_sha"], 40)
+            if source["engine"] != "mini_gpt":
+                raise ContractError("unified requests require the canonical internal engine")
         runtime = fields(data["runtime"], "torch cuda gpu visible_cuda_devices")
         if (runtime["torch"], runtime["cuda"], runtime["gpu"]) != (
             "2.6.0+cu124",
@@ -222,7 +228,7 @@ class Request:
         ):
             raise ContractError("continuation fixture must guarantee ten live steps")
         return cls(
-            1,
+            data["schema_version"],
             identifier(data["run_id"]),
             identifier(data["trial_id"]),
             identifier(data["arm_id"]),

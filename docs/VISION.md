@@ -32,3 +32,14 @@ heads, connections, topology, embeddings, contexts, memories, modules, input/out
 representations, cell count and learning algorithms remain revisable hypotheses.
 Every revision requires a finite resource envelope, independent evidence, migration
 invariants and reversible checkpoints. Growth is permission to investigate, not a goal.
+
+
+## One neural foundation, two experience paths
+
+Mini-GPT is the internal canonical neural engine. Independent knowledge/reasoning
+students and the embodied organism use the same implementation with distinct persistent
+LearningState histories. Controlled consolidation is a research question: independently
+learned changes must preserve the organism's prior capabilities under a preregistered
+evaluation, never automatically overwrite its state. Structural development, memory
+organization and learning-to-learn remain evidence-driven future work. Source consolidation
+does not improve any historical learning verdict or make a scientific stage automatic.

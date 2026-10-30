@@ -9,14 +9,14 @@ from pathlib import Path
 from ontogeny.execution.artifacts import verify_bundle, write_json
 from ontogeny.execution.contracts import Request, fingerprint
 from ontogeny.execution.providers import kaggle
-from ontogeny.neural.persistence import UPSTREAM_SHA, digest
+from ontogeny.neural.persistence import digest
 from ontogeny.world.state import WorldConfig
 
 
 def qualification_request(source_sha: str, protocol_sha: str) -> Request:
     return Request.parse(
         {
-            "schema_version": 1,
+            "schema_version": 2,
             "run_id": "execution-foundation",
             "trial_id": "complete-state",
             "arm_id": "unchanged-policy",
@@ -26,7 +26,7 @@ def qualification_request(source_sha: str, protocol_sha: str) -> Request:
                 {"world_seed": 91823, "episodes": 1, "kind": "continuation_fixture"}
             ),
             "operation": "continuation_check",
-            "source": {"ontogeny_sha": source_sha, "upstream_sha": UPSTREAM_SHA},
+            "source": {"ontogeny_sha": source_sha, "engine": "mini_gpt"},
             "runtime": {
                 "torch": "2.6.0+cu124",
                 "cuda": "12.4",

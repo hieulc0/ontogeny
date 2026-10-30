@@ -2,8 +2,8 @@
 
 import pytest
 
+from experiments.organism.qualification import paired_interval
 from ontogeny.evaluation.baselines import RestPolicy
-from ontogeny.evaluation.l1 import paired_interval
 from ontogeny.neural.encoding import encode_policy
 from ontogeny.world.environment import CellWorld
 
@@ -40,17 +40,14 @@ def test_paired_interval_respects_initialization_clusters():
 
 
 def test_continuation_comparator_uses_rng_state(monkeypatch):
-    # Import the driver is safe: torch is only imported inside remote setup().
-    import importlib
     import random
-    from pathlib import Path
     from types import SimpleNamespace
 
-    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "kaggle"))
-    driver = importlib.import_module("run_l1")
+    from ontogeny.execution.tasks import equal
+
     torch = SimpleNamespace(Tensor=type("FakeTensor", (), {}))
     np = SimpleNamespace(ndarray=type("FakeArray", (), {}))
     left, right = random.Random(2), random.Random(2)
-    assert left is not right and driver.equal(left, right, torch, np)
+    assert left is not right and equal(left, right, torch, np)
     right.random()
-    assert not driver.equal(left, right, torch, np)
+    assert not equal(left, right, torch, np)
