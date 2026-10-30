@@ -6,7 +6,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from experiments.neural.initial_student.launch import bootstrap
+from experiments.neural.initial_student.job import bootstrap
 from ontogeny.execution.providers import kaggle
 
 
