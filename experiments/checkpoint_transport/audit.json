@@ -1,0 +1,85 @@
+{
+  "all_pass": false,
+  "cases": {
+    "colab-to-colab": {
+      "evaluation_20_interactions": true,
+      "evaluation_checkpoint_identical": true,
+      "evaluation_same_input": true,
+      "evaluation_state_restored": true,
+      "evaluation_zero_updates": true,
+      "input_is_exported_recovery": true,
+      "input_sha256": "0ef35a0a2abd132e34a4b29cb865c26fd3ef3a58eadc3fd69b6e1dc0d8e15db2",
+      "loaded_state_exact": true,
+      "next_sample_transition_exact": true,
+      "one_update": true,
+      "pass": true,
+      "process_interruption_exact": true,
+      "state_groups": {
+        "external": true,
+        "gradients": true,
+        "metadata": true,
+        "model": true,
+        "optimizer": true,
+        "requires_grad": true,
+        "rng": true,
+        "scheduler": true,
+        "training_mode": true
+      }
+    },
+    "colab-to-kaggle": {
+      "evaluation_20_interactions": true,
+      "evaluation_checkpoint_identical": true,
+      "evaluation_same_input": true,
+      "evaluation_state_restored": true,
+      "evaluation_zero_updates": true,
+      "input_is_exported_recovery": true,
+      "input_sha256": "0ef35a0a2abd132e34a4b29cb865c26fd3ef3a58eadc3fd69b6e1dc0d8e15db2",
+      "loaded_state_exact": true,
+      "next_sample_transition_exact": true,
+      "one_update": true,
+      "pass": true,
+      "process_interruption_exact": true,
+      "state_groups": {
+        "external": true,
+        "gradients": true,
+        "metadata": true,
+        "model": true,
+        "optimizer": true,
+        "requires_grad": true,
+        "rng": true,
+        "scheduler": true,
+        "training_mode": true
+      }
+    },
+    "kaggle-to-colab": {
+      "error": "[Errno 2] No such file or directory: 'runs/checkpoint-transport/colab/kaggle-train/download/result/request.json'",
+      "kind": "FileNotFoundError",
+      "pass": false
+    },
+    "kaggle-to-kaggle": {
+      "evaluation_20_interactions": true,
+      "evaluation_checkpoint_identical": true,
+      "evaluation_same_input": true,
+      "evaluation_state_restored": true,
+      "evaluation_zero_updates": true,
+      "input_is_exported_recovery": true,
+      "input_sha256": "0cb59bf71cd5516d1d15a9dc512cb24c08d1a47add9a2a0b344096ab0f239470",
+      "loaded_state_exact": true,
+      "next_sample_transition_exact": true,
+      "one_update": true,
+      "pass": true,
+      "process_interruption_exact": true,
+      "state_groups": {
+        "external": true,
+        "gradients": true,
+        "metadata": true,
+        "model": true,
+        "optimizer": true,
+        "requires_grad": true,
+        "rng": true,
+        "scheduler": true,
+        "training_mode": true
+      }
+    }
+  }
+}

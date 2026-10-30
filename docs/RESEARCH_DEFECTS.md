@@ -29,3 +29,15 @@ positive advantage raises selected-action log probability and all intended group
 Immediate CANARY PASS, delayed FAIL, L.1 STILL FAIL. No CellWorld repair admitted,
 no new sealed rollouts, no capacity increase or second cell. Exact evidence and
 preregistered stop: LEARNING_DIAGNOSIS.md and experiments/learning_diagnosis/results.
+
+## Execution qualification gaps (separate from learning diagnosis)
+
+| ID | Status | Evidence and implication |
+|---|---|---|
+| EX-001 | Confirmed infrastructure failure; bounded recovery passed | Kaggle package setup exhausted a 300 s platform cap. Explicit 600 s sequential batch amortized setup and passed unchanged public worker cases; original failure retained. |
+| EX-002 | Availability blocker | Final Colab allocation refused with no assignment. Kaggle→Colab continuation/evaluation NOT RUN; no bidirectional portability claim. |
+| EX-003 | Qualification gap | Imported fixture checkpoint precedes the first update, so optimizer moments/gradients are empty. Exact post-update equality does not qualify migration of an already trained optimizer. |
+| EX-004 | Qualification gap | SIGKILL after complete publication passes, but arbitrary VM loss, periodic durable external ACKs and unexported-tail accounting remain unqualified. Automatic migration stays disabled. |
+
+These entries do not explain or reverse the L.1 behavioral failure. Execution evidence
+and source/runtime limits: CHECKPOINT_QUALIFICATION.md.

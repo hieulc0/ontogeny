@@ -1,0 +1,46 @@
+{
+  "artifacts_sha256": "965f230ca041dcd84564ecc1976e76c2b686a16c4558bd7012999470727b790c",
+  "batch_receipts": {
+    "6d24dd075ef20e26c7d2d047f32eae2aa6546db1ea350a179ef099bcc6e20817": {
+      "artifacts_sha256": "731691821fcb31246aa162566ad332c64e883aa716aeba6acaa00256fda39362",
+      "execution": "SUCCEEDED",
+      "request_sha256": "6d24dd075ef20e26c7d2d047f32eae2aa6546db1ea350a179ef099bcc6e20817",
+      "science": "NOT_RUN",
+      "verified_files": 12
+    },
+    "6f708974d818af87ceb1f3bdd23540e6bb0638b8bf8a644fa69abc7d945fffcd": {
+      "artifacts_sha256": "3289b3330b38ebfe7b8c82dd1737c91dd93d4bfa414cfa4c0f3f5d45cd1fbb08",
+      "execution": "SUCCEEDED",
+      "request_sha256": "6f708974d818af87ceb1f3bdd23540e6bb0638b8bf8a644fa69abc7d945fffcd",
+      "science": "NOT_RUN",
+      "verified_files": 13
+    },
+    "965fef14111e3cca0a73b444aac766cec1bbf2ec37c00e0101791096dbf2a6b9": {
+      "artifacts_sha256": "965f230ca041dcd84564ecc1976e76c2b686a16c4558bd7012999470727b790c",
+      "execution": "SUCCEEDED",
+      "request_sha256": "965fef14111e3cca0a73b444aac766cec1bbf2ec37c00e0101791096dbf2a6b9",
+      "science": "NOT_RUN",
+      "verified_files": 13
+    }
+  },
+  "execution": "SUCCEEDED",
+  "quota_after": [
+    {
+      "refreshAt": "2026-10-31T00:00:00+00:00",
+      "remaining": "2.74h",
+      "resource": "GPU",
+      "total": "30.00h",
+      "used": "27.26h"
+    },
+    {
+      "refreshAt": "2026-10-31T00:00:00+00:00",
+      "remaining": "20.00h",
+      "resource": "TPU",
+      "total": "20.00h",
+      "used": "0.00h"
+    }
+  ],
+  "request_sha256": "965fef14111e3cca0a73b444aac766cec1bbf2ec37c00e0101791096dbf2a6b9",
+  "science": "NOT_RUN",
+  "verified_files": 13
+}

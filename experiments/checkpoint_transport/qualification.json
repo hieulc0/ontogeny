@@ -1,0 +1,48 @@
+{
+  "cases": {
+    "colab-to-colab": {
+      "reason": null,
+      "status": "PASS"
+    },
+    "colab-to-kaggle": {
+      "reason": null,
+      "status": "PASS"
+    },
+    "kaggle-to-colab": {
+      "reason": "Colab allocation refused; reverse train/evaluation not executed.",
+      "status": "NOT_RUN"
+    },
+    "kaggle-to-kaggle": {
+      "reason": null,
+      "status": "PASS"
+    }
+  },
+  "colab_refused_assignments": 1,
+  "colab_successful_assignments": 3,
+  "completed_bundles": 8,
+  "completed_costs": {
+    "interactions": 105,
+    "physical_observation_tiles": 1217,
+    "task_wall_seconds": 38.43492243200029,
+    "updates": 9
+  },
+  "completed_worker_wall_seconds": 95.26076410400003,
+  "engineering_verdict": "INCONCLUSIVE",
+  "failed_attempt_neural_cost": "No prediction rows or complete counters; unobserved partial work is not added as zero.",
+  "kaggle_native_jobs": 4,
+  "kaggle_reported_quota_after_hours": 2.74,
+  "kaggle_reported_quota_before_hours": 3.0,
+  "kaggle_reserve_hours": 2.5,
+  "kaggle_total_reserved_platform_seconds": 1500,
+  "learning_verdict": "L.1 STILL FAIL",
+  "limits": [
+    "Pending checkpoint precedes the first update; input optimizer moments and gradients are empty.",
+    "SIGKILL after publication and export between jobs tested; arbitrary VM loss/unexported tail/periodic durable ACK unqualified.",
+    "One initialization, ten-step fixture, no within-episode hazard relocation; no general continual-learning claim.",
+    "Reverse cross-provider direction blocked; automatic checkpoint routing remains disabled."
+  ],
+  "peak_torch_memory_bytes": 79681024,
+  "recovery_transport_sha": "74bc0e87f428748fe358cd6a6418d8e5d7f6dc15",
+  "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d",
+  "worker_sha": "a88d7d386eb502e4ffae5bde7dc504441824c76d"
+}

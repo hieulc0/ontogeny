@@ -70,4 +70,7 @@ This is infrastructure qualification; L.1 remains Learning FAIL.
 `ontogeny-exec run --provider auto` requires verified Colab T4 readiness, not a 503-only
 check, then falls back to quota-admitted Kaggle on confirmed unavailability. Ambiguous
 allocation or cleanup blocks blind retries. Colab exports are verified before release.
-Public checkpoint upload/migration remains unqualified.
+Explicit-provider checkpoint upload/resume/evaluation passes the declared fixture on both
+providers. Colab→Kaggle continuation passes; Kaggle→Colab was blocked by allocation refusal.
+See [checkpoint qualification](docs/CHECKPOINT_QUALIFICATION.md). Automatic checkpoint
+routing/migration remains disabled; previously trained optimizer inputs remain unqualified.

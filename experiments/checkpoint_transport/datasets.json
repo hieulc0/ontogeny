@@ -1,0 +1,38 @@
+{
+  "colab": {
+    "info": {
+      "datasetId": 12959860,
+      "datasetSlug": "ontogeny-input-6d24dd075ef20e26c7d2",
+      "description": "",
+      "expectedUpdateFrequency": "not specified",
+      "isPrivate": true,
+      "licenses": [
+        {
+          "name": "other"
+        }
+      ],
+      "ownerUser": "sparklinghydraulics0",
+      "subtitle": "",
+      "title": "ontogeny-input-6d24dd075ef20e26c7d2",
+      "usabilityRating": 0.25
+    }
+  },
+  "kaggle": {
+    "info": {
+      "datasetId": 12959805,
+      "datasetSlug": "ontogeny-input-cfe783c0c13e7243559b",
+      "description": "",
+      "expectedUpdateFrequency": "not specified",
+      "isPrivate": true,
+      "licenses": [
+        {
+          "name": "other"
+        }
+      ],
+      "ownerUser": "sparklinghydraulics0",
+      "subtitle": "",
+      "title": "ontogeny-input-cfe783c0c13e7243559b",
+      "usabilityRating": 0.25
+    }
+  }
+}

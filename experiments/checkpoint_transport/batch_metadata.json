@@ -1,0 +1,14 @@
+{
+  "code_file": "launch.py",
+  "dataset_sources": [
+    "sparklinghydraulics0/ontogeny-input-cfe783c0c13e7243559b",
+    "sparklinghydraulics0/ontogeny-input-6d24dd075ef20e26c7d2"
+  ],
+  "enable_gpu": true,
+  "enable_internet": true,
+  "id": "sparklinghydraulics0/ontogeny-exec-44c9b56a1a8e4a53",
+  "is_private": true,
+  "kernel_type": "script",
+  "language": "python",
+  "title": "ontogeny-exec-44c9b56a1a8e4a53"
+}

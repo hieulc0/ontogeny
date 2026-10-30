@@ -144,3 +144,16 @@ both providers, then test cross-provider compatibility and interruption recovery
 a durable checkpoint. Fresh-job auto-selection does not yet mean safe mid-training
 migration. Keep the matched learning diagnosis on a separate scientific protocol;
 L.1 remains Learning FAIL and no L.2/two-cell work is admitted.
+
+## Subsequent checkpoint transport qualification
+
+Explicit-provider upload/resume/evaluation is now implemented and passes its declared
+pending-first-update fixture on both providers. Colab→Kaggle exact continuation passes;
+Kaggle→Colab was NOT RUN because Colab refused its next assignment. The controller
+correctly handled a precondition refusal with no owned assignment, without depending
+on HTTP 503, retrying creation or substituting another provider for the missing test.
+See CHECKPOINT_QUALIFICATION.md for actual sources, cap/DNS failures, recovery, costs
+and fixture limitations. Overall bidirectional portability remains INCONCLUSIVE.
+`run --provider auto` still rejects checkpoint inputs; continuing students require an
+explicit provider. No previously trained optimizer migration or arbitrary VM-loss
+recovery was qualified. These results do not amend the historical fresh-worker report.

@@ -96,3 +96,17 @@ starting revision during this session. Ontogeny made no upstream edits or reset.
 Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
 the newer local checkout was not used or claimed compatible. Default source verification
 correctly rejects it until a separately qualified integration revision is adopted.
+
+## Checkpoint transport follow-up
+
+Common worker a88d7d386eb502e4ffae5bde7dc504441824c76d and unchanged upstream pin above
+passed public full-state upload/resume/evaluation for the nine-experience, first-update
+fixture on both validated providers. Colab→Kaggle next-action/transition/update equality
+passed for all nine state groups despite the recorded Python/driver patch differences.
+The reverse direction was NOT RUN after a Colab allocation refusal. SIGKILL after atomic
+checkpoint publication and fresh-process recovery passed in both parent jobs. Input
+optimizer moments are empty at that boundary; importing a previously trained optimizer
+is not thereby qualified. Recovery transport 74bc0e87f428748fe358cd6a6418d8e5d7f6dc15
+only batches unchanged worker requests to amortize package setup. Full scoped evidence,
+negative results and execution costs: CHECKPOINT_QUALIFICATION.md. No upstream edits,
+capacity/objective changes, historical student replacement or learning promotion.

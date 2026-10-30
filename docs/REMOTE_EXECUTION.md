@@ -1,8 +1,10 @@
 # Portable remote execution — design draft
 
 Status: Kaggle foundation and fresh-job Colab readiness/routing implemented;
-Colab common-worker engineering qualification PASS. Checkpoint migration/durable
-interruption recovery remain proposed. See [COLAB_ROUTING.md](COLAB_ROUTING.md). Research checked 2026-10-30. Actual implemented scope, tested source and limits:
+Colab common-worker engineering qualification PASS. Public checkpoint fixture transport
+and evaluation pass on both providers; Colab→Kaggle exactness passes, reverse direction
+is blocked. See [checkpoint qualification](CHECKPOINT_QUALIFICATION.md). Automatic migration
+and arbitrary VM interruption recovery remain unqualified. See [COLAB_ROUTING.md](COLAB_ROUTING.md). Research checked 2026-10-30. Actual implemented scope, tested source and limits:
 [EXECUTION_QUALIFICATION.md](EXECUTION_QUALIFICATION.md). The larger design below includes
 unimplemented scheduling/portability features. Fresh jobs now accept validated Colab
 or Kaggle CUDA; historical experiments and checkpoint identities remain unchanged.

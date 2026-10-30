@@ -133,3 +133,31 @@ cleanup-retry reconciliation subsequently hardened locally. 86 local-safe tests 
 Kaggle fallback mocked; no live outage forced. No credentials committed, local neural
 execution, source/capacity/learning-objective change or old checkpoint migration.
 Details: COLAB_ROUTING.md; safe records: experiments/colab_execution. L.1 remains FAIL.
+
+## Checkpoint transport and interruption qualification
+
+Worker a88d7d386eb502e4ffae5bde7dc504441824c76d; recovery transport/protocol
+74bc0e87f428748fe358cd6a6418d8e5d7f6dc15; unchanged upstream
+8567836fb2c8c915d442b7c2fbedb4fd9b30396d. Overall INCONCLUSIVE: Colab→Colab,
+Kaggle→Kaggle and Colab→Kaggle fixture pairs PASS for upload, exact next-action/
+transition/update and zero-update evaluation with byte-identical retained checkpoint.
+Kaggle→Colab NOT RUN after a single precondition allocation refusal; no assignment,
+retry or provider substitution. Both parents passed SIGKILL-after-publication recovery
+and exact fresh-process/historical-reference continuation.
+
+Original Kaggle evaluation exceeded its 300 s platform cap during setup; preserved as
+infrastructure FAIL. Explicitly amended recovery batch (600 s cap, unchanged worker and
+requests, per-child state gates) completed all three remaining Kaggle operations. Total
+reserved Kaggle ceiling stayed 1,500 s across four jobs. First batch download hit DNS
+failure; a separate read-only collection recovered the completed job without GPU rerun.
+Completed work: eight bundles, nine updates, 105 interactions, 1,217 observation tiles,
+38.435 s task time; provider quota 3.00→2.74 h, retaining 2.5 h reserve. Failed attempt
+partial neural counters are unknown, not silently zero. 93 inspected local-safe tests
+and static checks PASS. All neural execution stayed on remote verified CUDA.
+
+Only one initialization and a pending-before-first-update input were tested; nonempty
+input optimizer moments, long rollouts, reverse portability and arbitrary VM-loss/
+periodic off-VM-ACK recovery remain unqualified. Automatic checkpoint routing stays
+blocked. L.1 remains Learning FAIL; no later stage. Details: CHECKPOINT_QUALIFICATION.md;
+selected evidence: experiments/checkpoint_transport; complete raw runs under ignored
+runs/checkpoint-transport. Failures and original preregistration preserved.

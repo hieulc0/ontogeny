@@ -1,0 +1,284 @@
+{
+  "batch": [
+    {
+      "expected_state": {
+        "external": "7ae22c65a7b494706fa92fd4eb751a202c0e507902830dada9b01f82c90fb493",
+        "gradients": "a4d0fee78b2337975cb0f31fd773edd750fe0e3acdb1efa214ab8b3cd32fea38",
+        "metadata": "c351f6c8d7596231b7ede98723a850da4e5c246684739ba322878fd8970c647f",
+        "model": "27adeb1910d47f35a6b77eb70121f8a5db6e5cff40e067199066d29b630984f5",
+        "optimizer": "3cf49765e2866a24c2624f41dcd911e0ca9d530a08d9c37d184fdaef90372ea9",
+        "requires_grad": "b2ca37c3f6884d8b236e1e4739bd3014f5ceb5d969b1eda8abb1b117fb28860e",
+        "rng": "7c7f1b9eb37193eef39087e521dbfca4654813beb3c0f8486ba36a7936807125",
+        "scheduler": "c8914a5205ced702f208f15b0ef09c15d23b98996e5434df65c61c8da397829a",
+        "training_mode": "38d36ce273c7be1c4d771030a94ce9d9760ca762732855090017581928dacb85"
+      },
+      "request": {
+        "arm_id": "unchanged-policy",
+        "initialization": {
+          "checkpoint": "parent",
+          "kind": "resume",
+          "seed": null
+        },
+        "inputs": [
+          {
+            "name": "parent",
+            "path": "checkpoints/parent.pt",
+            "role": "checkpoint",
+            "sha256": "0cb59bf71cd5516d1d15a9dc512cb24c08d1a47add9a2a0b344096ab0f239470",
+            "size_bytes": 652717,
+            "trusted": true
+          }
+        ],
+        "limits": {
+          "interactions": 22,
+          "output_bytes": 67108864,
+          "torch_memory_bytes": 134217728,
+          "updates": 3,
+          "wall_seconds": 120
+        },
+        "objective": {
+          "algorithm": "reinforce",
+          "baseline_decay": 0.9,
+          "gamma": 0.97,
+          "learning_rate": 0.0005
+        },
+        "operation": "evaluate",
+        "protocol_sha256": "169b971a91f53ea763a3bf5c45f5acd297f4037c733388c2eb063ea6a8759921",
+        "required_outputs": [
+          "runtime.json",
+          "execution.json",
+          "metrics.json",
+          "predictions.jsonl",
+          "learning.jsonl",
+          "checkpoint_manifest.json"
+        ],
+        "run_id": "checkpoint-transport",
+        "runtime": {
+          "cuda": "12.4",
+          "gpu": "Tesla T4",
+          "torch": "2.6.0+cu124",
+          "visible_cuda_devices": 1
+        },
+        "schema_version": 1,
+        "source": {
+          "ontogeny_sha": "a88d7d386eb502e4ffae5bde7dc504441824c76d",
+          "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d"
+        },
+        "split": "development",
+        "split_manifest_sha256": "750c8eb7e33db4d16896b9cd92c122724a8fb48a765e7d72e33fa10be866b100",
+        "targets": {
+          "criterion": "state_integrity",
+          "kind": "engineering"
+        },
+        "trial_id": "kaggle-parent",
+        "world": {
+          "config": {
+            "action_cost": 1,
+            "change_interval": 20,
+            "hazard_cost": 6,
+            "hazards": 12,
+            "height": 12,
+            "initial_energy": 100,
+            "inspect_cost": 2,
+            "max_energy": 100,
+            "max_steps": 10,
+            "resource_gain": 15,
+            "resources": 24,
+            "width": 12
+          },
+          "episodes": 2,
+          "seed": 92823
+        }
+      }
+    },
+    {
+      "expected_state": {
+        "external": "371a888e2f1353ec36ada781b94d4fdc26b68e72ed017cf386d7e5fe0c1f0bc5",
+        "gradients": "89c959230c89c901fe456139c35940f1e836bbad0d7700b35a9e7fffe40fea19",
+        "metadata": "524d8a02948e90a9e6181595c411ad813514de9795051e8c27883aac10d28036",
+        "model": "31b8cabc5feb65336c513f66b24cccc36b4816b6573afc9aa50dcff3c8d4872c",
+        "optimizer": "3b3fa0d47f2c4dbfda839d465c142609239ce8e9ffe095716e43b71a145bb4d6",
+        "requires_grad": "b2ca37c3f6884d8b236e1e4739bd3014f5ceb5d969b1eda8abb1b117fb28860e",
+        "rng": "7c7f1b9eb37193eef39087e521dbfca4654813beb3c0f8486ba36a7936807125",
+        "scheduler": "c8914a5205ced702f208f15b0ef09c15d23b98996e5434df65c61c8da397829a",
+        "training_mode": "b15e5dc2d0858d7d9f2afcad8bf251f5b807810b68219e7ebcc645cb09c2474c"
+      },
+      "request": {
+        "arm_id": "unchanged-policy",
+        "initialization": {
+          "checkpoint": "parent",
+          "kind": "resume",
+          "seed": null
+        },
+        "inputs": [
+          {
+            "name": "parent",
+            "path": "checkpoints/parent.pt",
+            "role": "checkpoint",
+            "sha256": "0ef35a0a2abd132e34a4b29cb865c26fd3ef3a58eadc3fd69b6e1dc0d8e15db2",
+            "size_bytes": 652717,
+            "trusted": true
+          }
+        ],
+        "limits": {
+          "interactions": 22,
+          "output_bytes": 67108864,
+          "torch_memory_bytes": 134217728,
+          "updates": 3,
+          "wall_seconds": 120
+        },
+        "objective": {
+          "algorithm": "reinforce",
+          "baseline_decay": 0.9,
+          "gamma": 0.97,
+          "learning_rate": 0.0005
+        },
+        "operation": "train",
+        "protocol_sha256": "169b971a91f53ea763a3bf5c45f5acd297f4037c733388c2eb063ea6a8759921",
+        "required_outputs": [
+          "runtime.json",
+          "execution.json",
+          "metrics.json",
+          "predictions.jsonl",
+          "learning.jsonl",
+          "checkpoint_manifest.json"
+        ],
+        "run_id": "checkpoint-transport",
+        "runtime": {
+          "cuda": "12.4",
+          "gpu": "Tesla T4",
+          "torch": "2.6.0+cu124",
+          "visible_cuda_devices": 1
+        },
+        "schema_version": 1,
+        "source": {
+          "ontogeny_sha": "a88d7d386eb502e4ffae5bde7dc504441824c76d",
+          "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d"
+        },
+        "split": "train",
+        "split_manifest_sha256": "279a2166e39ab487f02e136bb8d7a2ec0a53aff862c5b4e0dd67ad3d8d6e3e0e",
+        "targets": {
+          "criterion": "state_integrity",
+          "kind": "engineering"
+        },
+        "trial_id": "colab-parent",
+        "world": {
+          "config": {
+            "action_cost": 1,
+            "change_interval": 20,
+            "hazard_cost": 6,
+            "hazards": 12,
+            "height": 12,
+            "initial_energy": 100,
+            "inspect_cost": 2,
+            "max_energy": 100,
+            "max_steps": 10,
+            "resource_gain": 15,
+            "resources": 24,
+            "width": 12
+          },
+          "episodes": 1,
+          "seed": 91823
+        }
+      }
+    },
+    {
+      "expected_state": {
+        "external": "7ae22c65a7b494706fa92fd4eb751a202c0e507902830dada9b01f82c90fb493",
+        "gradients": "a4d0fee78b2337975cb0f31fd773edd750fe0e3acdb1efa214ab8b3cd32fea38",
+        "metadata": "40bf3628cc05390201e3ec34e2a71fa497181e2625658efeae9892c06f091fa8",
+        "model": "27adeb1910d47f35a6b77eb70121f8a5db6e5cff40e067199066d29b630984f5",
+        "optimizer": "3cf49765e2866a24c2624f41dcd911e0ca9d530a08d9c37d184fdaef90372ea9",
+        "requires_grad": "b2ca37c3f6884d8b236e1e4739bd3014f5ceb5d969b1eda8abb1b117fb28860e",
+        "rng": "7c7f1b9eb37193eef39087e521dbfca4654813beb3c0f8486ba36a7936807125",
+        "scheduler": "c8914a5205ced702f208f15b0ef09c15d23b98996e5434df65c61c8da397829a",
+        "training_mode": "38d36ce273c7be1c4d771030a94ce9d9760ca762732855090017581928dacb85"
+      },
+      "request": {
+        "arm_id": "unchanged-policy",
+        "initialization": {
+          "checkpoint": "parent",
+          "kind": "resume",
+          "seed": null
+        },
+        "inputs": [
+          {
+            "name": "parent",
+            "path": "checkpoints/parent.pt",
+            "role": "checkpoint",
+            "sha256": "0ef35a0a2abd132e34a4b29cb865c26fd3ef3a58eadc3fd69b6e1dc0d8e15db2",
+            "size_bytes": 652717,
+            "trusted": true
+          }
+        ],
+        "limits": {
+          "interactions": 22,
+          "output_bytes": 67108864,
+          "torch_memory_bytes": 134217728,
+          "updates": 3,
+          "wall_seconds": 120
+        },
+        "objective": {
+          "algorithm": "reinforce",
+          "baseline_decay": 0.9,
+          "gamma": 0.97,
+          "learning_rate": 0.0005
+        },
+        "operation": "evaluate",
+        "protocol_sha256": "169b971a91f53ea763a3bf5c45f5acd297f4037c733388c2eb063ea6a8759921",
+        "required_outputs": [
+          "runtime.json",
+          "execution.json",
+          "metrics.json",
+          "predictions.jsonl",
+          "learning.jsonl",
+          "checkpoint_manifest.json"
+        ],
+        "run_id": "checkpoint-transport",
+        "runtime": {
+          "cuda": "12.4",
+          "gpu": "Tesla T4",
+          "torch": "2.6.0+cu124",
+          "visible_cuda_devices": 1
+        },
+        "schema_version": 1,
+        "source": {
+          "ontogeny_sha": "a88d7d386eb502e4ffae5bde7dc504441824c76d",
+          "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d"
+        },
+        "split": "development",
+        "split_manifest_sha256": "750c8eb7e33db4d16896b9cd92c122724a8fb48a765e7d72e33fa10be866b100",
+        "targets": {
+          "criterion": "state_integrity",
+          "kind": "engineering"
+        },
+        "trial_id": "colab-parent",
+        "world": {
+          "config": {
+            "action_cost": 1,
+            "change_interval": 20,
+            "hazard_cost": 6,
+            "hazards": 12,
+            "height": 12,
+            "initial_energy": 100,
+            "inspect_cost": 2,
+            "max_energy": 100,
+            "max_steps": 10,
+            "resource_gain": 15,
+            "resources": 24,
+            "width": 12
+          },
+          "episodes": 2,
+          "seed": 92823
+        }
+      }
+    }
+  ],
+  "context": {
+    "attempt_id": "attempt-1",
+    "native_id": "sparklinghydraulics0/ontogeny-exec-44c9b56a1a8e4a53",
+    "provider": "kaggle"
+  },
+  "platform_seconds": 600,
+  "transport_sha": "74bc0e87f428748fe358cd6a6418d8e5d7f6dc15"
+}

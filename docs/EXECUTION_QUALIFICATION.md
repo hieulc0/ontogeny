@@ -213,3 +213,11 @@ Subsequent provider increment: fresh-job Colab readiness/common-worker execution
 now qualified; see COLAB_ROUTING.md for its different tested source and actual cleanup
 recovery. The earlier remaining-scope list is historical. Uploaded-checkpoint and
 cross-provider continuation qualification remain outstanding.
+
+Checkpoint follow-up: public upload/resume/evaluation passed the declared fixture on
+both providers; Colab→Kaggle exact continuation passed, while Kaggle→Colab was blocked
+by Colab allocation refusal. SIGKILL after checkpoint publication passed in both parent
+jobs. The input optimizer is still before its first update, so previously trained
+optimizer migration remains unqualified. Actual cap/DNS failures and scoped results:
+CHECKPOINT_QUALIFICATION.md. Automatic migration remains disabled; overall bidirectional
+qualification INCONCLUSIVE, L.1 STILL FAIL.
