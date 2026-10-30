@@ -38,3 +38,19 @@ and training wall cap to 120 seconds, leaving 140 seconds for platform setup/exp
 This shorter cap may cause an infrastructure failure; do not retry automatically or
 report a started job as complete without verified artifacts. Check quota again immediately
 before submission. Retain both attempts and do not change the scientific interpretation.
+
+## Colab bounded-transfer attempt
+
+The prior Colab upload sent the full 155 MiB checkpoint as one base64-encoded HTTP
+request; its TLS connection closed unexpectedly. The exact server-side cause is unknown.
+Admit one new Colab attempt after the user requested this repair. Upload and download
+through 8 MiB parts, with the parent SHA-256 verified remotely before any neural work;
+verify all result parts, archive hash and indexed file hashes locally before release.
+Preserve the previous attempts. Use the same parent, training objective, three updates,
+one discarded audit update, development examples and 200-second task / 3 GiB Torch /
+1 GiB result limits. Provider execution is bounded at 600 seconds, with finite per-part
+transport timeouts and a maximum 1,100 MiB archive. One positively verified T4 and no
+CPU fallback. If allocation or staging fails, do not claim neural execution. A started
+or ambiguous worker must be reconciled and must not be restarted automatically. Kaggle
+fallback remains subject to the original 600-second cap and 2.5-hour reserve.
+The transfer mechanism is an engineering repair, not evidence of learning-to-learn.

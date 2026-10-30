@@ -8,7 +8,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from ontogeny.execution.providers import colab, kaggle
+from ontogeny.execution.providers import colab, colab_transfer, kaggle
 
 PARENT = "8e4ea63d5e3c3719b30364614005b631d202dbf09cb666796f89f0fd2b35df7d"
 
@@ -93,9 +93,7 @@ def main() -> None:
             record.update(state="STAGING", provider="colab", readiness=proof)
             kaggle.journal(journal, record)
             parent = "/content/ontogeny-parent-" + session.nonce + ".pt"
-            upload = session.invoke(["upload", "-s", session.name, str(args.parent), parent], 360)
-            if upload.returncode:
-                raise RuntimeError("checkpoint upload failed; see private command log")
+            colab_transfer.upload_file(session, args.parent, parent, PARENT)
             root = "/content/curriculum-" + session.nonce
             script = session.directory / "bootstrap.py"
             script.write_text(bootstrap(revision, root, parent))
@@ -108,18 +106,12 @@ def main() -> None:
                 raise RuntimeError(
                     "remote execution failed or transport closed; see private command log"
                 )
-            download = session.invoke(
-                [
-                    "download",
-                    "-s",
-                    session.name,
-                    root + "/result.zip",
-                    str(args.directory / "result.zip"),
-                ],
-                600,
+            colab_transfer.download_file(
+                session,
+                root + "/result.zip",
+                args.directory / "result.zip",
+                max_bytes=1100 * 1024**2,
             )
-            if download.returncode:
-                raise RuntimeError("remote artifact download failed; see private command log")
             colab.extract_bundle(args.directory / "result.zip", args.directory / "result", 1024**3)
             result = verify(args.directory / "result", revision)
             session.release()
