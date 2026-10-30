@@ -1,0 +1,647 @@
+{
+  "execution": "COMPLETE",
+  "protocol": "ordering-retention-001",
+  "source": "b9d1cf99518d37853abfa38638831698f620caf2",
+  "admitted": true,
+  "parents": [
+    {
+      "seed": 707,
+      "initial": {
+        "path": "707-initial.pt",
+        "sha256": "93db83b13156033744f2637f86d0f2bd14413366769130e8cbf196047ea44bda"
+      },
+      "checkpoint": {
+        "path": "707-A.pt",
+        "sha256": "de97dfbb5e7484348bae60c55ca74eb75ef2a84326d44360431e22d5e4d6be0b"
+      },
+      "development": {
+        "correct": 337,
+        "count": 368
+      },
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 341,
+          "count": 368
+        },
+        "B": {
+          "correct": 24,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 808,
+      "initial": {
+        "path": "808-initial.pt",
+        "sha256": "6b8073faf2d5da77b51e3a16a684c5df9a01ac0a1fce4642f8714993e8775738"
+      },
+      "checkpoint": {
+        "path": "808-A.pt",
+        "sha256": "2bfa4e514fa5c430f9db8b06f36ca3dd227df18b88fd687ccd472de51ddd2a01"
+      },
+      "development": {
+        "correct": 342,
+        "count": 368
+      },
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 353,
+          "count": 368
+        },
+        "B": {
+          "correct": 15,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 909,
+      "initial": {
+        "path": "909-initial.pt",
+        "sha256": "f769945985f47d01214eed08d04a7fbff40135e75947fff67d6ad48a2e677450"
+      },
+      "checkpoint": {
+        "path": "909-A.pt",
+        "sha256": "2fb2c3c6731ae67ded05b07da12e5c869f800462b16dd6484cb9db17c2287108"
+      },
+      "development": {
+        "correct": 340,
+        "count": 368
+      },
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 342,
+          "count": 368
+        },
+        "B": {
+          "correct": 28,
+          "count": 368
+        }
+      }
+    }
+  ],
+  "records": [
+    {
+      "seed": 707,
+      "arm": "ordinary",
+      "parent": {
+        "path": "707-A.pt",
+        "sha256": "de97dfbb5e7484348bae60c55ca74eb75ef2a84326d44360431e22d5e4d6be0b"
+      },
+      "checkpoint": {
+        "path": "707-ordinary.pt",
+        "sha256": "48af4aef0d30f628cc4a10eef03df418008a6831f2671031f900d935f8f1dd5e"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 337,
+            "count": 368
+          },
+          "B": {
+            "correct": 28,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 34,
+            "count": 368
+          },
+          "B": {
+            "correct": 343,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 26,
+            "count": 368
+          },
+          "B": {
+            "correct": 345,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 8192,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 16,
+          "count": 368
+        },
+        "B": {
+          "correct": 352,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 707,
+      "arm": "replay",
+      "parent": {
+        "path": "707-A.pt",
+        "sha256": "de97dfbb5e7484348bae60c55ca74eb75ef2a84326d44360431e22d5e4d6be0b"
+      },
+      "checkpoint": {
+        "path": "707-replay.pt",
+        "sha256": "8604301c713c4b1d828da68c3714f3484ede65b083617d4cfa0e69fd4b84f2ad"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 337,
+            "count": 368
+          },
+          "B": {
+            "correct": 28,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 248,
+            "count": 368
+          },
+          "B": {
+            "correct": 184,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 309,
+            "count": 368
+          },
+          "B": {
+            "correct": 313,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 4096,
+      "A_replayed": 4096,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 322,
+          "count": 368
+        },
+        "B": {
+          "correct": 313,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 707,
+      "arm": "matched_new",
+      "parent": {
+        "path": "707-A.pt",
+        "sha256": "de97dfbb5e7484348bae60c55ca74eb75ef2a84326d44360431e22d5e4d6be0b"
+      },
+      "checkpoint": {
+        "path": "707-matched_new.pt",
+        "sha256": "62e3676ded779131963f19ef1342edb37a669a1abbb819d04376cadfe1400492"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 337,
+            "count": 368
+          },
+          "B": {
+            "correct": 28,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 34,
+            "count": 368
+          },
+          "B": {
+            "correct": 337,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 18,
+            "count": 368
+          },
+          "B": {
+            "correct": 352,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 20,
+          "count": 368
+        },
+        "B": {
+          "correct": 346,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 808,
+      "arm": "ordinary",
+      "parent": {
+        "path": "808-A.pt",
+        "sha256": "2bfa4e514fa5c430f9db8b06f36ca3dd227df18b88fd687ccd472de51ddd2a01"
+      },
+      "checkpoint": {
+        "path": "808-ordinary.pt",
+        "sha256": "d71ac11c44b64455931b615bfa2ba87d1a1b19b9cebf6b8744e25bc8528a3b9b"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 342,
+            "count": 368
+          },
+          "B": {
+            "correct": 26,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 33,
+            "count": 368
+          },
+          "B": {
+            "correct": 348,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 21,
+            "count": 368
+          },
+          "B": {
+            "correct": 355,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 8192,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 21,
+          "count": 368
+        },
+        "B": {
+          "correct": 357,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 808,
+      "arm": "replay",
+      "parent": {
+        "path": "808-A.pt",
+        "sha256": "2bfa4e514fa5c430f9db8b06f36ca3dd227df18b88fd687ccd472de51ddd2a01"
+      },
+      "checkpoint": {
+        "path": "808-replay.pt",
+        "sha256": "e7acb2b9defc4cf51695a438e33ca9b38bfe8df5ebc415f4ebbe6f3e7fd05f03"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 342,
+            "count": 368
+          },
+          "B": {
+            "correct": 26,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 185,
+            "count": 368
+          },
+          "B": {
+            "correct": 199,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 334,
+            "count": 368
+          },
+          "B": {
+            "correct": 315,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 4096,
+      "A_replayed": 4096,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 326,
+          "count": 368
+        },
+        "B": {
+          "correct": 315,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 808,
+      "arm": "matched_new",
+      "parent": {
+        "path": "808-A.pt",
+        "sha256": "2bfa4e514fa5c430f9db8b06f36ca3dd227df18b88fd687ccd472de51ddd2a01"
+      },
+      "checkpoint": {
+        "path": "808-matched_new.pt",
+        "sha256": "2bddc7eea3cac7c6af9c7602b0e168233110ea91906a1ee085633be93244b42c"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 342,
+            "count": 368
+          },
+          "B": {
+            "correct": 26,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 115,
+            "count": 368
+          },
+          "B": {
+            "correct": 278,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 36,
+            "count": 368
+          },
+          "B": {
+            "correct": 343,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 32,
+          "count": 368
+        },
+        "B": {
+          "correct": 348,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 909,
+      "arm": "ordinary",
+      "parent": {
+        "path": "909-A.pt",
+        "sha256": "2fb2c3c6731ae67ded05b07da12e5c869f800462b16dd6484cb9db17c2287108"
+      },
+      "checkpoint": {
+        "path": "909-ordinary.pt",
+        "sha256": "72710caad8bf6a57bffaa8b76a29c5e3828f632b8b0df27599d4691dd31ebe95"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 340,
+            "count": 368
+          },
+          "B": {
+            "correct": 27,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 88,
+            "count": 368
+          },
+          "B": {
+            "correct": 282,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 97,
+            "count": 368
+          },
+          "B": {
+            "correct": 329,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 8192,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 94,
+          "count": 368
+        },
+        "B": {
+          "correct": 329,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 909,
+      "arm": "replay",
+      "parent": {
+        "path": "909-A.pt",
+        "sha256": "2fb2c3c6731ae67ded05b07da12e5c869f800462b16dd6484cb9db17c2287108"
+      },
+      "checkpoint": {
+        "path": "909-replay.pt",
+        "sha256": "2d81ed80a5e2f1e072af70518de9fb846b1f2c7c7eeb4f48a282e4455f219776"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 340,
+            "count": 368
+          },
+          "B": {
+            "correct": 27,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 184,
+            "count": 368
+          },
+          "B": {
+            "correct": 184,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 336,
+            "count": 368
+          },
+          "B": {
+            "correct": 316,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 4096,
+      "A_replayed": 4096,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 336,
+          "count": 368
+        },
+        "B": {
+          "correct": 319,
+          "count": 368
+        }
+      }
+    },
+    {
+      "seed": 909,
+      "arm": "matched_new",
+      "parent": {
+        "path": "909-A.pt",
+        "sha256": "2fb2c3c6731ae67ded05b07da12e5c869f800462b16dd6484cb9db17c2287108"
+      },
+      "checkpoint": {
+        "path": "909-matched_new.pt",
+        "sha256": "be0a08dc5e637fda4e17f79102779da9722d9952417c3dfed3b8d7516c4ddb1a"
+      },
+      "curve": [
+        {
+          "offset": 0,
+          "A": {
+            "correct": 340,
+            "count": 368
+          },
+          "B": {
+            "correct": 27,
+            "count": 368
+          }
+        },
+        {
+          "offset": 128,
+          "A": {
+            "correct": 86,
+            "count": 368
+          },
+          "B": {
+            "correct": 282,
+            "count": 368
+          }
+        },
+        {
+          "offset": 512,
+          "A": {
+            "correct": 93,
+            "count": 368
+          },
+          "B": {
+            "correct": 275,
+            "count": 368
+          }
+        }
+      ],
+      "B_slots": 4096,
+      "B_processed": 8192,
+      "A_replayed": 0,
+      "memory_examples": 256,
+      "test": {
+        "A": {
+          "correct": 92,
+          "count": 368
+        },
+        "B": {
+          "correct": 276,
+          "count": 368
+        }
+      }
+    }
+  ],
+  "costs": {
+    "updates": 6144,
+    "training_tokens": 589824,
+    "evaluation_tokens": 178848
+  },
+  "wall_seconds": 117.34535537399995,
+  "peak_torch_bytes": 79802368,
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "device": "Tesla T4"
+}

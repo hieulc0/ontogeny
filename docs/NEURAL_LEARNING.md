@@ -87,3 +87,9 @@ fresh initializations after 512 updates on 256 examples. Three shorter/smaller c
 failed. This qualifies only that narrow supervised task; no retention, forward transfer,
 organism or structural-development gate is promoted. Canonical model/optimizer algorithms
 and schema2 are unchanged. See experiments/neural/concept_acquisition/COVERAGE_REPORT.md.
+
+The subsequent two-relation sequential study completed all paired arms but failed its
+retention/acquisition and replay-benefit gates. Replay mitigated interference while final
+competence remained insufficient; the task is contextual reversal, not independent task
+families or long-horizon plasticity. No structural-development or organism gate changes.
+See experiments/neural/sequential_retention/REPORT.md.

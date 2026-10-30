@@ -97,3 +97,7 @@ The follow-up with matched operand coverage passed its narrow acquisition gate: 
 initializations reached 94.02–95.65% on held-out comparison pairs with 256 examples and 512
 updates. This supports planning sequential-retention research; it does not establish
 self-directed learning or growth. [Full evidence](experiments/neural/concept_acquisition/COVERAGE_REPORT.md).
+
+The sequential ordering follow-up completed but failed joint acquisition/retention:
+replay preserved much more prior-task performance than ordinary training, yet did not
+meet the protected competence thresholds. [Results and limitations](experiments/neural/sequential_retention/REPORT.md).

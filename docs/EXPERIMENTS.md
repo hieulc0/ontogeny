@@ -249,3 +249,14 @@ Three secondary conditions failed. Longer training alone did not improve the sma
 set's mean test score. No architecture change or organism replacement occurred; L.1 and
 structural-development gates remain unchanged. Full protocol, costs and limitations:
 experiments/neural/concept_acquisition/COVERAGE_REPORT.md.
+
+## Sequential ordering retention
+
+At source b9d1cf99518d37853abfa38638831698f620caf2, Colab T4 session
+ontogeny-0f3bebb8d1c76307 completed all 6144 updates across three A parents and nine
+continuation branches. All parents passed initial competence admission. Ordinary training
+largely reversed A behavior while learning B; replay retained substantially more A but
+failed the joint competence/drop gates (mean final A89.13%, B85.78%). Its separate benefit
+gate also failed. Full endpoints and logs were recovered and hash-verified; cleanup was
+confirmed. No retry, checkpoint promotion or organism replacement occurred. Exact results,
+protocol, source, costs and limitations: experiments/neural/sequential_retention/REPORT.md.
