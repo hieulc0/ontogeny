@@ -11,7 +11,14 @@ from contextlib import contextmanager
 from pathlib import Path
 
 from ontogeny.execution.artifacts import confined, verify_bundle, verify_inputs, write_json
-from ontogeny.execution.contracts import ExecutionContext, Request, canonical
+from ontogeny.execution.contracts import (
+    ExecutionContext,
+    Request,
+    canonical,
+    fingerprint,
+    hexadecimal,
+)
+from ontogeny.execution.state_identity import STATE_GROUPS
 
 
 class ProviderError(RuntimeError):
@@ -113,6 +120,7 @@ def prepare(
     owner: str = "sparklinghydraulics0",
     platform_seconds: int = 1200,
     dataset_sources: tuple[str, ...] = (),
+    batch: tuple[tuple[Request, dict[str, str]], ...] = (),
 ) -> ExecutionContext:
     if not re.fullmatch("[a-z0-9_-]+", owner):
         raise ProviderError("invalid Kaggle owner")
@@ -134,13 +142,28 @@ def prepare(
         raise ProviderError(
             "checkpoint input requires explicit dataset sources, fresh jobs require none"
         )
-    native_id = f"{owner}/ontogeny-exec-{request.sha256[:16]}"
+    if batch:
+        for _, check in batch:
+            if set(check) != set(STATE_GROUPS):
+                raise ProviderError("batch gates require all complete-state groups")
+            for value in check.values():
+                hexadecimal(value, 64)
+    entries = batch or ((request, {}),)
+    if entries[0][0].sha256 != request.sha256:
+        raise ProviderError("batch principal request mismatch")
+    if len({r.sha256 for r, _ in entries}) != len(entries) or any(
+        r.source != request.source or r.runtime != request.runtime for r, _ in entries
+    ):
+        raise ProviderError("batch requests must be unique with identical source/runtime")
+    if sum(r.limits.wall_seconds for r, _ in entries) + 120 > platform_seconds:
+        raise ProviderError("batch worker budgets leave no setup/export margin")
+    batch_identity = [{"request": r.to_dict(), "expected_state": check} for r, check in entries]
+    identity = fingerprint(batch_identity) if batch else request.sha256
+    native_id = f"{owner}/ontogeny-exec-{identity[:16]}"
     context = ExecutionContext("kaggle", native_id, "attempt-1")
     directory.mkdir(parents=True, exist_ok=False)
-    encoded_request, encoded_context = (
-        canonical(request.to_dict()).decode(),
-        canonical(vars(context)).decode(),
-    )
+    encoded_context = canonical(vars(context)).decode()
+    encoded_batch = canonical(batch_identity).decode()
     visible_devices = ",".join(str(i) for i in range(request.runtime["visible_cuda_devices"]))
     launcher = f"""import os, subprocess, sys
 from pathlib import Path
@@ -162,14 +185,27 @@ run([sys.executable, '-m', 'pip', 'install', 'torch==2.6.0',
      '--index-url', 'https://download.pytorch.org/whl/cu124'])
 run([sys.executable, '-m', 'pip', 'install', 'numpy==2.1.3', 'pyyaml==6.0.2'])
 os.environ['PYTHONPATH'] = '/tmp/ontogeny/src:/tmp/adaptive-mini-gpt/src'
-request = Path('/kaggle/working/request.json')
-request.write_text({encoded_request!r})
-inputs = Path('/kaggle/working/inputs')
-run([sys.executable, '-m', 'ontogeny.execution.artifacts', '--request', str(request),
-     '--source', '/kaggle/input', '--output', str(inputs)])
-run([sys.executable, '-m', 'ontogeny.execution.worker', '--request', str(request),
-     '--context', {encoded_context!r}, '--upstream', '/tmp/adaptive-mini-gpt',
-     '--inputs', str(inputs), '--output', '/kaggle/working/result'], Path('/tmp/ontogeny'))
+import json
+entries = json.loads({encoded_batch!r})
+for index, entry in enumerate(entries):
+    spec = entry['request']
+    from hashlib import sha256
+    identity = sha256(json.dumps(spec, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+    request = Path('/kaggle/working') / ('request-' + identity + '.json')
+    request.write_text(json.dumps(spec))
+    inputs = Path('/kaggle/working/inputs') / identity
+    output = (Path('/kaggle/working/result') if index == 0
+              else Path('/kaggle/working/followups') / identity)
+    run([sys.executable, '-m', 'ontogeny.execution.artifacts', '--request', str(request),
+         '--source', '/kaggle/input', '--output', str(inputs)])
+    run([sys.executable, '-m', 'ontogeny.execution.worker', '--request', str(request),
+         '--context', {encoded_context!r}, '--upstream', '/tmp/adaptive-mini-gpt',
+         '--inputs', str(inputs), '--output', str(output)], Path('/tmp/ontogeny'))
+    if entry['expected_state']:
+        actual = json.loads((output / 'final_state.json').read_text())
+        if actual != entry['expected_state']:
+            raise RuntimeError('batch complete-state gate failed: ' + identity)
+
 """
     (directory / "launch.py").write_text(launcher)
     write_json(
@@ -189,7 +225,14 @@ run([sys.executable, '-m', 'ontogeny.execution.worker', '--request', str(request
     write_json(directory / "request.json", request.to_dict())
     write_json(
         directory / "submission.json",
-        {"context": vars(context), "platform_seconds": platform_seconds},
+        {
+            "context": vars(context),
+            "transport_sha": subprocess.check_output(
+                ["git", "rev-parse", "HEAD"], text=True
+            ).strip(),
+            "platform_seconds": platform_seconds,
+            "batch": batch_identity if batch else [],
+        },
     )
     return context
 
@@ -223,6 +266,8 @@ def submit(directory: Path, ledger: Path, *, reserve_hours: float = 2.5) -> dict
             "reserve_hours": reserve_hours,
             "quota_before": json.loads(quota),
             "submitted_at": time.time(),
+            "batch": submission.get("batch", []),
+            "transport_sha": submission.get("transport_sha"),
         }
         journal(path, record)
         try:
@@ -271,7 +316,15 @@ def status(request: Request, ledger: Path) -> dict:
         if not match:
             raise ProviderError("unrecognized native status; reservation remains held")
         native = match.group(1)
-        record.update(state=native, status_output=output, observed_at=time.time())
+        # Duration-cap cancellation is a confirmed stopped job, not a successful result.
+        state = (
+            "CANCELLED"
+            if (native == "CANCEL_ACKNOWLEDGED" and "was stopped because it exceeded" in output)
+            else native
+        )
+        record.update(
+            native_state=native, state=state, status_output=output, observed_at=time.time()
+        )
         journal(path, record)
         return record
 
@@ -288,6 +341,21 @@ def collect(request: Request, ledger: Path, directory: Path) -> dict:
         )
         root = directory / "result"
         receipt = verify_bundle(root, request)
+        if record.get("batch"):
+            receipts = {request.sha256: dict(receipt)}
+            for entry in record["batch"]:
+                child = Request.parse(entry["request"])
+                child_root = (
+                    root
+                    if child.sha256 == request.sha256
+                    else directory / "followups" / child.sha256
+                )
+                receipts[child.sha256] = verify_bundle(child_root, child)
+                if entry["expected_state"] != json.loads(
+                    (child_root / "final_state.json").read_text()
+                ):
+                    raise ProviderError("batch expected complete-state mismatch")
+            receipt["batch_receipts"] = receipts
         receipt["quota_after"] = json.loads(command(["kaggle", "quota", "--format", "json"]))
         if record["state"] != "COMPLETE":
             raise ProviderError("provider terminal status is not COMPLETE")

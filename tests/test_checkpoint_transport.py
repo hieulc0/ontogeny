@@ -106,3 +106,72 @@ def test_state_identity_tracks_rng_and_container_types():
     assert before["model"] == after["model"]
     with pytest.raises(TypeError):
         fingerprints((object(), *values[1:]), torch, np)
+
+
+def test_batch_preparation_keeps_worker_requests_and_gates_explicit(tmp_path, monkeypatch):
+    import ast
+    import subprocess
+
+    from ontogeny.execution.state_identity import STATE_GROUPS
+
+    request, _ = parent_input(tmp_path)
+    evaluated = checkpoint_request(request, tmp_path / "opaque.pt", "evaluate")
+    monkeypatch.setattr(
+        kaggle.subprocess,
+        "check_output",
+        lambda args, **kw: "" if "status" in args else "a" * 40 + "\trefs/heads/main",
+    )
+    monkeypatch.setattr(
+        kaggle.subprocess, "run", lambda *a, **kw: subprocess.CompletedProcess([], 0)
+    )
+    gates = {name: "c" * 64 for name in STATE_GROUPS}
+    batch = ((evaluated, gates), (request, gates))
+    job = tmp_path / "job"
+    context = kaggle.prepare(
+        evaluated, job, platform_seconds=600, dataset_sources=("owner/private",), batch=batch
+    )
+    body = (job / "launch.py").read_text()
+    ast.parse(body)
+    assert context.native_id.split("-")[-1] != evaluated.sha256[:16]
+    submission = json.loads((job / "submission.json").read_text())
+    assert [item["request"] for item in submission["batch"]] == [
+        evaluated.to_dict(),
+        request.to_dict(),
+    ]
+    assert "batch complete-state gate failed" in body
+    with pytest.raises(kaggle.ProviderError, match="setup/export"):
+        kaggle.prepare(
+            evaluated,
+            tmp_path / "bad",
+            platform_seconds=300,
+            dataset_sources=("owner/private",),
+            batch=batch,
+        )
+    with pytest.raises(kaggle.ProviderError, match="all complete-state"):
+        kaggle.prepare(
+            evaluated,
+            tmp_path / "partial",
+            platform_seconds=600,
+            dataset_sources=("owner/private",),
+            batch=((evaluated, {}),),
+        )
+
+
+def test_native_duration_cancellation_is_not_pass(tmp_path, monkeypatch):
+    from ontogeny.execution.artifacts import write_json
+
+    req, _ = parent_input(tmp_path)
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    write_json(ledger / (req.sha256 + ".json"), {"native_id": "owner/job", "state": "RUNNING"})
+    monkeypatch.setattr(
+        kaggle,
+        "command",
+        lambda *a, **kw: (
+            "KernelWorkerStatus.CANCEL_ACKNOWLEDGED\n"
+            "Your notebook was stopped because it exceeded the max allowed execution duration."
+        ),
+    )
+    result = kaggle.status(req, ledger)
+    assert result["state"] == "CANCELLED"
+    assert result["native_state"] == "CANCEL_ACKNOWLEDGED"

@@ -92,3 +92,33 @@ and checkpoints stay under ignored runs/, selected sanitized evidence in experim
 Even a full engineering PASS does not qualify self-directed learning or L.1 acquisition.
 Automatic mid-training migration, durable periodic off-VM acknowledgments and abrupt
 VM/preemption recovery remain unqualified until separately implemented and fault-tested.
+
+## Recorded cap failure and transport-only recovery protocol
+
+Original Kaggle evaluation 965fef14111e3cca0a73b444aac766cec1bbf2ec37c00e0101791096dbf2a6b9
+was stopped at the 300 s platform cap. It reached package setup around 301 s; a partial
+worker directory has no complete result. Preserve CANCEL_ACKNOWLEDGED/native duration
+failure and all partial outputs. It is an infrastructure FAIL, not an evaluation PASS.
+Dependent controllers were stopped before either cross-provider case was allocated.
+Kaggle quota after that failure: 2.80 h; the 2.5 h reserve remains binding.
+
+Before any recovery execution, admit one sequential, fail-closed Kaggle batch capped at
+600 platform seconds. It runs the exact original evaluation request, then the already
+frozen Colab-origin train and evaluation requests through separate public common-worker
+processes. Both private datasets remain checkpoint-only/hash-verified. Reuse package
+setup within that one GPU job; do not change worker source a88d7d386eb502e4ffae5bde7dc504441824c76d,
+upstream, request bytes, objectives, input checkpoints, worlds, numerical profile or
+comparison gates. The new adapter's published source is separately recorded. Verify
+each child's expected state fingerprints before starting its successor. All bundles,
+including earlier successful children on later failure, must be exported and retained.
+No automatic retry: this is a separately recorded manual infrastructure recovery.
+
+The total Kaggle reservation ceiling remains 1,500 s: three prior 300 s jobs plus one
+600 s batch replaces the two unsubmitted 300 s jobs. At most four native Kaggle jobs,
+with the evaluation retried once under an explicit attempt identity; no further retry.
+Worker budgets stay unchanged, counting any partial neural work from the stopped job
+as unknown rather than claiming zero. Colab retains its two unsubmitted cross-provider
+assignments only after Kaggle evaluation passes. If quota admission fails or the batch
+fails, stop and report the remaining gates NOT RUN/INCONCLUSIVE. Automatic migration
+remains disabled. This amendment preserves the original failure and does not turn its
+300 s cap into an assumed pass.
