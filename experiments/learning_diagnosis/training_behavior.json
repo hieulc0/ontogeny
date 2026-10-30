@@ -1,0 +1,134 @@
+[
+  {
+    "seed": 42,
+    "periods": [
+      {
+        "period": "early",
+        "interactions": 2227,
+        "actions": {
+          "4": 308,
+          "0": 308,
+          "1": 261,
+          "5": 357,
+          "6": 264,
+          "2": 304,
+          "3": 425
+        },
+        "resources": 40,
+        "hazards": 118,
+        "resource_opportunities": 231,
+        "resource_interactions": 40,
+        "positive_reward_fraction": 0.01796138302649304,
+        "mean_undiscounted_return": -2.6666666666666665
+      },
+      {
+        "period": "late",
+        "interactions": 2297,
+        "actions": {
+          "3": 237,
+          "5": 594,
+          "0": 368,
+          "6": 571,
+          "2": 153,
+          "4": 168,
+          "1": 206
+        },
+        "resources": 47,
+        "hazards": 146,
+        "resource_opportunities": 174,
+        "resource_interactions": 47,
+        "positive_reward_fraction": 0.02046147148454506,
+        "mean_undiscounted_return": -2.6666666666666665
+      }
+    ],
+    "exhaustion": 256
+  },
+  {
+    "seed": 43,
+    "periods": [
+      {
+        "period": "early",
+        "interactions": 2087,
+        "actions": {
+          "0": 280,
+          "4": 212,
+          "3": 302,
+          "5": 320,
+          "2": 300,
+          "1": 430,
+          "6": 243
+        },
+        "resources": 26,
+        "hazards": 121,
+        "resource_opportunities": 189,
+        "resource_interactions": 26,
+        "positive_reward_fraction": 0.012458073790129372,
+        "mean_undiscounted_return": -2.6666666666666665
+      },
+      {
+        "period": "late",
+        "interactions": 2488,
+        "actions": {
+          "6": 94,
+          "5": 1583,
+          "1": 506,
+          "0": 46,
+          "2": 53,
+          "3": 89,
+          "4": 117
+        },
+        "resources": 38,
+        "hazards": 93,
+        "resource_opportunities": 71,
+        "resource_interactions": 38,
+        "positive_reward_fraction": 0.01527331189710611,
+        "mean_undiscounted_return": -2.6666666666666665
+      }
+    ],
+    "exhaustion": 256
+  },
+  {
+    "seed": 44,
+    "periods": [
+      {
+        "period": "early",
+        "interactions": 2270,
+        "actions": {
+          "2": 291,
+          "3": 416,
+          "5": 424,
+          "1": 289,
+          "0": 236,
+          "6": 409,
+          "4": 205
+        },
+        "resources": 35,
+        "hazards": 118,
+        "resource_opportunities": 205,
+        "resource_interactions": 35,
+        "positive_reward_fraction": 0.015418502202643172,
+        "mean_undiscounted_return": -2.6666666666666665
+      },
+      {
+        "period": "late",
+        "interactions": 1850,
+        "actions": {
+          "0": 396,
+          "2": 255,
+          "1": 617,
+          "4": 269,
+          "3": 109,
+          "6": 112,
+          "5": 92
+        },
+        "resources": 17,
+        "hazards": 129,
+        "resource_opportunities": 288,
+        "resource_interactions": 17,
+        "positive_reward_fraction": 0.009189189189189189,
+        "mean_undiscounted_return": -2.6666666666666665
+      }
+    ],
+    "exhaustion": 256
+  }
+]
