@@ -92,3 +92,8 @@ A fixed-capacity comparison-concept experiment completed 12 fresh research stude
 Colab. Training fit improved, but all four conditions failed the preregistered across-seed
 acquisition gate. See [results](experiments/neural/concept_acquisition/REPORT.md) and the
 [inactive structural-development research sequence](docs/STRUCTURAL_DEVELOPMENT.md).
+
+The follow-up with matched operand coverage passed its narrow acquisition gate: all three
+initializations reached 94.02–95.65% on held-out comparison pairs with 256 examples and 512
+updates. This supports planning sequential-retention research; it does not establish
+self-directed learning or growth. [Full evidence](experiments/neural/concept_acquisition/COVERAGE_REPORT.md).

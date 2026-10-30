@@ -1,0 +1,761 @@
+{
+  "execution": "COMPLETE",
+  "protocol": "comparison-coverage-001",
+  "source": "cb013147fc455175bb0a15bb4cf4187ffede72c8",
+  "records": [
+    {
+      "identity": "404-degree-2",
+      "seed": 404,
+      "degree": 2,
+      "checkpoints": {
+        "0": {
+          "path": "404-degree-2-0.pt",
+          "sha256": "45ee0144d8e047d2e11da44cf32c20184d784e0886fd6f74130fc3a7d54ab439"
+        },
+        "128": {
+          "path": "404-degree-2-128.pt",
+          "sha256": "52a6178fa1095ff1d63a2d1d17dcb7ae4d1b3936dc14596df8b32918ca845d07"
+        },
+        "512": {
+          "path": "404-degree-2-512.pt",
+          "sha256": "13d3ee5dd83d6cb54969ac65d189929e681f8b82d61d8fe864f8779227f2fede"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 64
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 35,
+            "count": 64
+          },
+          "development": {
+            "correct": 198,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 63,
+            "count": 64
+          },
+          "development": {
+            "correct": 329,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 64,
+            "count": 64
+          },
+          "development": {
+            "correct": 335,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 64,
+            "count": 64
+          },
+          "development": {
+            "correct": 334,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 335,
+          "count": 368
+        },
+        "512": {
+          "correct": 336,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 522,
+        "34": 473,
+        "35": 475,
+        "36": 491,
+        "37": 529,
+        "38": 500,
+        "39": 529,
+        "40": 492,
+        "41": 481,
+        "42": 483,
+        "43": 505,
+        "44": 495,
+        "45": 525,
+        "46": 526,
+        "47": 492,
+        "48": 569,
+        "49": 499,
+        "50": 519,
+        "51": 543,
+        "52": 516,
+        "53": 573,
+        "54": 499,
+        "55": 537,
+        "56": 504,
+        "57": 485,
+        "58": 544,
+        "59": 520,
+        "60": 510,
+        "61": 500,
+        "62": 521,
+        "63": 496
+      }
+    },
+    {
+      "identity": "404-degree-8",
+      "seed": 404,
+      "degree": 8,
+      "checkpoints": {
+        "0": {
+          "path": "404-degree-8-0.pt",
+          "sha256": "4c056b23ee1c3c875ed67e68a7402eb149d87bfd7e81cb45bc63249a117c92b2"
+        },
+        "128": {
+          "path": "404-degree-8-128.pt",
+          "sha256": "6e67e7504cc0bbd77cdf497f21852d287896eea9967765a430880341c118d19c"
+        },
+        "512": {
+          "path": "404-degree-8-512.pt",
+          "sha256": "0977dcf994d794a58dade1c8e299aefb9aa106f07e90c94d36e6aacb608f235b"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 256
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 192,
+            "count": 256
+          },
+          "development": {
+            "correct": 278,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 227,
+            "count": 256
+          },
+          "development": {
+            "correct": 319,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 246,
+            "count": 256
+          },
+          "development": {
+            "correct": 340,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 255,
+            "count": 256
+          },
+          "development": {
+            "correct": 356,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 324,
+          "count": 368
+        },
+        "512": {
+          "correct": 346,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 472,
+        "34": 540,
+        "35": 495,
+        "36": 508,
+        "37": 526,
+        "38": 494,
+        "39": 526,
+        "40": 508,
+        "41": 502,
+        "42": 496,
+        "43": 512,
+        "44": 515,
+        "45": 529,
+        "46": 476,
+        "47": 529,
+        "48": 493,
+        "49": 535,
+        "50": 556,
+        "51": 516,
+        "52": 526,
+        "53": 533,
+        "54": 494,
+        "55": 477,
+        "56": 525,
+        "57": 514,
+        "58": 488,
+        "59": 510,
+        "60": 527,
+        "61": 509,
+        "62": 521,
+        "63": 501
+      }
+    },
+    {
+      "identity": "505-degree-2",
+      "seed": 505,
+      "degree": 2,
+      "checkpoints": {
+        "0": {
+          "path": "505-degree-2-0.pt",
+          "sha256": "c77f49024c5aaa27ebe4c434600e5aa9d2aace3b3c5ef8af1ed2bd1d694715b6"
+        },
+        "128": {
+          "path": "505-degree-2-128.pt",
+          "sha256": "1afeac6bad0aed4e418ff21bd5a393f9fbfe7893cb3febf49aa04f0b2b7fece3"
+        },
+        "512": {
+          "path": "505-degree-2-512.pt",
+          "sha256": "4f5c2bbc7a3994ad3f6cd4f67d34f0120396d126ae900dc9c6b12911841e73d8"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 64
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 40,
+            "count": 64
+          },
+          "development": {
+            "correct": 229,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 57,
+            "count": 64
+          },
+          "development": {
+            "correct": 327,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 57,
+            "count": 64
+          },
+          "development": {
+            "correct": 320,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 64,
+            "count": 64
+          },
+          "development": {
+            "correct": 337,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 329,
+          "count": 368
+        },
+        "512": {
+          "correct": 338,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 522,
+        "34": 473,
+        "35": 475,
+        "36": 491,
+        "37": 529,
+        "38": 500,
+        "39": 529,
+        "40": 492,
+        "41": 481,
+        "42": 483,
+        "43": 505,
+        "44": 495,
+        "45": 525,
+        "46": 526,
+        "47": 492,
+        "48": 569,
+        "49": 499,
+        "50": 519,
+        "51": 543,
+        "52": 516,
+        "53": 573,
+        "54": 499,
+        "55": 537,
+        "56": 504,
+        "57": 485,
+        "58": 544,
+        "59": 520,
+        "60": 510,
+        "61": 500,
+        "62": 521,
+        "63": 496
+      }
+    },
+    {
+      "identity": "505-degree-8",
+      "seed": 505,
+      "degree": 8,
+      "checkpoints": {
+        "0": {
+          "path": "505-degree-8-0.pt",
+          "sha256": "a702334473422e23882c8054f8974e2a0d51392b1c5af1a423c0df96c6867cb4"
+        },
+        "128": {
+          "path": "505-degree-8-128.pt",
+          "sha256": "53bda83300f0346c868f7b4a595eed65652f47ec57fa3bf617e01b193622adaf"
+        },
+        "512": {
+          "path": "505-degree-8-512.pt",
+          "sha256": "11c53f040dcb9395b12af12b8990bce7c61c1c544f15618ccebe7ec224db5115"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 256
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 192,
+            "count": 256
+          },
+          "development": {
+            "correct": 278,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 245,
+            "count": 256
+          },
+          "development": {
+            "correct": 345,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 251,
+            "count": 256
+          },
+          "development": {
+            "correct": 351,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 256,
+            "count": 256
+          },
+          "development": {
+            "correct": 357,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 338,
+          "count": 368
+        },
+        "512": {
+          "correct": 352,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 472,
+        "34": 540,
+        "35": 495,
+        "36": 508,
+        "37": 526,
+        "38": 494,
+        "39": 526,
+        "40": 508,
+        "41": 502,
+        "42": 496,
+        "43": 512,
+        "44": 515,
+        "45": 529,
+        "46": 476,
+        "47": 529,
+        "48": 493,
+        "49": 535,
+        "50": 556,
+        "51": 516,
+        "52": 526,
+        "53": 533,
+        "54": 494,
+        "55": 477,
+        "56": 525,
+        "57": 514,
+        "58": 488,
+        "59": 510,
+        "60": 527,
+        "61": 509,
+        "62": 521,
+        "63": 501
+      }
+    },
+    {
+      "identity": "606-degree-2",
+      "seed": 606,
+      "degree": 2,
+      "checkpoints": {
+        "0": {
+          "path": "606-degree-2-0.pt",
+          "sha256": "03140136b04fe2407da401661fed69cab222ae9f8f0ffdf3446d16f632323c79"
+        },
+        "128": {
+          "path": "606-degree-2-128.pt",
+          "sha256": "ec67115cff52082d94c7b86311ffafcc528a81d2b1a3425f1797a9a1240354fc"
+        },
+        "512": {
+          "path": "606-degree-2-512.pt",
+          "sha256": "9ef281a876901231ad69ba5fd20c7ef729a5135fbc408ac9810ef771ee25355b"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 64
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 46,
+            "count": 64
+          },
+          "development": {
+            "correct": 278,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 62,
+            "count": 64
+          },
+          "development": {
+            "correct": 329,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 64,
+            "count": 64
+          },
+          "development": {
+            "correct": 328,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 64,
+            "count": 64
+          },
+          "development": {
+            "correct": 328,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 320,
+          "count": 368
+        },
+        "512": {
+          "correct": 310,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 522,
+        "34": 473,
+        "35": 475,
+        "36": 491,
+        "37": 529,
+        "38": 500,
+        "39": 529,
+        "40": 492,
+        "41": 481,
+        "42": 483,
+        "43": 505,
+        "44": 495,
+        "45": 525,
+        "46": 526,
+        "47": 492,
+        "48": 569,
+        "49": 499,
+        "50": 519,
+        "51": 543,
+        "52": 516,
+        "53": 573,
+        "54": 499,
+        "55": 537,
+        "56": 504,
+        "57": 485,
+        "58": 544,
+        "59": 520,
+        "60": 510,
+        "61": 500,
+        "62": 521,
+        "63": 496
+      }
+    },
+    {
+      "identity": "606-degree-8",
+      "seed": 606,
+      "degree": 8,
+      "checkpoints": {
+        "0": {
+          "path": "606-degree-8-0.pt",
+          "sha256": "85dd1edb34057c82ccd5f37f77310eab8e9ff8c8ce72ec0bb23ee6621810f0c6"
+        },
+        "128": {
+          "path": "606-degree-8-128.pt",
+          "sha256": "9d456c215b534bb71ec460104a71e677416631b270a436cfd56536acc92b114f"
+        },
+        "512": {
+          "path": "606-degree-8-512.pt",
+          "sha256": "09f5ac958f2490258dde0c18d766a7aa044f9ef43cdf6af226a52d1024927913"
+        }
+      },
+      "curve": [
+        {
+          "step": 0,
+          "development": {
+            "correct": 0,
+            "count": 368
+          },
+          "training": {
+            "correct": 0,
+            "count": 256
+          }
+        },
+        {
+          "step": 32,
+          "training": {
+            "correct": 192,
+            "count": 256
+          },
+          "development": {
+            "correct": 278,
+            "count": 368
+          }
+        },
+        {
+          "step": 128,
+          "training": {
+            "correct": 225,
+            "count": 256
+          },
+          "development": {
+            "correct": 310,
+            "count": 368
+          }
+        },
+        {
+          "step": 256,
+          "training": {
+            "correct": 249,
+            "count": 256
+          },
+          "development": {
+            "correct": 342,
+            "count": 368
+          }
+        },
+        {
+          "step": 512,
+          "training": {
+            "correct": 255,
+            "count": 256
+          },
+          "development": {
+            "correct": 353,
+            "count": 368
+          }
+        }
+      ],
+      "tests": {
+        "0": {
+          "correct": 0,
+          "count": 368
+        },
+        "128": {
+          "correct": 316,
+          "count": 368
+        },
+        "512": {
+          "correct": 346,
+          "count": 368
+        }
+      },
+      "operand_counts": {
+        "32": 531,
+        "33": 472,
+        "34": 540,
+        "35": 495,
+        "36": 508,
+        "37": 526,
+        "38": 494,
+        "39": 526,
+        "40": 508,
+        "41": 502,
+        "42": 496,
+        "43": 512,
+        "44": 515,
+        "45": 529,
+        "46": 476,
+        "47": 529,
+        "48": 493,
+        "49": 535,
+        "50": 556,
+        "51": 516,
+        "52": 526,
+        "53": 533,
+        "54": 494,
+        "55": 477,
+        "56": 525,
+        "57": 514,
+        "58": 488,
+        "59": 510,
+        "60": 527,
+        "61": 509,
+        "62": 521,
+        "63": 501
+      }
+    }
+  ],
+  "costs": {
+    "updates": 3072,
+    "training_tokens": 294912,
+    "evaluation_tokens": 134784
+  },
+  "wall_seconds": 58.58621271900006,
+  "peak_torch_bytes": 79804416,
+  "torch": "2.6.0+cu124",
+  "numpy": "2.1.3",
+  "device": "Tesla T4"
+}

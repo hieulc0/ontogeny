@@ -80,3 +80,10 @@ Framework RNGs are process-global. Separate interleaved research arms must use d
 processes or explicit state snapshot/restore boundaries; the owner does not create an
 implicit per-model Torch generator. Current independent and organism workers run separate
 processes. Policy/sampler Random instances remain explicit external-state members.
+
+A subsequent independent matched-coverage comparison cohort passed its prespecified
+acquisition gate at fixed architecture: 94.02–95.65% exact held-out accuracy across three
+fresh initializations after 512 updates on 256 examples. Three shorter/smaller conditions
+failed. This qualifies only that narrow supervised task; no retention, forward transfer,
+organism or structural-development gate is promoted. Canonical model/optimizer algorithms
+and schema2 are unchanged. See experiments/neural/concept_acquisition/COVERAGE_REPORT.md.

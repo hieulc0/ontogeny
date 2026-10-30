@@ -236,3 +236,16 @@ helped in the paired observations, but the strongest condition reached only 85.5
 No tuning/retry or promotion followed. Existing student/organism histories are preserved;
 L.1 and structural-development gates are unchanged. Protocol, costs, limitations and
 all outcomes: experiments/neural/concept_acquisition/REPORT.md.
+
+## Matched-coverage acquisition
+
+Source cb013147fc455175bb0a15bb4cf4187ffede72c8 completed six fresh states on Colab T4
+session ontogeny-4953351498113018. All 3072 updates, 18 complete checkpoints and raw logs
+were recovered and verified; owned session cleanup confirmed. The preregistered primary
+condition (256 examples, 512 updates) passed narrow acquisition: held-out exact accuracy
+94.02%, 95.65%, 94.02% across seeds 404/505/606. Both data sizes covered every operand
+uniformly; the range 32..63 and its pairs were disjoint from the consumed earlier cohort.
+Three secondary conditions failed. Longer training alone did not improve the smaller
+set's mean test score. No architecture change or organism replacement occurred; L.1 and
+structural-development gates remain unchanged. Full protocol, costs and limitations:
+experiments/neural/concept_acquisition/COVERAGE_REPORT.md.
