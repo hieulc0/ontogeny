@@ -33,3 +33,37 @@ def test_invalid_requests_fail():
             comparisons("train", pairs=count)
     with pytest.raises(ValueError):
         Comparison(1, 2).tokens("invalid")  # type: ignore[arg-type]
+
+
+def test_regular_coverage_is_matched_and_held_out():
+    from collections import Counter
+
+    from mini_gpt.data.comparison import regular_comparisons
+
+    def rows(split, degree):
+        return regular_comparisons(
+            split, values=tuple(range(32, 64)), degree=degree, max_degree=8, seed=771
+        )
+
+    low, high = rows("train", 2), rows("train", 8)
+    assert len(low) == 64 and len(high) == 256
+    assert set(low) < set(high)
+    for degree, train in ((2, low), (8, high)):
+        assert Counter(r.left for r in train) == {v: degree for v in range(32, 64)}
+        assert Counter(r.right for r in train) == {v: degree for v in range(32, 64)}
+    dev, test = rows("development", 2), rows("test", 2)
+    assert dev == rows("development", 8) and test == rows("test", 8)
+    assert len(dev) == len(test) == 368
+    assert not set(dev) & set(test) and not (set(dev) | set(test)) & set(high)
+    assert len(set(high) | set(dev) | set(test)) == 32 * 31
+    assert not (set(high) | set(dev) | set(test)) & set(comparisons("test"))
+    for group in (low, high, dev, test):
+        assert sum(r.target == 49 for r in group) == len(group) // 2
+
+
+@pytest.mark.parametrize("degree", [True, 0, 3, 10])
+def test_regular_invalid_degree(degree):
+    from mini_gpt.data.comparison import regular_comparisons
+
+    with pytest.raises(ValueError):
+        regular_comparisons("train", values=tuple(range(32)), degree=degree, max_degree=8, seed=771)

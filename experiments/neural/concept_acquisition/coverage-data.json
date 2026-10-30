@@ -1,0 +1,26 @@
+{
+  "train-2": {
+    "count": 64,
+    "sha256": "73515aef87d416db2862740b564e8cdd31e3c2bb1f14bc11f8a94bbb4d8d53f0"
+  },
+  "train-8": {
+    "count": 256,
+    "sha256": "ee9026ceb0ba89632c548ad41e7039faca8ba63a3f8f543cc338fc37355c56be"
+  },
+  "development-2": {
+    "count": 368,
+    "sha256": "2357d52f00a0a9ad46b531adc6f67bc9ee9157e170d9fc14ea49115241c37614"
+  },
+  "development-8": {
+    "count": 368,
+    "sha256": "2357d52f00a0a9ad46b531adc6f67bc9ee9157e170d9fc14ea49115241c37614"
+  },
+  "test-2": {
+    "count": 368,
+    "sha256": "90a5413f7b4c221dadc736abf5842df20700f8849ea42377e47692a2c0459d3e"
+  },
+  "test-8": {
+    "count": 368,
+    "sha256": "90a5413f7b4c221dadc736abf5842df20700f8849ea42377e47692a2c0459d3e"
+  }
+}

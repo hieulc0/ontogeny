@@ -78,7 +78,8 @@ finally:
             response.returncode
             or result["source"] != revision
             or result["execution"] != "COMPLETE"
-            or len(result["records"]) != 12
+            or result.get("protocol") != "comparison-coverage-001"
+            or len(result["records"]) != 6
         ):
             raise RuntimeError("incomplete cohort; inspect recovered evidence")
         session.release()
