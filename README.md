@@ -84,5 +84,6 @@ revisions recorded in those reports; their scientific artifacts are preserved.
 The first internal research student has **10,054,016 parameters**. A bounded two-update
 Kaggle pilot saved and verified complete checkpoints and exact fresh-process continuation.
 That is an engineering result, not a language or learning-to-learn qualification.
-See [the measured pilot](experiments/neural/initial_student/REPORT.md). Continuing it onto
-new subjects needs an explicit training-segment interface, which is the next build.
+See [the measured pilot](experiments/neural/initial_student/REPORT.md). An explicit training-segment interface and a small synthetic curriculum are now available;
+their neural continuation has not yet been verified remotely. See [data](data/README.md)
+and [learning-to-learn study direction](docs/LEARNING_TO_LEARN.md).

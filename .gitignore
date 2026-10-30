@@ -12,3 +12,4 @@ runs/*
 .gemini/
 .aws/
 .codex/
+data/generated/

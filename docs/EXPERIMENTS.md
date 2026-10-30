@@ -191,3 +191,14 @@ partial work is unknown; no archive was recovered and its owned session was stop
 The Kaggle run was an explicitly recorded new fresh lineage, not a claim of continuation.
 Full protocol, actual costs, failure, lineage and checkpoint paths:
 experiments/neural/initial_student/REPORT.md. Old reports and learner states are preserved.
+
+## Student curriculum and continuation preparation
+
+A deterministic, project-authored starter curriculum and explicit segment-continuation
+interface have been implemented. Its 2,000 examples comprise 1,587 training, 202
+development and 211 test instances across five idealized domains. The splits share
+underlying task templates; they are not evidence of learning to learn. Only local-safe
+data, metadata and lineage contracts have been checked. The new segment interface has not
+been exercised with a real checkpoint on a remote GPU. No new neural training, scientific
+acquisition, transfer or architectural development has been qualified. See
+LEARNING_TO_LEARN.md and data/README.md.
