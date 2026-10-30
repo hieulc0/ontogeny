@@ -25,3 +25,16 @@ seconds; retain 2.5 Kaggle GPU hours and require margin 0.01 hour. One Colab ass
 with positive readiness; fallback to Kaggle only after confirmed pre-start unavailability.
 No automatic retries, CPU fallback or switching an ambiguous started job. Export and verify
 checkpoint bytes before releasing Colab; preserve raw failures.
+
+## Pre-training provider recovery amendment
+
+The first Colab T4 passed readiness, but upload of the parent checkpoint failed with an
+SSL unexpected EOF before the worker started. The owned session was stopped and cleanup
+confirmed. No neural update occurred. Admit one separate Kaggle continuation attempt;
+there is no ambiguous active job. Preserve the same parent, dataset, updates, evaluation,
+audit, memory and output limits. Quota observed 2.61 h; retain the 2.5 h reserve plus
+0.01 h margin using a 340-second platform cap. Tighten worker task cap to 200 seconds
+and training wall cap to 120 seconds, leaving 140 seconds for platform setup/export.
+This shorter cap may cause an infrastructure failure; do not retry automatically or
+report a started job as complete without verified artifacts. Check quota again immediately
+before submission. Retain both attempts and do not change the scientific interpretation.

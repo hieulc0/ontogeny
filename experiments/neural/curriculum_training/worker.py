@@ -124,7 +124,7 @@ def main() -> None:
             "--additional-updates",
             "3",
             "--wall-seconds",
-            "180",
+            "120",
             "--max-torch-memory-mib",
             "3072",
         ]
@@ -160,7 +160,7 @@ def main() -> None:
             str(args.output / "after.json"),
         ]
     )
-    if time.monotonic() - start > 300:
+    if time.monotonic() - start > 200:
         raise RuntimeError("task wall budget exceeded")
     files = {
         str(p.relative_to(args.output)): {"sha256": file_digest(p), "size_bytes": p.stat().st_size}
