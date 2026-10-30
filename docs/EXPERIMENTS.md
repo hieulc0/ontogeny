@@ -202,3 +202,14 @@ data, metadata and lineage contracts have been checked. The new segment interfac
 been exercised with a real checkpoint on a remote GPU. No new neural training, scientific
 acquisition, transfer or architectural development has been qualified. See
 LEARNING_TO_LEARN.md and data/README.md.
+
+## Curriculum continuation attempt
+
+The preregistered three-update continuation did not run. Colab T4 readiness passed, but
+checkpoint upload failed before worker execution; cleanup was confirmed. The separately
+admitted Kaggle recovery submitted a job before its private checkpoint dataset was ready;
+Kaggle rejected the attachment and the worker failed on the missing file before loading
+or training. Quota was 2.61→2.56 h, with a 2.5 h reserve. No new learner state, metrics,
+continuation qualification or scientific result was produced. A controller correction
+checks dataset readiness and rejected-input responses for future runs. Full evidence and
+exact source/job identities: experiments/neural/curriculum_training/REPORT.md.

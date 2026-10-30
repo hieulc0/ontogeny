@@ -146,6 +146,10 @@ def main() -> None:
         )
         if dataset not in response or "being created" not in response:
             raise RuntimeError("private checkpoint upload unconfirmed")
+        record["state"] = "DATASET_CREATED"
+        kaggle.journal(journal, record)
+        if kaggle.command(["kaggle", "datasets", "status", dataset]).strip().lower() != "ready":
+            raise RuntimeError("checkpoint dataset is not ready; no job was submitted")
         job = args.directory / "job"
         job.mkdir()
         native = "sparklinghydraulics0/ontogeny-curriculum-run-" + revision[:10]
@@ -188,6 +192,10 @@ def main() -> None:
         )
         if not re.search(r"Kernel version \d+ successfully pushed", response):
             raise RuntimeError("Kaggle submission unconfirmed")
+        if "not valid dataset sources" in response:
+            record.update(state="SUBMITTED_INPUT_REJECTED", submission=response)
+            kaggle.journal(journal, record)
+            raise RuntimeError("job submitted without its checkpoint input; reconcile it")
         record.update(state="SUBMITTED", submission=response)
         kaggle.journal(journal, record)
         print(json.dumps(record, indent=2))
@@ -204,7 +212,7 @@ def main() -> None:
                     record.update(state="UNKNOWN", cleanup="unconfirmed")
         elif record.get("state") in ("SUBMITTING", "UPLOADING"):
             record["state"] = "UNKNOWN"
-        elif record.get("state") != "UNKNOWN":
+        elif record.get("state") not in ("UNKNOWN", "SUBMITTED_INPUT_REJECTED"):
             record["state"] = "FAILED"
         record.update(reason=str(error), error_kind=type(error).__name__)
         kaggle.journal(journal, record)
