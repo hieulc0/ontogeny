@@ -1,0 +1,108 @@
+{
+  "immediate": [
+    {
+      "seed": 42,
+      "status": "PASS",
+      "accuracy": 1,
+      "first_quarter": 0.6640625,
+      "last_quarter": 1,
+      "paired_differences": {
+        "random": {
+          "mean": 0.482421875,
+          "lower95": 0.4390960267840044
+        },
+        "frozen": {
+          "mean": 0.482421875,
+          "lower95": 0.4390960267840044
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "status": "PASS",
+      "accuracy": 1,
+      "first_quarter": 0.80859375,
+      "last_quarter": 1,
+      "paired_differences": {
+        "random": {
+          "mean": 0.482421875,
+          "lower95": 0.4390960267840044
+        },
+        "frozen": {
+          "mean": 0.486328125,
+          "lower95": 0.4429916873887459
+        }
+      }
+    },
+    {
+      "seed": 44,
+      "status": "PASS",
+      "accuracy": 1,
+      "first_quarter": 0.5,
+      "last_quarter": 1,
+      "paired_differences": {
+        "random": {
+          "mean": 0.482421875,
+          "lower95": 0.4390960267840044
+        },
+        "frozen": {
+          "mean": 0.482421875,
+          "lower95": 0.4390960267840044
+        }
+      }
+    }
+  ],
+  "delayed": [
+    {
+      "seed": 42,
+      "status": "FAIL",
+      "accuracy": 0.15234375,
+      "first_quarter": 0.09375,
+      "last_quarter": 0.09375,
+      "paired_differences": {
+        "random": {
+          "mean": 0,
+          "lower95": -0.013273983205390394
+        },
+        "frozen": {
+          "mean": 0,
+          "lower95": -0.013273983205390394
+        }
+      }
+    },
+    {
+      "seed": 43,
+      "status": "FAIL",
+      "accuracy": 0.15625,
+      "first_quarter": 0.16796875,
+      "last_quarter": 0.10546875,
+      "paired_differences": {
+        "random": {
+          "mean": 0.00390625,
+          "lower95": -0.003749999999999999
+        },
+        "frozen": {
+          "mean": 0.0078125,
+          "lower95": -0.0015491485978260302
+        }
+      }
+    },
+    {
+      "seed": 44,
+      "status": "FAIL",
+      "accuracy": 0.189453125,
+      "first_quarter": 0.109375,
+      "last_quarter": 0.10546875,
+      "paired_differences": {
+        "random": {
+          "mean": 0.037109375,
+          "lower95": 0.0015132059386234048
+        },
+        "frozen": {
+          "mean": 0.033203125,
+          "lower95": -0.002007464901148462
+        }
+      }
+    }
+  ]
+}

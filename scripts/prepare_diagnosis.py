@@ -1,5 +1,6 @@
 """Render a private pinned diagnostic GPU job after publishing source."""
 
+import argparse
 import json
 import subprocess
 from pathlib import Path
@@ -8,15 +9,22 @@ from ontogeny.neural.persistence import UPSTREAM_SHA
 
 
 def main() -> None:
-    sha = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--revision", default="HEAD")
+    parser.add_argument("--job", type=Path, default=Path("runs/learning-diagnosis/job"))
+    args = parser.parse_args()
+    sha = subprocess.check_output(["git", "rev-parse", args.revision], text=True).strip()
     if subprocess.check_output(["git", "status", "--porcelain"], text=True).strip():
         raise RuntimeError("commit executable code first")
     remote = subprocess.check_output(
         ["git", "ls-remote", "origin", "refs/heads/main"], text=True
     ).split()[0]
-    if sha != remote:
-        raise RuntimeError("publish exact execution source first")
-    output = Path("runs/learning-diagnosis/job")
+    if (
+        subprocess.run(["git", "merge-base", "--is-ancestor", sha, remote], check=False).returncode
+        != 0
+    ):
+        raise RuntimeError("execution revision must be published in origin/main history")
+    output = args.job
     output.mkdir(parents=True, exist_ok=False)
     launcher = f"""import os, subprocess, sys
 from pathlib import Path

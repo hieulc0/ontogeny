@@ -87,3 +87,18 @@ starting revision during this session. Ontogeny made no upstream edits or reset.
 Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
 the newer local checkout was not used or claimed compatible. Default source verification
 correctly rejects it until a separately qualified integration revision is adopted.
+
+## Learning failure diagnosis — executed
+
+Execution source c09f0cb5e1d6fb5a050a977020d9b65f06580ed0; upstream exact8567836fb2c8c915d442b7c2fbedb4fd9b30396d.
+Kaggle sparklinghydraulics0/ontogeny-learning-diagnosis version1 COMPLETE, 155.434 s.
+Positive-advantage sign/ownership test PASS. Original checkpoint endpoints probed on
+training observations only; 31/31 parameter tensors changed per initialization.
+Immediate cue canary PASS: all three 100% held-out. Delayed canary FAIL:15.23/15.63/18.95%.
+No repair or original-world rollout after failed delayed prerequisite. L.1 STILL FAIL.
+6,145 total updates,12,288 canary training and18,432 evaluation interactions. New
+canary checkpoint reload verified; fresh-process next-update equivalence NOT RUN.
+Non-neural arithmetic/coverage/artifact audit PASS; curves visually checked. Download
+DNS failure retried; offline plot-cache failure resolved by installing pinned plotting
+dependency. All raw data and negative outcomes retained. No upstream/code-capacity/world
+changes, no L.2. Details:LEARNING_DIAGNOSIS.md; defects:RESEARCH_DEFECTS.md.

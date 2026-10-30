@@ -1,0 +1,146 @@
+[
+  {
+    "task": "immediate",
+    "seed": 42,
+    "entropy_early": 0.13178801857781305,
+    "entropy_late": 0.0005257170256142913,
+    "gradient_norm_late": 4.5418038615147004e-17,
+    "evaluation": {
+      "random": {
+        "success": 0.517578125,
+        "cumulative_return": 0.03515625,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.517578125,
+        "cumulative_return": 0.03515625,
+        "entropy": 0.6931462077922018
+      },
+      "learning": {
+        "success": 1,
+        "cumulative_return": 1.0,
+        "entropy": 0.0005132103893452549
+      }
+    }
+  },
+  {
+    "task": "immediate",
+    "seed": 43,
+    "entropy_early": 0.14546464821703542,
+    "entropy_late": 0.0029301868232060758,
+    "gradient_norm_late": 1.225633997650832e-07,
+    "evaluation": {
+      "random": {
+        "success": 0.517578125,
+        "cumulative_return": 0.03515625,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.513671875,
+        "cumulative_return": 0.02734375,
+        "entropy": 0.6930910402091263
+      },
+      "learning": {
+        "success": 1,
+        "cumulative_return": 1.0,
+        "entropy": 0.002952242246650936
+      }
+    }
+  },
+  {
+    "task": "immediate",
+    "seed": 44,
+    "entropy_early": 0.12534072903214122,
+    "entropy_late": 0.0012709785039036628,
+    "gradient_norm_late": 4.674622858451646e-12,
+    "evaluation": {
+      "random": {
+        "success": 0.517578125,
+        "cumulative_return": 0.03515625,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.517578125,
+        "cumulative_return": 0.03515625,
+        "entropy": 0.693050952839093
+      },
+      "learning": {
+        "success": 1,
+        "cumulative_return": 1.0,
+        "entropy": 0.0012574843805823912
+      }
+    }
+  },
+  {
+    "task": "delayed",
+    "seed": 42,
+    "entropy_early": 0.6509788626848008,
+    "entropy_late": 0.6156936548268879,
+    "gradient_norm_late": 0.3200977809803902,
+    "evaluation": {
+      "random": {
+        "success": 0.15234375,
+        "cumulative_return": -0.6953125,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.15234375,
+        "cumulative_return": -0.6953125,
+        "entropy": 0.6931464613222713
+      },
+      "learning": {
+        "success": 0.15234375,
+        "cumulative_return": -0.6953125,
+        "entropy": 0.6904612109621477
+      }
+    }
+  },
+  {
+    "task": "delayed",
+    "seed": 43,
+    "entropy_early": 0.6690469337029438,
+    "entropy_late": 0.691736075331028,
+    "gradient_norm_late": 0.18500184347794857,
+    "evaluation": {
+      "random": {
+        "success": 0.15234375,
+        "cumulative_return": -0.6953125,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.1484375,
+        "cumulative_return": -0.703125,
+        "entropy": 0.6930900092108233
+      },
+      "learning": {
+        "success": 0.15625,
+        "cumulative_return": -0.6875,
+        "entropy": 0.693065920826137
+      }
+    }
+  },
+  {
+    "task": "delayed",
+    "seed": 44,
+    "entropy_early": 0.6878330131350134,
+    "entropy_late": 0.6770776176008736,
+    "gradient_norm_late": 0.24503522907070874,
+    "evaluation": {
+      "random": {
+        "success": 0.15234375,
+        "cumulative_return": -0.6953125,
+        "entropy": 0.6931471805599453
+      },
+      "frozen": {
+        "success": 0.15625,
+        "cumulative_return": -0.6875,
+        "entropy": 0.6930508317697737
+      },
+      "learning": {
+        "success": 0.189453125,
+        "cumulative_return": -0.62109375,
+        "entropy": 0.6144736893403863
+      }
+    }
+  }
+]

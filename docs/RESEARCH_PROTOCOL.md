@@ -23,3 +23,8 @@ report FAIL/INCONCLUSIVE/NOT RUN per gate. Roll back rejected candidates to immu
 parents. Ablate updates, initialization/history and observation costs before attributing
 benefit to development. L.2 additionally needs history-matched reset controls and prior
 competence gates; no silent optimizer resets or replacement specialists.
+
+Follow-up diagnosis protocol and actual gated outcomes are recorded separately in
+LEARNING_DIAGNOSIS.md. Its canaries do not amend the original L.1 preregistration or
+reopen consumed sealed worlds; the delayed prerequisite failed, so navigation repair
+was not admitted.

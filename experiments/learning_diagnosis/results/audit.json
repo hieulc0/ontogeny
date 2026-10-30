@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "counts": {
+    "updates": 6145,
+    "training_interactions": 12288,
+    "evaluation_interactions": 18432
+  },
+  "checks": [
+    {
+      "task": "immediate",
+      "seed": 42,
+      "max_loss_reconstruction_error": 2.6863917934605297e-07,
+      "initial_sha256": "4910255c76c1573357fa979e26e0924389eee04f06fbc2ea3a35f47731960646",
+      "final_sha256": "78c5c71580c97d818972b873ef4a2db4931fbd06a755a174ac1a5e9c4ee99f50"
+    },
+    {
+      "task": "immediate",
+      "seed": 43,
+      "max_loss_reconstruction_error": 4.2879694639452737e-07,
+      "initial_sha256": "0b86b6582ece9b62f354559cf0b436f42f5b0568bfe1436f6192ec440ee92c71",
+      "final_sha256": "ec264ee64dd0bace9d51f3ca1c39dabfeacde64c1ae67dc43a139e0b88026ebf"
+    },
+    {
+      "task": "immediate",
+      "seed": 44,
+      "max_loss_reconstruction_error": 3.085860549312258e-07,
+      "initial_sha256": "6f0799196a88a670a8042fa9f95326227fea79be15299df2d7bc48c998af84dd",
+      "final_sha256": "54e81006813ad9b0eb955bc95bf7d587ee4ea9bf021311f8a29410545e59003d"
+    },
+    {
+      "task": "delayed",
+      "seed": 42,
+      "max_loss_reconstruction_error": 2.0462146266275738e-07,
+      "initial_sha256": "4910255c76c1573357fa979e26e0924389eee04f06fbc2ea3a35f47731960646",
+      "final_sha256": "d70dd52e88699c53ede5dd0e3ac5349eead00fbfd87557c2a1ef94b97fede5b1"
+    },
+    {
+      "task": "delayed",
+      "seed": 43,
+      "max_loss_reconstruction_error": 2.1449744247448166e-07,
+      "initial_sha256": "0b86b6582ece9b62f354559cf0b436f42f5b0568bfe1436f6192ec440ee92c71",
+      "final_sha256": "fc10fa51eb426ec2e651244f9315251a90cfefde7043e8c8e5edfd8fda2cf868"
+    },
+    {
+      "task": "delayed",
+      "seed": 44,
+      "max_loss_reconstruction_error": 2.1277003936504002e-07,
+      "initial_sha256": "6f0799196a88a670a8042fa9f95326227fea79be15299df2d7bc48c998af84dd",
+      "final_sha256": "ec5e5388cf39d261f7bad74d6600e69a605352d7d89f88f60f799ca664c95797"
+    }
+  ],
+  "artifacts": {
+    "delayed-44-initial.pt": {
+      "bytes": 641578,
+      "sha256": "6f0799196a88a670a8042fa9f95326227fea79be15299df2d7bc48c998af84dd"
+    },
+    "immediate-44-evaluation.json": {
+      "bytes": 421590,
+      "sha256": "7b6291e42e963c41eb47f83af71c0d3d6ce5970b1ee4f4b2a2e2cc4bf17146bd"
+    },
+    "immediate-42-training.jsonl": {
+      "bytes": 405838,
+      "sha256": "ccc7b9425e0a8faa57aa2a0abca3e8d284ab8d1cf935c6193eb9ca48e8bd6a84"
+    },
+    "delayed-42-evaluation.json": {
+      "bytes": 952356,
+      "sha256": "25bc1a0a3f21bf33600ebd06099a5de16ca7977b2c77cc69c6ba748bde072b00"
+    },
+    "immediate-44-training.jsonl": {
+      "bytes": 404427,
+      "sha256": "22dacb512c2d987db291f3e4f916fd9182b092c3fb193fce2d9e4d23426dfe56"
+    },
+    "delayed-43-evaluation.json": {
+      "bytes": 952626,
+      "sha256": "7068447c133e790b84aad5d6f9c4fe9fa167f2cf7823a609e1db76afc58e79fa"
+    },
+    "delayed-43-initial.pt": {
+      "bytes": 641578,
+      "sha256": "0b86b6582ece9b62f354559cf0b436f42f5b0568bfe1436f6192ec440ee92c71"
+    },
+    "immediate-43-evaluation.json": {
+      "bytes": 421856,
+      "sha256": "aad436eb8d2913a09995e7298c72dcd63768df4bc99c0bb817617511a6daea2b"
+    },
+    "delayed-43-training.jsonl": {
+      "bytes": 832498,
+      "sha256": "682d65304d3570f011a78e2e6f79d8d6692889b7e4e8d181f37471c8592f1f6d"
+    },
+    "immediate-44-final.pt": {
+      "bytes": 2174514,
+      "sha256": "54e81006813ad9b0eb955bc95bf7d587ee4ea9bf021311f8a29410545e59003d"
+    },
+    "delayed-44-evaluation.json": {
+      "bytes": 951548,
+      "sha256": "ae060defff60c1c3d0c18d97210b94554202e57d92927c2fdda9318c343caf3a"
+    },
+    "immediate-42-initial.pt": {
+      "bytes": 641642,
+      "sha256": "4910255c76c1573357fa979e26e0924389eee04f06fbc2ea3a35f47731960646"
+    },
+    "immediate-43-final.pt": {
+      "bytes": 2174514,
+      "sha256": "ec264ee64dd0bace9d51f3ca1c39dabfeacde64c1ae67dc43a139e0b88026ebf"
+    },
+    "delayed-44-final.pt": {
+      "bytes": 2213810,
+      "sha256": "ec5e5388cf39d261f7bad74d6600e69a605352d7d89f88f60f799ca664c95797"
+    },
+    "delayed-44-training.jsonl": {
+      "bytes": 833381,
+      "sha256": "d1e61d0e929a6585efee3191c1fd0958b66c9037088ef7783234bc10366965e4"
+    },
+    "original_diagnosis.json": {
+      "bytes": 519210,
+      "sha256": "11edf512cb0648804e3295839282dea8293e75bfe00482191b95ed6332f702b9"
+    },
+    "immediate-42-final.pt": {
+      "bytes": 2174514,
+      "sha256": "78c5c71580c97d818972b873ef4a2db4931fbd06a755a174ac1a5e9c4ee99f50"
+    },
+    "immediate-42-evaluation.json": {
+      "bytes": 422368,
+      "sha256": "31a41f29613d7b4e4beb02057a1ceb52fce475554a0faaf3b341825836cc1b14"
+    },
+    "canary_results.json": {
+      "bytes": 2336,
+      "sha256": "ad465fd7ac9c7002a553d6de46464dafc1c5409f1c33de9c82468e00cca313ce"
+    },
+    "completion.json": {
+      "bytes": 1728,
+      "sha256": "6eb7c5b23687691a55624733f68c34a3062cf8fc328c4255ad1cc613cac90c45"
+    },
+    "immediate-44-initial.pt": {
+      "bytes": 641578,
+      "sha256": "6f0799196a88a670a8042fa9f95326227fea79be15299df2d7bc48c998af84dd"
+    },
+    "gradient_test.json": {
+      "bytes": 2963,
+      "sha256": "02be6bb6a9808bde668ed49fa9bd6c16c57536b761fda2f5e0b9582be3598185"
+    },
+    "immediate-43-training.jsonl": {
+      "bytes": 404861,
+      "sha256": "a337df1f00cd3f254c2afc3f0012ae1062d7a68256a44266bc4f5a81bb618ca0"
+    },
+    "delayed-42-training.jsonl": {
+      "bytes": 832846,
+      "sha256": "a4d9661fbfde7794b6b34f62818d1ad0e51ac6a0679f6a00d3e5519d2d3d2602"
+    },
+    "immediate-43-initial.pt": {
+      "bytes": 641578,
+      "sha256": "0b86b6582ece9b62f354559cf0b436f42f5b0568bfe1436f6192ec440ee92c71"
+    },
+    "positive-advantage.pt": {
+      "bytes": 2093874,
+      "sha256": "eac6cdc6bd9cb82c4a0f3298d3a3655f69f5cd4e343586e2c04a7e0059e35f18"
+    },
+    "delayed-43-final.pt": {
+      "bytes": 2213874,
+      "sha256": "fc10fa51eb426ec2e651244f9315251a90cfefde7043e8c8e5edfd8fda2cf868"
+    },
+    "delayed-42-initial.pt": {
+      "bytes": 641642,
+      "sha256": "4910255c76c1573357fa979e26e0924389eee04f06fbc2ea3a35f47731960646"
+    },
+    "delayed-42-final.pt": {
+      "bytes": 2213874,
+      "sha256": "d70dd52e88699c53ede5dd0e3ac5349eead00fbfd87557c2a1ef94b97fede5b1"
+    }
+  }
+}

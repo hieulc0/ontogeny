@@ -51,3 +51,8 @@ See [training curves](experiments/l1_single_cell/results/training.svg) and
 [comparison records](experiments/l1_single_cell/results/comparison.csv).
 
 Development conventions: [CONTRIBUTING.md](CONTRIBUTING.md). Mandatory agent rules: [AGENTS.md](AGENTS.md).
+
+Failure diagnosis: [report](docs/LEARNING_DIAGNOSIS.md) and
+[defect register](docs/RESEARCH_DEFECTS.md). Immediate cue learning passed on all three
+initializations; the delayed sequence failed. L.1 remains FAIL; no navigation repair
+or later stage was admitted.

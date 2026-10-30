@@ -328,3 +328,12 @@ starting revision during this session. Ontogeny made no upstream edits or reset.
 Every actual GPU job cloned/verified 8567836fb2c8c915d442b7c2fbedb4fd9b30396d;
 the newer local checkout was not used or claimed compatible. Default source verification
 correctly rejects it until a separately qualified integration revision is adopted.
+
+## Learning failure diagnosis follow-up
+
+See [LEARNING_DIAGNOSIS.md](LEARNING_DIAGNOSIS.md): immediate cue canary PASS on
+all three initializations (100% held-out success), delayed three-action canary FAIL.
+Actual positive-advantage/optimizer test PASS; original seven-action training-only
+endpoint analysis completed. Failure is localized before navigation, not uniquely
+attributed to delayed credit. No original-world correction or new qualification was
+admitted. Original L.1 remains FAIL and original checkpoints/protocol/results unchanged.
