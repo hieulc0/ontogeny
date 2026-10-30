@@ -397,3 +397,14 @@ def test_counter_overrun_fails_before_success_publication(tmp_path, request_file
         tmp_path / "result",
     )
     assert result["execution"] == "FAILED" and "counters" in result["reason"]
+
+
+def test_audit_branches_count_toward_sensory_cost(tmp_path):
+    from ontogeny.execution.tasks import physical_observation_tiles
+
+    (tmp_path / "resumed").mkdir()
+    (tmp_path / "resumed/predictions.jsonl").write_text('{"observation_tiles":25}\n')
+    (tmp_path / "reference_experience.jsonl").write_text(
+        json.dumps({"observation": {"tiles": [[0, 0, "empty"]] * 9}}) + "\n"
+    )
+    assert physical_observation_tiles(tmp_path, 100) == 134

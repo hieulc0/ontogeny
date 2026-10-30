@@ -1,0 +1,14 @@
+{
+  "collected": 0,
+  "continuation_exact": true,
+  "final_energy": 82,
+  "hazard_exposures": 1,
+  "interactions": 21,
+  "logical_interactions": 10,
+  "logical_updates": 1,
+  "mean_entropy": 1.9457027430895555,
+  "observation_tiles": 122,
+  "peak_torch_memory_bytes": 77035520,
+  "task_wall_seconds": 7.438837610000064,
+  "updates": 3
+}

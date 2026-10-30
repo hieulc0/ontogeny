@@ -57,5 +57,11 @@ Failure diagnosis: [report](docs/LEARNING_DIAGNOSIS.md) and
 initializations; the delayed sequence failed. L.1 remains FAIL; no navigation repair
 or later stage was admitted.
 
-Draft next-work planning (not implemented): [research roadmap](docs/DEVELOPMENT_ROADMAP.md)
+Next-work planning: [research roadmap](docs/DEVELOPMENT_ROADMAP.md)
 and [provider-neutral Colab/Kaggle execution design](docs/REMOTE_EXECUTION.md).
+
+Execution foundation: [contract, usage and measured qualification](docs/EXECUTION_QUALIFICATION.md).
+`ontogeny-exec` provides strict request validation, common worker tasks and Kaggle
+prepare/submit/status/collect/verify. The Kaggle continuation fixture passes exact
+fresh-process and historical-runner comparisons. Colab and auto-routing are not implemented.
+This is infrastructure qualification; L.1 remains Learning FAIL.

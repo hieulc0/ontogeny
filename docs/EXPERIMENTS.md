@@ -102,3 +102,20 @@ Non-neural arithmetic/coverage/artifact audit PASS; curves visually checked. Dow
 DNS failure retried; offline plot-cache failure resolved by installing pinned plotting
 dependency. All raw data and negative outcomes retained. No upstream/code-capacity/world
 changes, no L.2. Details:LEARNING_DIAGNOSIS.md; defects:RESEARCH_DEFECTS.md.
+
+## Common execution foundation — engineering qualification
+
+Source f8c4bc88cf53ae8b1b82d37fa33fad7a212eeedf; upstream exact8567836fb2c8c915d442b7c2fbedb4fd9b30396d.
+Kaggle sparklinghydraulics0/ontogeny-exec-2fc67f1e54ff4758 version1 COMPLETE.
+Request digest2fc67f1e54ff475818e1b109e1783017ae8a34d7a10c8eeeaabfa8d7bb328b19.
+Common worker SUCCEEDED; scientific verdict NOT_RUN. Full fresh-process continuation
+and independent unchanged historical runner comparisons exact; 3 physical audit/update
+steps,21 interactions. Candidate state1 update/10 interactions. All21 bundle files
+recovered/verified through new adapter. Quota reports3.06h->3.00h;2.5h reserve retained.
+One visible CUDA device, two physical T4s, full runtime inventory captured. No migration
+of old two-visible-device checkpoints, no Colab, routing, new scientific trial or L.2.
+Original sensory metric122 candidate tiles later clarified with a physical total253
+from raw traces; local regression test covers that accounting-only addition. Historical
+remote outputs remain unchanged. All72 local-safe tests/static checks pass. Initial
+local build fetch failed under restricted DNS, then authorized packaging succeeded.
+Details and exact limitations: EXECUTION_QUALIFICATION.md. Evidence: experiments/execution_foundation.

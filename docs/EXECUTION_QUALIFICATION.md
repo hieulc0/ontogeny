@@ -128,3 +128,83 @@ uv run python -m ontogeny.execution.cli verify --request runs/execution/request.
 
 A scientific training request is not automatically created from this fixture. No
 scientific acquisition or transfer result follows from these engineering gates.
+
+## Actual result
+
+**Engineering qualification PASS for the tested Kaggle continuation task.**
+Scientific result remains NOT_RUN; L.1 Learning FAIL is unchanged.
+
+- Tested source: `f8c4bc88cf53ae8b1b82d37fa33fad7a212eeedf`.
+- Request digest: `2fc67f1e54ff475818e1b109e1783017ae8a34d7a10c8eeeaabfa8d7bb328b19`.
+- [Kaggle run, version 1](https://www.kaggle.com/code/sparklinghydraulics0/ontogeny-exec-2fc67f1e54ff4758): COMPLETE.
+- Common worker SUCCEEDED, 13.704 s including its admission; task 7.439 s excluding
+  package installation/VM setup. Kernel active time was not separately profiled.
+- Python 3.13.15, Torch 2.6.0+cu124, CUDA 12.4, driver 580.178.04, T4. Two physical
+  devices allocated, one visible. Full package/version inventory retained in runtime.json.
+- All nine full-state groups, sampled action/distribution/transition and the unchanged
+  historical runner comparison match exactly. Nine pending experiences restored.
+- Three physical optimizer steps / 21 physical interactions, one candidate logical
+  update / ten logical interactions. Candidate final energy 82; this is a test fixture,
+  not a behavioral qualification metric.
+- Peak Torch-allocated memory 77,035,520 bytes <128 MiB. Indexed bundle 9,646,693 bytes
+  <64 MiB. Adapter recovered and verified all 21 files plus immutable checkpoint hashes.
+- Reported GPU quota 3.06 h before, 3.00 h after. Values are rounded account reports,
+  not a precise profiling or billing measurement; protected reserve remains 2.5 h.
+- Local final checks: 72 non-neural tests, Ruff check/format, Pyright, compile checks PASS.
+
+Small versioned evidence: experiments/execution_foundation; complete binary bundle and
+raw job logs: runs/execution-foundation/download. The versioned evidence directory is
+selected records, NOT itself a complete verified result bundle.
+
+The original metrics.json observation_tiles field counts candidate sensory observations
+(122), while interactions/updates count physical audit work too. This was clarified after
+remote execution: the new physical_observation_tiles metric and budget audit count all
+three branches (253). A local regression test and replay of recorded traces verify that
+accounting-only addition; the remote state/behavior evidence remains pinned to the tested
+source above. No repeat GPU run or scientific change was made for this telemetry addition.
+
+Two local setup issues were preserved: initial build dependency fetch failed under the
+sandbox's DNS restriction, then succeeded with authorized package access; formatting/type
+issues during development were corrected before publication. There was no failed neural
+qualification attempt and no result-driven retry.
+
+### Reproduce the exact published run
+
+The request file contains its immutable protocol/source identities. Use it directly,
+not a newly hashed version of this now-extended report. From the final clean checkout:
+
+```bash
+uv sync --locked
+ontogeny-exec validate --request experiments/execution_foundation/request.json
+ontogeny-exec prepare --request experiments/execution_foundation/request.json --job runs/reproduce-worker/job
+ontogeny-exec submit --job runs/reproduce-worker/job --ledger runs/reproduce-worker/ledger --reserve-hours 2.5
+ontogeny-exec status --request experiments/execution_foundation/request.json --ledger runs/reproduce-worker/ledger
+# Collect only after COMPLETE; an ERROR's partial artifacts remain available for diagnosis.
+ontogeny-exec collect --request experiments/execution_foundation/request.json --ledger runs/reproduce-worker/ledger --directory runs/reproduce-worker/download
+ontogeny-exec verify --request experiments/execution_foundation/request.json --directory runs/reproduce-worker/download/result
+```
+
+A new explicit reproduction may create another native version; the original version 1
+and selected evidence remain intact. Repeated submit with the SAME ledger never submits
+again. Request/artifact-index digests use canonical JSON; individual file SHA-256 values
+hash raw bytes. No local checkpoint load is needed for collection or verification.
+
+### Remaining scope and next decision
+
+The common request/worker boundary and Kaggle continuation transport are operational.
+Public train/evaluate handlers use the same PolicyCell and have contract/mock coverage;
+separate end-to-end uploaded-checkpoint resume/evaluate submissions have NOT yet been
+GPU-qualified. The actual test qualified an owned pending checkpoint restored in another
+process within one remote job. Abrupt VM loss, periodic off-VM checkpoint ACK, native
+Kaggle cancellation and account-wide multi-controller reservations are not qualified.
+Split labels protect operation dispatch; the first release uses explicit inline world
+recipes, not a general external dataset/sealed-manifest authorization system.
+
+Next: close the public staged resume/evaluate path, then add Colab transport using this
+same contract/worker and explicit artifact export-before-stop. Move provider admission
+into a validated adapter boundary while preserving current neural import guards and
+historical checkpoints. Update AGENTS explicitly when enabling Colab. No fake Kaggle
+flag and no CPU fallback. Only after per-provider qualification should routing, cooldown
+caching and automatic recovery be enabled. Cross-provider numerical continuation remains
+unqualified even with a single visible device. Scientific matched credit/binding work
+can proceed separately on qualified Kaggle; do not turn infrastructure PASS into L.1 PASS.

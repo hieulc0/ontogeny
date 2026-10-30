@@ -1,8 +1,10 @@
 # Portable remote execution — design draft
 
-Status: PROPOSED, not implemented or GPU-qualified. Research checked 2026-10-30.
-No runtime was allocated for this design. Current executable training remains Kaggle-only.
-This proposal does not silently loosen its guards or amend historical experiments.
+Status: Kaggle foundation implemented and engineering-qualified; Colab/routing remain
+PROPOSED. Research checked 2026-10-30. Actual implemented scope, tested source and limits:
+[EXECUTION_QUALIFICATION.md](EXECUTION_QUALIFICATION.md). The larger design below includes
+unimplemented scheduling/portability features. Executable training remains Kaggle-only;
+no guards or historical experiments were silently amended.
 
 ## Decision
 

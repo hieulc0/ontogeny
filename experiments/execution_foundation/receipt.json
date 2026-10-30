@@ -1,0 +1,23 @@
+{
+  "artifacts_sha256": "3b30fc5082fcd62c958432e4c2af8fa543f45fa767825ef2020adc868e347d3c",
+  "execution": "SUCCEEDED",
+  "quota_after": [
+    {
+      "refreshAt": "2026-10-31T00:00:00+00:00",
+      "remaining": "3.00h",
+      "resource": "GPU",
+      "total": "30.00h",
+      "used": "27.00h"
+    },
+    {
+      "refreshAt": "2026-10-31T00:00:00+00:00",
+      "remaining": "20.00h",
+      "resource": "TPU",
+      "total": "20.00h",
+      "used": "0.00h"
+    }
+  ],
+  "request_sha256": "2fc67f1e54ff475818e1b109e1783017ae8a34d7a10c8eeeaabfa8d7bb328b19",
+  "science": "NOT_RUN",
+  "verified_files": 21
+}

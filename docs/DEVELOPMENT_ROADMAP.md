@@ -241,5 +241,7 @@ changes and preserve old serialized class paths. Use behavior-based module names
 
 Before any GPU submission: publish exact executable SHAs, verify immutable inputs,
 check available quota, reserve setup/export/retry costs and freeze stop conditions.
-No implementation, new configuration, skill, runtime allocation or training was performed
-as part of writing this plan. Proposed next actions remain reviewable drafts.
+The plan itself did not implement or launch experiments. Subsequently the common
+worker/Kaggle foundation was implemented and engineering-qualified; see
+EXECUTION_QUALIFICATION.md for the exact limited scope. Colab/routing and the matched
+scientific study remain proposed, with no automatic advancement.

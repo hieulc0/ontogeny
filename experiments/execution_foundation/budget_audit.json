@@ -1,0 +1,15 @@
+{
+  "source_sha": "f8c4bc88cf53ae8b1b82d37fa33fad7a212eeedf",
+  "native_id": "sparklinghydraulics0/ontogeny-exec-2fc67f1e54ff4758",
+  "version": 1,
+  "execution": "SUCCEEDED",
+  "science": "NOT_RUN",
+  "verified_files": 21,
+  "logical_observation_tiles": 122,
+  "physical_observation_tiles": 253,
+  "physical_updates": 3,
+  "physical_interactions": 21,
+  "historical_runner_exact": true,
+  "fresh_process_exact": true,
+  "raw_bundle": "runs/execution-foundation/download/result"
+}

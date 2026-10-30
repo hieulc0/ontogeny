@@ -136,6 +136,23 @@ def act_step(
     return row
 
 
+def physical_observation_tiles(output: Path, logical_tiles: int) -> int:
+    """Include discarded continuation/reference branches in actual sensory cost."""
+    total = logical_tiles
+    resumed = output / "resumed" / "predictions.jsonl"
+    if resumed.exists():
+        total += sum(
+            json.loads(row)["observation_tiles"] for row in resumed.read_text().splitlines()
+        )
+    reference = output / "reference_experience.jsonl"
+    if reference.exists():
+        total += sum(
+            len(json.loads(row)["observation"]["tiles"])
+            for row in reference.read_text().splitlines()
+        )
+    return total
+
+
 def run_task(
     request: Request,
     context: ExecutionContext,
@@ -396,6 +413,9 @@ def run_task(
             "collected": sum(r["collected"] for r in rows),
             "hazard_exposures": sum(r["hazard"] for r in rows),
             "observation_tiles": sum(r["observation_tiles"] for r in rows),
+            "physical_observation_tiles": physical_observation_tiles(
+                output, sum(r["observation_tiles"] for r in rows)
+            ),
             "final_energy": rows[-1]["energy"] if rows else None,
             "mean_entropy": sum(
                 -sum(p * math.log(max(p, 1e-30)) for p in r["probabilities"]) for r in rows

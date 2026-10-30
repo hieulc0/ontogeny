@@ -1,0 +1,69 @@
+{
+  "arm_id": "unchanged-policy",
+  "initialization": {
+    "checkpoint": null,
+    "kind": "fresh",
+    "seed": 42
+  },
+  "inputs": [],
+  "limits": {
+    "interactions": 22,
+    "output_bytes": 67108864,
+    "torch_memory_bytes": 134217728,
+    "updates": 3,
+    "wall_seconds": 120
+  },
+  "objective": {
+    "algorithm": "reinforce",
+    "baseline_decay": 0.9,
+    "gamma": 0.97,
+    "learning_rate": 0.0005
+  },
+  "operation": "continuation_check",
+  "protocol_sha256": "1e3e447b4ea035da933b9b0b3b37145218fe57454c9838cc69ed7fbefed601c3",
+  "required_outputs": [
+    "runtime.json",
+    "execution.json",
+    "metrics.json",
+    "predictions.jsonl",
+    "learning.jsonl",
+    "checkpoint_manifest.json"
+  ],
+  "run_id": "execution-foundation",
+  "runtime": {
+    "cuda": "12.4",
+    "gpu": "Tesla T4",
+    "torch": "2.6.0+cu124",
+    "visible_cuda_devices": 1
+  },
+  "schema_version": 1,
+  "source": {
+    "ontogeny_sha": "f8c4bc88cf53ae8b1b82d37fa33fad7a212eeedf",
+    "upstream_sha": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d"
+  },
+  "split": "diagnostic",
+  "split_manifest_sha256": "279a2166e39ab487f02e136bb8d7a2ec0a53aff862c5b4e0dd67ad3d8d6e3e0e",
+  "targets": {
+    "criterion": "state_integrity",
+    "kind": "engineering"
+  },
+  "trial_id": "complete-state",
+  "world": {
+    "config": {
+      "action_cost": 1,
+      "change_interval": 20,
+      "hazard_cost": 6,
+      "hazards": 12,
+      "height": 12,
+      "initial_energy": 100,
+      "inspect_cost": 2,
+      "max_energy": 100,
+      "max_steps": 10,
+      "resource_gain": 15,
+      "resources": 24,
+      "width": 12
+    },
+    "episodes": 1,
+    "seed": 91823
+  }
+}
