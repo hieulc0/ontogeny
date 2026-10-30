@@ -1,4 +1,4 @@
-"""Dense decoder-only Transformer extracted from the audited upstream implementation."""
+"""Canonical dense decoder-only Transformer and shared hidden-state traversal."""
 
 import torch
 from torch import Tensor, nn

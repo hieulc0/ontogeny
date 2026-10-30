@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 
-from mini_gpt.provenance import SOURCE_REVISION
 from ontogeny.neural.adapter import require_remote
 from ontogeny.neural.encoding import encode_policy
 from ontogeny.neural.persistence import digest
@@ -20,7 +19,6 @@ def test_encoding_is_bounded_observable_only():
     observation = CellWorld().observe()
     encoded = encode_policy(observation)
     assert len(encoded) == 29 and all(0 <= x < 256 for x in encoded)
-    assert len(SOURCE_REVISION) == 40
 
 
 def test_hash(tmp_path: Path):

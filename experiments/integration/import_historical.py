@@ -4,6 +4,7 @@ Class remapping is confined to this conversion operation. No old namespace is in
 or aliased for normal loading. Unsupported neural structures stay with their old code.
 """
 
+import json
 import pickle
 from pathlib import Path
 from types import ModuleType
@@ -11,8 +12,11 @@ from typing import Any
 
 from mini_gpt.checkpoint.identity import file_digest
 from mini_gpt.model.config import ModelConfig
-from mini_gpt.provenance import HISTORICAL_REVISION, SOURCE_REVISION
 from mini_gpt.runtime import require_remote_cuda
+
+REFERENCE = json.loads(Path(__file__).with_name("reference.json").read_text())
+HISTORICAL_REVISION = REFERENCE["historical_revision"]
+SOURCE_REVISION = REFERENCE["source_revision"]
 
 
 class DenseCheckpointUnpickler(pickle.Unpickler):
@@ -106,3 +110,29 @@ def import_dense_checkpoint(
     owner.restore(snapshot)
     owner.snapshot()  # Reject unsupported hooks before permitting publication.
     return owner
+
+
+def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--sha256", required=True)
+    parser.add_argument("--source-revision", required=True)
+    parser.add_argument("--trusted", action="store_true", required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    from mini_gpt.runtime import configure_determinism
+
+    configure_determinism()
+    owner = import_dense_checkpoint(
+        args.source,
+        expected_sha256=args.sha256,
+        source_revision=args.source_revision,
+        trusted=args.trusted,
+    )
+    owner.save(args.output)
+
+
+if __name__ == "__main__":
+    main()

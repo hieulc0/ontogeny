@@ -40,7 +40,10 @@ def main() -> None:
 
         torch, np = configure_determinism()
         from mini_gpt.checkpoint.identity import file_digest
-        from mini_gpt.provenance import SOURCE_REVISION
+
+        SOURCE_REVISION = json.loads(
+            (source / "experiments/integration/reference.json").read_text()
+        )["source_revision"]
 
         revision = subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=source, text=True

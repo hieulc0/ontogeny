@@ -7,7 +7,6 @@ from dataclasses import asdict, dataclass
 from pathlib import Path, PurePosixPath
 from typing import Any, Literal
 
-from mini_gpt.provenance import HISTORICAL_REVISION
 from ontogeny.world.state import WorldConfig
 
 
@@ -142,8 +141,6 @@ class Request:
             source = fields(data["source"], "ontogeny_sha upstream_sha")
             for value in source.values():
                 hexadecimal(value, 40)
-            if source["upstream_sha"] != HISTORICAL_REVISION:
-                raise ContractError("unqualified historical source revision")
         else:
             source = fields(data["source"], "ontogeny_sha engine")
             hexadecimal(source["ontogeny_sha"], 40)

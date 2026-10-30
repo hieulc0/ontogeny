@@ -61,3 +61,13 @@ def test_core_has_no_organism_or_external_repository_imports():
             assert all(
                 not name or not name.startswith(("ontogeny", "adaptive_mini_gpt")) for name in names
             )
+
+
+def test_core_has_no_external_revision_or_import_compatibility_layer():
+    root = Path(__file__).resolve().parents[2] / ".." / "src/mini_gpt"
+    assert not (root / "provenance.py").exists()
+    assert not (root / "checkpoint/legacy.py").exists()
+    for path in root.rglob("*.py"):
+        text = path.read_text()
+        assert "adaptive_mini_gpt" not in text
+        assert "adaptive-mini-gpt" not in text

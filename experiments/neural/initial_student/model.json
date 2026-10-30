@@ -1,0 +1,10 @@
+{
+  "vocab_size": 256,
+  "d_model": 384,
+  "n_layers": 5,
+  "n_heads": 6,
+  "d_ff": 1792,
+  "context_length": 512,
+  "dropout": 0.1,
+  "pos_encoding": "rope"
+}

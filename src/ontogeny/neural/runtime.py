@@ -11,7 +11,7 @@ from mini_gpt.runtime import configure_determinism
 def initialize() -> tuple[Any, Any, Any]:
     torch, np = configure_determinism()
     from mini_gpt.learning.state import LearningState
-    from mini_gpt.provenance import verify_import
+    from mini_gpt.runtime import verify_import
 
     package_root = Path(__file__).resolve().parents[2] / "mini_gpt"
     for name in (

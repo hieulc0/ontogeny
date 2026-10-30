@@ -9,6 +9,11 @@ and arbitrary VM interruption recovery remain unqualified. See [COLAB_ROUTING.md
 unimplemented scheduling/portability features. Fresh jobs now accept validated Colab
 or Kaggle CUDA; historical experiments and checkpoint identities remain unchanged.
 
+Current implementation uses request schema2 and the internal mini_gpt engine; normal
+launchers clone only Ontogeny. Earlier qualification numbers in this document belong
+to their pinned pre-consolidation sources. See MIGRATION.md for the new code/state
+contract and measured verification. The larger design remains a proposal where marked.
+
 ## Decision
 
 Expose one training/job contract, implemented by a common remote worker. A controller

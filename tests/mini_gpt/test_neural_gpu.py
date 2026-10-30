@@ -21,15 +21,14 @@ from typing import cast
 import numpy as np
 import torch
 
+from experiments.integration.import_historical import HISTORICAL_REVISION, import_dense_checkpoint
 from mini_gpt.checkpoint.comparison import capture_state, equal
 from mini_gpt.checkpoint.identity import file_digest
-from mini_gpt.checkpoint.legacy import import_dense_checkpoint
 from mini_gpt.learning.optimizer import optimizer_membership
 from mini_gpt.learning.state import LearningState
 from mini_gpt.learning.trainer import train_tokens
 from mini_gpt.model.config import ModelConfig
 from mini_gpt.model.transformer import MiniGPT
-from mini_gpt.provenance import HISTORICAL_REVISION
 from mini_gpt.runtime import configure_determinism
 
 pytestmark = pytest.mark.remote

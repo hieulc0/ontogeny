@@ -4,7 +4,6 @@ import json
 
 import pytest
 
-from mini_gpt.provenance import HISTORICAL_REVISION
 from ontogeny.execution.cli import qualification_request
 from ontogeny.execution.contracts import ExecutionContext, Request
 from ontogeny.execution.providers.colab import bootstrap
@@ -21,7 +20,7 @@ def test_current_contract_has_one_source_identity():
 def test_historical_request_remains_readable_without_becoming_current():
     value = qualification_request("a" * 40, "b" * 64).to_dict()
     value["schema_version"] = 1
-    value["source"] = {"ontogeny_sha": "a" * 40, "upstream_sha": HISTORICAL_REVISION}
+    value["source"] = {"ontogeny_sha": "a" * 40, "upstream_sha": "c" * 40}
     old = Request.parse(value)
     assert json.loads(json.dumps(old.to_dict())) == value
     with pytest.raises(RuntimeError, match="historical"):

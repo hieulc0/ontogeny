@@ -1,12 +1,16 @@
 """Prepare a finite migration verification job; submission remains explicit."""
 
 import argparse
+import json
 import subprocess
 from pathlib import Path
 
 from mini_gpt.checkpoint.identity import file_digest
-from mini_gpt.provenance import SOURCE_REVISION
 from ontogeny.execution.artifacts import write_json
+
+SOURCE_REVISION = json.loads(
+    (Path(__file__).resolve().parents[1] / "experiments/integration/reference.json").read_text()
+)["source_revision"]
 
 
 def main() -> None:

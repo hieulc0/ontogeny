@@ -19,7 +19,6 @@ dev = ["pytest>=8", "ruff>=0.6", "pyright>=1.1"]
 ontogeny = "ontogeny.cli:main"
 ontogeny-exec = "ontogeny.execution.cli:main"
 mini-gpt-train = "mini_gpt.cli:main"
-mini-gpt-import = "mini_gpt.cli:import_checkpoint"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/mini_gpt", "src/ontogeny"]

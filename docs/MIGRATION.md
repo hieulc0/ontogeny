@@ -1,6 +1,9 @@
 # Unified neural foundation migration
 
-Status: implementation and local checks in progress; remote verification NOT RUN.
+Status: the audited engine at the migration test revision passed six remote neural checks,
+independent token training and organism continuation. Complete artifact recovery remains
+in progress; subsequent removal of archival references from the active core and the 10M
+pilot are separately documented. No scientific acquisition is claimed.
 This is an engineering consolidation. It changes no historical scientific verdict.
 
 ## Audit and ancestry
@@ -61,7 +64,7 @@ New snapshots use format version2, with the same roots/gradients/RNG graph contr
 new class paths. State-dict parameter keys are retained. Normal load refuses old format
 or missing old class paths; it never replaces missing weights or optimizer state.
 
-mini_gpt.checkpoint.legacy.import_dense_checkpoint is an explicit, remote-only trusted
+experiments/integration/import_historical.py is an explicit, remote-only trusted
 conversion boundary. It requires a declared SHA-256 and audited source revision, remaps
 only five dense config/model/attention classes, validates that no adaptive routing,
 selective-token hooks or structural skips are active, and restores the joint graph with
@@ -126,3 +129,24 @@ operations are guarded and selected only in the remote job.
 Any GPU gate failure is engineering FAIL/PARTIAL with raw evidence preserved. A missing
 GPU is NOT RUN, never inferred from local mocks. Numerical mismatches stop equivalence
 claims; no tolerance relaxation after viewing results. Actual outcomes will be appended.
+
+
+## Initial remote verification
+
+Kaggle native job sparklinghydraulics0/ontogeny-neural-consolidation-a3a26ba630/1
+finished COMPLETE. The result record reports six neural tests PASS, independent token
+training PASS and organism training/continuation PASS; its organism bundle was verified
+remotely with 31 files. The reference comparison included an actual checkpoint with
+existing optimizer moments and an exact subsequent interaction/update. Source for that
+run is the migration test revision recorded in its output. Two local bulk-download
+attempts failed during DNS resolution; partial files and private logs remain under
+runs/neural-consolidation/. The small result record was recovered separately. Do not
+confuse verified remote checks with complete local artifact recovery. No GPU rerun was
+performed because download failed.
+
+Following the user's direction, archival source identities and the one-time historical
+conversion tool are kept in experiments/integration and migration records, outside the
+active mini_gpt package. Normal engine imports never fetch or select an external model.
+A training run records its own source for reproducibility; that record is not a choice
+of neural engine. The continuing learner's own checkpoint remains its learned state.
+The later archival-boundary cleanup and 10M pilot need their own verification.

@@ -1,4 +1,4 @@
-"""Independent, bounded neural training and explicit trusted checkpoint conversion."""
+"""Independent, bounded neural training using the internal canonical engine."""
 
 import argparse
 import json
@@ -20,16 +20,22 @@ def main() -> None:
     parser.add_argument("--updates", type=int, required=True)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--wall-seconds", type=int, default=120)
+    parser.add_argument("--max-torch-memory-mib", type=int, default=3072)
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--checkpoint-sha256")
     args = parser.parse_args()
-    if not 0 < args.updates <= 100000 or not 0 < args.wall_seconds <= 3600:
+    if (
+        not 0 < args.updates <= 100000
+        or not 0 < args.wall_seconds <= 3600
+        or args.max_torch_memory_mib <= 0
+    ):
         parser.error("finite positive update/time envelope required")
     config = ModelConfig.from_dict(json.loads(args.config.read_text()))
     batches = json.loads(args.data.read_text())
     if not isinstance(batches, list) or not batches:
         parser.error("data must be a nonempty array of {tokens, targets} batches")
     torch, np = configure_determinism()
+    torch.cuda.reset_peak_memory_stats()
     repository = Path(__file__).resolve().parents[2]
     revision = subprocess.check_output(
         ["git", "rev-parse", "HEAD"], cwd=repository, text=True
@@ -50,11 +56,11 @@ def main() -> None:
         if file_digest(args.resume) != args.checkpoint_sha256:
             raise ValueError("declared full checkpoint hash required")
         owner = LearningState.load(args.resume)
-        if (
-            owner.metadata.get("training_envelope") != envelope
-            or owner.metadata.get("source_revision") != revision
-        ):
+        if owner.metadata.get("training_envelope") != envelope:
             raise ValueError("resume cannot silently change the training envelope")
+        history = owner.metadata.setdefault("code_history", [owner.metadata.get("source_revision")])
+        if history[-1] != revision:
+            history.append(revision)
     else:
         random.seed(args.seed)
         np.random.seed(args.seed)
@@ -83,30 +89,25 @@ def main() -> None:
             torch.tensor(batch["targets"], device="cuda"),
             max_updates=args.updates,
         )
+        peak = torch.cuda.max_memory_allocated()
+        if peak > args.max_torch_memory_mib * 1024**2:
+            raise RuntimeError("Torch allocation exceeds the experiment envelope")
+        row["peak_torch_memory_bytes"] = peak
         owner.external["batch_cursor"] = cursor + 1
         owner.save(args.output / f"step-{owner.metadata['steps']}.pt")
+        if torch.cuda.max_memory_allocated() > args.max_torch_memory_mib * 1024**2:
+            raise RuntimeError("checkpoint allocation exceeds the experiment envelope")
         with (args.output / "updates.jsonl").open("a") as stream:
             stream.write(json.dumps(row) + "\n")
-
-
-def import_checkpoint() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--source", type=Path, required=True)
-    parser.add_argument("--sha256", required=True)
-    parser.add_argument("--source-revision", required=True)
-    parser.add_argument("--trusted", action="store_true", required=True)
-    parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args()
-    configure_determinism()
-    from mini_gpt.checkpoint.legacy import import_dense_checkpoint
-
-    owner = import_dense_checkpoint(
-        args.source,
-        expected_sha256=args.sha256,
-        source_revision=args.source_revision,
-        trusted=args.trusted,
+    (args.output / "resources.json").write_text(
+        json.dumps(
+            {
+                "peak_torch_memory_bytes": torch.cuda.max_memory_allocated(),
+                "source_revision": revision,
+                "max_torch_memory_mib": args.max_torch_memory_mib,
+            }
+        )
     )
-    owner.save(args.output)
 
 
 if __name__ == "__main__":

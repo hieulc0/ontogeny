@@ -1,0 +1,7 @@
+{
+  "source_repository": "https://github.com/hieulc0/adaptive-mini-gpt",
+  "source_revision": "87e8928c440fecc4f3a6f6c5ea3c869a6a8537e6",
+  "historical_revision": "8567836fb2c8c915d442b7c2fbedb4fd9b30396d",
+  "historical_ontogeny_revision": "a88d7d386eb502e4ffae5bde7dc504441824c76d",
+  "purpose": "One-time migration comparison only; not an active engine dependency."
+}

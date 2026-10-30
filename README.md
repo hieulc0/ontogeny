@@ -65,7 +65,7 @@ need explicit preregistration and independent evaluation; a smoke result cannot 
 L.1. New request schema2 identifies the internal engine. Old schema1 requests remain
 readable for artifact audits but execute only at their historical source revision.
 
-Trusted dense historical checkpoints have an explicit remote conversion command;
+Trusted dense historical checkpoints have an explicit one-time remote conversion tool;
 unsupported architectures remain loadable with their original repository/source. No
 weights, optimizer state or continuing history are reset silently. Exact support and
 commands: [migration](docs/MIGRATION.md).

@@ -3,6 +3,7 @@
 import importlib
 import os
 from pathlib import Path
+from types import ModuleType
 from typing import Any
 
 
@@ -36,3 +37,10 @@ def configure_determinism() -> tuple[Any, Any]:
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     return torch, importlib.import_module("numpy")
+
+
+def verify_import(module: ModuleType, package_root: Path) -> None:
+    if module.__file__ is None or not Path(module.__file__).resolve().is_relative_to(
+        package_root.resolve()
+    ):
+        raise RuntimeError("neural module imported outside the verified internal package")

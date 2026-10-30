@@ -1,6 +1,5 @@
 """Full learning ownership with alias-preserving rollback and deterministic continuation.
 
-Derived from adaptive-mini-gpt; modifications and imported revision: docs/MIGRATION.md.
 Only explicitly trusted same-code state is deserialized. No implicit model replacement.
 """
 
@@ -16,14 +15,13 @@ import torch
 from torch import Tensor, nn
 
 from mini_gpt.learning.optimizer import adamw_groups, optimizer_membership
-from mini_gpt.provenance import CHECKPOINT_VERSION
 from mini_gpt.runtime import require_remote_cuda
 
 
 class LearningState:
     """One model, optimizer, scheduler and all declared mutable experience/state."""
 
-    VERSION = CHECKPOINT_VERSION
+    VERSION = 2
 
     def __init__(
         self,
