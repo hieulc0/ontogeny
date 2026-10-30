@@ -1,0 +1,26 @@
+{
+  "A-train": {
+    "count": 256,
+    "sha256": "f5673d9a64b951d426fc38998c073c456c085c61d6326c79b82edd5939bcd5c0"
+  },
+  "A-development": {
+    "count": 368,
+    "sha256": "623fff4307e8721a9ed68089316bc45adb4037853722be54a0201834e44441c4"
+  },
+  "A-test": {
+    "count": 368,
+    "sha256": "642161287ae5869b338953f5069b717e1dcca1ec196bc4d5893684f3024404dc"
+  },
+  "B-train": {
+    "count": 256,
+    "sha256": "09bf92832a3b882774eaba0444695043fd4414dc0fcbe1c1f31b6178a155e038"
+  },
+  "B-development": {
+    "count": 368,
+    "sha256": "823f345c8f2862a9d60166c323a685a04aca5a1034063611e5e636f7a1e5b469"
+  },
+  "B-test": {
+    "count": 368,
+    "sha256": "8b7366b23a01d4381167a876d4a8706d6d1a16611969d3d2cf00798c280dd59a"
+  }
+}

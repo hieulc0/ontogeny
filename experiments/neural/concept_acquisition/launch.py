@@ -12,7 +12,14 @@ from ontogeny.execution.providers import colab, colab_transfer, kaggle
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--directory", type=Path, required=True)
+    parser.add_argument("--study", choices=("coverage", "retention"), default="coverage")
     args = parser.parse_args()
+    worker = (
+        "experiments/neural/"
+        + ("sequential_retention" if args.study == "retention" else "concept_acquisition")
+        + "/worker.py"
+    )
+    protocol = "ordering-retention-001" if args.study == "retention" else "comparison-coverage-001"
     revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     published = subprocess.check_output(
         ["git", "ls-remote", "origin", "refs/heads/main"], text=True
@@ -39,8 +46,8 @@ try:
  run(['git','checkout','--detach',{revision!r}],repo)
  run([sys.executable,'-m','pip','install','torch==2.6.0','--index-url','https://download.pytorch.org/whl/cu124'])
  run([sys.executable,'-m','pip','install','numpy==2.1.3'])
- os.environ['PYTHONPATH']=str(repo/'src')
- run([sys.executable,str(repo/'experiments/neural/concept_acquisition/worker.py'),'--source',{revision!r},'--output',str(result)],repo,620)
+ os.environ['PYTHONPATH']=str(repo/'src')+os.pathsep+str(repo)
+ run([sys.executable,str(repo/{worker!r}),'--source',{revision!r},'--output',str(result)],repo,620)
 except BaseException:
  result.mkdir(exist_ok=True)
  (result/'bootstrap-failure.txt').write_text(traceback.format_exc())
@@ -74,12 +81,14 @@ finally:
             if hashlib.sha256((destination / name).read_bytes()).hexdigest() != digest:
                 raise RuntimeError("artifact hash mismatch")
         result = json.loads((destination / "result.json").read_text())
+        expected_records = (9 if result.get("admitted") else 0) if args.study == "retention" else 6
         if (
             response.returncode
             or result["source"] != revision
             or result["execution"] != "COMPLETE"
-            or result.get("protocol") != "comparison-coverage-001"
-            or len(result["records"]) != 6
+            or result.get("protocol") != protocol
+            or len(result["records"]) != expected_records
+            or (args.study == "retention" and len(result.get("parents", [])) != 3)
         ):
             raise RuntimeError("incomplete cohort; inspect recovered evidence")
         session.release()
